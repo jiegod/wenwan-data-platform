@@ -1,0 +1,15 @@
+server:
+  port: 8089
+spring:
+  application:
+    name: wenwan-data-service
+  dataSource:
+    db1:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://rm-bp1z0r275698r8y64so.mysql.rds.aliyuncs.com:3306/wenwan?serverTimezone=UTC
+      username: admin1
+      password: LIwenling521
+      type: com.alibaba.druid.pool.DruidDataSource
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
