@@ -10,6 +10,8 @@ import java.util.Date;
 @Data
 public class ColumnInfoVo extends BaseQuery {
     private Long id;
+    @ApiModelProperty("所属表id")
+    private Long tableId;
     @ApiModelProperty("列名")
     private String name;
     @ApiModelProperty("列中文名")

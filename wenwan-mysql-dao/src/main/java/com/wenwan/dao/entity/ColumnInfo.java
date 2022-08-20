@@ -12,6 +12,7 @@ import java.util.Date;
 public class ColumnInfo {
     @TableId(type= IdType.AUTO)
     private Long id;
+    private Long tableId;
     private String name;
     private String comment;
     private String type;
