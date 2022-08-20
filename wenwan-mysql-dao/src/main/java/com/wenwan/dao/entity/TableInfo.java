@@ -12,11 +12,16 @@ import java.util.Date;
 public class TableInfo {
     @TableId(type= IdType.AUTO)
     private Long id;
+    //库名
     private String dbName;
+    //表名
     private String tableName;
+    //表中文名
     private String comment;
+    //操作人
     private String operator;
-    private String operationTime;
+    //操作时间
+    private Date operationTime;
 
     private Date createDate;
     private Date updateDate;

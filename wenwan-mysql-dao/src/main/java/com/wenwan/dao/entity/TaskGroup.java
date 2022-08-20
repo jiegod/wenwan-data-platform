@@ -8,20 +8,18 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@TableName("column_info")
-public class ColumnInfo {
+@TableName("task_group")
+public class TaskGroup {
     @TableId(type= IdType.AUTO)
     private Long id;
-    //关联表id
-    private Long tableId;
-    //列名
+    //任务组编号
+    private String code;
+    //任务组名称
     private String name;
-    //列中文名
-    private String comment;
-    //列类型
-    private String type;
-    //列长度
-    private String length;
+    //任务组描述
+    private String desc;
+    //台账编号
+    private String parseRuleCode;
     //操作人
     private String operator;
     //操作时间

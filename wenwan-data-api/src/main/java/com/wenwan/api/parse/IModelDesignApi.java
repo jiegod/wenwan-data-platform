@@ -18,12 +18,12 @@ public interface IModelDesignApi {
     APIResponse<Void> insertTable(@RequestBody TableInfoVo tableInfoVo);
 
     @PostMapping("/table/update")
-    @ApiOperation("新增表信息")
+    @ApiOperation("修改表信息")
     APIResponse<Void> updateTable(@RequestBody TableInfoVo tableInfoVo);
 
-    @DeleteMapping("/table/delete/{id}")
+    @DeleteMapping("/table/delete/{tableId}")
     @ApiOperation("删除表信息")
-    APIResponse<Void> deleteTable(@PathVariable Long id);
+    APIResponse<Void> deleteTable(@PathVariable Long tableId);
 
     @PostMapping("/table/query")
     @ApiOperation("表list")
@@ -34,8 +34,8 @@ public interface IModelDesignApi {
     APIResponse<Void> insertColumn(@RequestBody List<ColumnInfoVo> columnInfoVos);
 
     @PostMapping("/column/update")
-    @ApiOperation("新增字段信息")
-    APIResponse<Void> updateColumn(@RequestBody List<ColumnInfoVo> columnInfoVo);
+    @ApiOperation("修改字段信息")
+    APIResponse<Void> updateColumn(@RequestBody List<ColumnInfoVo> columnInfoVos);
 
     @PostMapping("/column/update")
     @ApiOperation("字段list")
@@ -44,4 +44,8 @@ public interface IModelDesignApi {
     @PostMapping("/column/generate")
     @ApiOperation("生成字段信息(excel)")
     APIResponse<List<ColumnInfoVo>> generateColumn(@RequestParam MultipartFile file);
+
+    @GetMapping("/ddl/generate/{tableId}")
+    @ApiOperation("生成建表语句")
+    APIResponse<String> generateDDL(@PathVariable Long tableId);
 }
