@@ -3,6 +3,7 @@ package com.wenwan.dao.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.wenwan.common.enums.SqlType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -19,7 +20,7 @@ public class TaskSql {
     @ApiModelProperty("任务组名称编号")
     private String taskGroupCode;
     @ApiModelProperty("SQL类型")
-    private String type;
+    private SqlType type;
     @ApiModelProperty("启用状态")
     private String status;
     @ApiModelProperty("执行顺序")
@@ -31,6 +32,6 @@ public class TaskSql {
     @ApiModelProperty("操作时间")
     private Date operationTime;
 
-    private Date createDate;
-    private Date updateDate;
+    private Date createTime;
+    private Date updateTime;
 }

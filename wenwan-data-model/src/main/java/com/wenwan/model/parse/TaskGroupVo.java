@@ -14,6 +14,7 @@ public class TaskGroupVo {
     private String name;
     @ApiModelProperty("任务组描述")
     private String desc;
+    //todo 一个任务组关联多个解析模版，有可能吗？
     @ApiModelProperty("台账编号")
     private String parseRuleCode;
     @ApiModelProperty("操作人")

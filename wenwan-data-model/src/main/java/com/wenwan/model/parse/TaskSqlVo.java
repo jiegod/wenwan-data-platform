@@ -2,6 +2,7 @@ package com.wenwan.model.parse;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.wenwan.common.enums.SqlType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -15,7 +16,7 @@ public class TaskSqlVo {
     @ApiModelProperty("任务组名称编号")
     private String taskGroupCode;
     @ApiModelProperty("SQL类型")
-    private String type;
+    private SqlType type;
     @ApiModelProperty("启用状态")
     private String status;
     @ApiModelProperty("执行顺序")

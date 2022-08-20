@@ -1,6 +1,7 @@
 package com.wenwan.api.parse;
 
 import com.wenwan.common.api.APIResponse;
+import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.ColumnInfoVo;
 import com.wenwan.model.parse.TableInfoVo;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +27,7 @@ public interface IModelDesignApi {
 
     @PostMapping("/table/query")
     @ApiOperation("表list")
-    APIResponse<List<TableInfoVo>> queryTable(@RequestBody TableInfoVo tableInfoVo);
+    APIResponse<SearchResult<TableInfoVo>> queryTable(@RequestBody TableInfoVo tableInfoVo);
 
     @PutMapping("/column/insert")
     @ApiOperation("新增字段信息")
@@ -38,7 +39,7 @@ public interface IModelDesignApi {
 
     @PostMapping("/column/update")
     @ApiOperation("字段list")
-    APIResponse<List<ColumnInfoVo>> queryColumn(@RequestBody ColumnInfoVo columnInfoVo);
+    APIResponse<SearchResult<ColumnInfoVo>> queryColumn(@RequestBody ColumnInfoVo columnInfoVo);
 
     @PostMapping("/column/generate")
     @ApiOperation("生成字段信息(excel)")

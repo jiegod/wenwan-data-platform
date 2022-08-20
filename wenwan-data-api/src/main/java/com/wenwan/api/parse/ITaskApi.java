@@ -1,6 +1,7 @@
 package com.wenwan.api.parse;
 
 import com.wenwan.common.api.APIResponse;
+import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.TableInfoVo;
 import com.wenwan.model.parse.TaskGroupVo;
 import com.wenwan.model.parse.TaskSqlVo;
@@ -25,7 +26,7 @@ public interface ITaskApi {
 
     @PostMapping("/group/query")
     @ApiOperation("任务组list")
-    APIResponse<List<TaskGroupVo>> queryTable(@RequestBody TaskGroupVo taskGroupVo);
+    APIResponse<SearchResult<TaskGroupVo>> queryGroup(@RequestBody TaskGroupVo taskGroupVo);
 
     @PutMapping("/sql/insert")
     @ApiOperation("新增SQL")
@@ -41,6 +42,6 @@ public interface ITaskApi {
 
     @PostMapping("/sql/query")
     @ApiOperation("Sql-list")
-    APIResponse<List<TaskSqlVo>> querySql(@RequestBody TaskSqlVo taskSqlVo);
+    APIResponse<SearchResult<TaskSqlVo>> querySql(@RequestBody TaskSqlVo taskSqlVo);
 
 }

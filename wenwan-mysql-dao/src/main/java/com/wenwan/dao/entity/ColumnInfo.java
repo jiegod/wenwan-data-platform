@@ -28,6 +28,6 @@ public class ColumnInfo {
     @ApiModelProperty("操作时间")
     private Date operationTime;
 
-    private Date createDate;
-    private Date updateDate;
+    private Date createTime;
+    private Date updateTime;
 }
