@@ -10,7 +10,7 @@ public class TriggerSortDto {
 
     private List<String> fileIds;
     @ApiModelProperty("分类标签")
-    private String classification;
+    private String label;
     @ApiModelProperty("描述")
     private String description;
     private TriggerSortTemplate triggerSortTemplate;

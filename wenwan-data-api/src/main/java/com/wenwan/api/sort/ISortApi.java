@@ -23,6 +23,7 @@ public interface ISortApi {
     APIResponse<String> trigger(@RequestBody TriggerSortDto sort);
 
     @PostMapping("/detail")
+    //todo 暂时先不做
     APIResponse<SourceFileDto> detail(@RequestParam Long id);
 
 }

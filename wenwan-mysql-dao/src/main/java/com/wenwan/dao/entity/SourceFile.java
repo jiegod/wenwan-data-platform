@@ -3,7 +3,8 @@ package com.wenwan.dao.entity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 @Data
 public class SourceFile {
@@ -18,8 +19,10 @@ public class SourceFile {
     @ApiModelProperty("接受日期")
     private String receiveDate;
     @ApiModelProperty("附件名")
-    private String attachment;
-
+    private String attachmentName;
+    private String attachmentPath;
+    private String creator;
+    private String modifier;
     private Date createTime;
-    private Date modifyTime;
+    private Date updateTime;
 }

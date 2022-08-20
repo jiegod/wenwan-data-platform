@@ -1,4 +1,4 @@
-package com.wenwan.web.parse;
+package com.wenwan.web.controller.parse;
 
 import com.wenwan.api.parse.IDataParseRuleApi;
 import com.wenwan.common.api.APIResponse;
