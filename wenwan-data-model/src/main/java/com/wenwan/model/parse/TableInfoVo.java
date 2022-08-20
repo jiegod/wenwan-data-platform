@@ -4,6 +4,8 @@ import com.wenwan.model.request.BaseQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class TableInfoVo extends BaseQuery {
     private Long id;
@@ -16,5 +18,5 @@ public class TableInfoVo extends BaseQuery {
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")
-    private String operationTime;
+    private Date operationTime;
 }

@@ -23,5 +23,5 @@ public class ColumnInfoVo extends BaseQuery {
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")
-    private String operationTime;
+    private Date operationTime;
 }

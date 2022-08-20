@@ -9,20 +9,19 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@TableName("column_info")
-public class ColumnInfo {
+@TableName("task_group")
+public class TaskGroup {
     @TableId(type= IdType.AUTO)
     private Long id;
-    @ApiModelProperty("关联表id")
-    private Long tableId;
-    @ApiModelProperty("列名")
+    @ApiModelProperty("任务组编号")
+    private String code;
+    @ApiModelProperty("任务组名称")
     private String name;
-    @ApiModelProperty("列中文名")
-    private String comment;
-    @ApiModelProperty("列类型")
-    private String type;
-    @ApiModelProperty("列长度")
-    private String length;
+    @ApiModelProperty("任务组描述")
+    private String desc;
+    @ApiModelProperty("台账编号")
+    //todo 解析模版跟任务组关系，一对多？
+    private String parseRuleCode;
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")
