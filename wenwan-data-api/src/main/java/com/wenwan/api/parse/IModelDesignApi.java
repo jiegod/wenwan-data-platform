@@ -3,7 +3,6 @@ package com.wenwan.api.parse;
 import com.wenwan.common.api.APIResponse;
 import com.wenwan.model.parse.ColumnInfoVo;
 import com.wenwan.model.parse.TableInfoVo;
-import com.wenwan.model.parse.WwDataParseRule;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
