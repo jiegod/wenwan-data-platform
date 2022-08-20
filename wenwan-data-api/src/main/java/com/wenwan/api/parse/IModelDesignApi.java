@@ -1,6 +1,8 @@
 package com.wenwan.api.parse;
 
 import com.wenwan.common.api.APIResponse;
+import com.wenwan.model.parse.ColumnInfoVo;
+import com.wenwan.model.parse.TableInfoVo;
 import com.wenwan.model.parse.WwDataParseRule;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +12,11 @@ public interface IModelDesignApi {
 
     @PutMapping("/insert/table")
     @ApiOperation("新增表信息")
-    APIResponse<Void> insertTable(@RequestBody WwDataParseRule parseRule);
+    APIResponse<Void> insertTable(@RequestBody TableInfoVo tableInfoVo);
 
     @PostMapping("/update/table")
     @ApiOperation("新增表信息")
-    APIResponse<Void> updateTable(@RequestBody WwDataParseRule parseRule);
+    APIResponse<Void> updateTable(@RequestBody TableInfoVo tableInfoVo);
 
     @DeleteMapping("/delete/table/{id}")
     @ApiOperation("删除表信息")
@@ -22,9 +24,9 @@ public interface IModelDesignApi {
 
     @PutMapping("/insert/column")
     @ApiOperation("新增列信息")
-    APIResponse<Void> insertColumn(@RequestBody WwDataParseRule parseRule);
+    APIResponse<Void> insertColumn(@RequestBody ColumnInfoVo columnInfoVo);
 
     @PostMapping("/update/column")
     @ApiOperation("新增列信息")
-    APIResponse<Void> updateColumn(@RequestBody WwDataParseRule parseRule);
+    APIResponse<Void> updateColumn(@RequestBody ColumnInfoVo columnInfoVo);
 }
