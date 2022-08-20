@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class WwDataParseRule extends BaseQuery {
+public class WwDataParseRuleDto extends BaseQuery {
 
     private long id;
     @ApiModelProperty("解析规则编码")
@@ -32,6 +32,8 @@ public class WwDataParseRule extends BaseQuery {
     private String receiver;
     @ApiModelProperty("五要素五 文件主题正则")
     private String theme;
+    @ApiModelProperty("数据源")
+    private String dataSource;
     private String status;
     private String creator;
     private String modifier;

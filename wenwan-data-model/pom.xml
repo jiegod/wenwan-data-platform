@@ -28,5 +28,10 @@
       <version>1.5.13</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-annotation</artifactId>
+      <version>3.3.2</version>
+    </dependency>
   </dependencies>
 </project>
