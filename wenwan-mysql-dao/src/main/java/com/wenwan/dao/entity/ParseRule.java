@@ -21,6 +21,7 @@ public class ParseRule {
     @ApiModelProperty("描述")
     private String description;
     @ApiModelProperty("业务落地表")
+    //todo 这个是target table还是落地表
     private String busLogTable;
     @ApiModelProperty("五要素一 文件路径正则")
     private String filePath;
