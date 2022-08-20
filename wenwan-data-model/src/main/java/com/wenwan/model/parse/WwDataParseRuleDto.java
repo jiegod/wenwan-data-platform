@@ -17,10 +17,11 @@ public class WwDataParseRuleDto extends BaseQuery {
     @ApiModelProperty("优先级")
     private String priority;
     @ApiModelProperty("分类标签")
-    private String classification;
+    private String label;
     @ApiModelProperty("描述")
     private String description;
     @ApiModelProperty("业务落地表")
+    //todo 多sheet（可能字段不同） 是不是落库后为不同的分类？（标签）
     private String busLogTable;
     @ApiModelProperty("五要素一 文件路径正则")
     private String filePath;

@@ -6,7 +6,11 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class SortTemplate {
+public class SortRule {
+    private long id;
+    private long labelId;
+    @ApiModelProperty("分拣规则名称")
+    private String name;
     @ApiModelProperty("收件箱正则")
     private String receiver;
     @ApiModelProperty("发件人正则")
@@ -19,4 +23,9 @@ public class SortTemplate {
     private Date validStart;
     @ApiModelProperty("有效期结束")
     private Date validEnd;
+    private String description;
+    private String creator;
+    private String modifier;
+    private Date createTime;
+    private Date updateTime;
 }

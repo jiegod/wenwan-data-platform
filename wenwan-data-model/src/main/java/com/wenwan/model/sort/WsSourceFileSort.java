@@ -9,7 +9,7 @@ public class WsSourceFileSort {
     @ApiModelProperty("文件id")
     private String fileId;
     @ApiModelProperty("分类")
-    private String classification;
+    private String label;
 
     //按照ppt调整request
 

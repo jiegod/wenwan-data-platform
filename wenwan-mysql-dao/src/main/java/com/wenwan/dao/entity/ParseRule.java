@@ -13,10 +13,11 @@ public class ParseRule {
     @ApiModelProperty("规则名称")
     private String name;
     @ApiModelProperty("优先级")
+    //todo 多个规则匹配同一个标签的时候使用优先级
     private String priority;
     @ApiModelProperty("分类标签")
     //todo 一个规则有多个标签吗？
-    private String classification;
+    private long labelId;
     @ApiModelProperty("描述")
     private String description;
     @ApiModelProperty("业务落地表")
@@ -34,8 +35,10 @@ public class ParseRule {
     @ApiModelProperty("数据源")
     private String dataSource;
     private String status;
-    private String creator;
-    private String modifier;
     @ApiModelProperty("操作时间")
     private Date operateTime;
+    private String creator;
+    private String modifier;
+    private Date createTime;
+    private Date updateTime;
 }

@@ -7,6 +7,7 @@ import java.util.Date;
 
 @Data
 public class TriggerSortTemplate {
+    //todo 五要素正则是用户手动输入的还是通过选中的文件生成的
     @ApiModelProperty("收件箱正则")
     private String receiver;
     @ApiModelProperty("发件人正则")

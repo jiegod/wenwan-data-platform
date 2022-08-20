@@ -4,6 +4,8 @@ import com.wenwan.model.request.BaseQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class WwSortRule extends BaseQuery {
     private long id;
@@ -12,9 +14,11 @@ public class WwSortRule extends BaseQuery {
     @ApiModelProperty("规则名称")
     private String name;
     @ApiModelProperty("分类")
-    private String classification;
+    private String label;
     @ApiModelProperty("有效期")
-    private String validTime;
+    private Date validStart;
+    @ApiModelProperty("有效期")
+    private Date validEnd;
     @ApiModelProperty("备注")
     private String description;
     @ApiModelProperty("五要素一 文件路径正则")

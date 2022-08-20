@@ -7,7 +7,8 @@ import lombok.Data;
 @Data
 public class SourceFileRequest extends BaseQuery {
 
-    private String classifications;
+    //todo 加上apimodel
+    private String label;
     private String status;
     private String receiveDateStart;
     private String receiveDateEnd;
@@ -16,5 +17,4 @@ public class SourceFileRequest extends BaseQuery {
     private String theme;
     @ApiModelProperty("附件名")
     private String attachment;
-    private String monitorName;
 }

@@ -19,9 +19,10 @@ public class SourceFileDto {
     @ApiModelProperty("附件名")
     private String attachment;
     @ApiModelProperty("多标签拼接分类")
-    private String classifications;
+    private String labels;
     @ApiModelProperty("处理状态")
     private String status;
+    //todo excel里面有 不确定要不要
     @ApiModelProperty("监控状态")
     private String monitorStatus;
 
