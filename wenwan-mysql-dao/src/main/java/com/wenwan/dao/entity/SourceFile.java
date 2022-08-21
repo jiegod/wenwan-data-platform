@@ -18,9 +18,12 @@ public class SourceFile {
     private String theme;
     @ApiModelProperty("接受日期")
     private String receiveDate;
+    @ApiModelProperty("邮件正文")
+    private String content;
     @ApiModelProperty("附件名")
     private String attachmentName;
     private String attachmentPath;
+    private String labels;//逗号分隔
     private String creator;
     private String modifier;
     private Date createTime;

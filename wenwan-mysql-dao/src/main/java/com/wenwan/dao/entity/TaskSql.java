@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Data
 @TableName("task_sql")
-//todo 目标表、参数组、file_id
+//todo 参数组多条跑多次
 public class TaskSql {
     @TableId(type= IdType.AUTO)
     private Long id;

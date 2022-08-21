@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 public class SortRule {
     private long id;
-    private long labelId;
+    private long labelId;//todo 五要素对标签 1对多
     @ApiModelProperty("分拣规则名称")
     private String name;
     @ApiModelProperty("收件箱正则")
@@ -23,6 +23,7 @@ public class SortRule {
     private Date validStart;
     @ApiModelProperty("有效期结束")
     private Date validEnd;
+    //todo 加个优先级
     private String description;
     private String creator;
     private String modifier;

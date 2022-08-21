@@ -13,15 +13,16 @@ public class ParseRule {
     @ApiModelProperty("规则名称")
     private String name;
     @ApiModelProperty("优先级")
-    //todo 多个规则匹配同一个标签的时候使用优先级
+    //优先级指的是同一个分类，范围广的优先级低
     private String priority;
     @ApiModelProperty("分类标签")
-    //todo 一个规则有多个标签吗？
-    private long labelId;
+    private String label;//1对1
+    @ApiModelProperty("business_log")
+    private String businessLog;
     @ApiModelProperty("描述")
     private String description;
     @ApiModelProperty("业务落地表")
-    private String busLogTable;
+    private String tableIds;//todo 1对多
     @ApiModelProperty("五要素一 文件路径正则")
     private String filePath;
     @ApiModelProperty("五要素二 文件名称正则")
