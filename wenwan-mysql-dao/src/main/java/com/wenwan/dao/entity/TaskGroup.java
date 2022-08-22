@@ -19,13 +19,10 @@ public class TaskGroup {
     private String name;
     @ApiModelProperty("任务组描述")
     private String desc;
-    @ApiModelProperty("台账编号")
-    //todo 解析模版跟任务组关系，一对多
-    private String parseRuleCode;
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")
-    private Date operationTime;
+    private Date operationDate;//数据库设置为date类型
 
     private Date createTime;
     private Date updateTime;

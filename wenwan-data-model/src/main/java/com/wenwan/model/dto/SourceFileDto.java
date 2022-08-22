@@ -22,7 +22,6 @@ public class SourceFileDto {
     private String labels;
     @ApiModelProperty("处理状态")
     private String status;
-    //todo excel里面有 不确定要不要
     @ApiModelProperty("监控状态")
     private String monitorStatus;
 

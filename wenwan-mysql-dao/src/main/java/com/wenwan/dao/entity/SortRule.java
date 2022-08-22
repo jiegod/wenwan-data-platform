@@ -1,14 +1,20 @@
 package com.wenwan.dao.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@TableName("sort_rule")
 public class SortRule {
+    @TableId(type= IdType.AUTO)
     private long id;
-    private long labelId;//todo 五要素对标签 1对多
+    @ApiModelProperty("标签")
+    private String labels;//五要素对标签 1对多
     @ApiModelProperty("分拣规则名称")
     private String name;
     @ApiModelProperty("收件箱正则")
@@ -23,10 +29,15 @@ public class SortRule {
     private Date validStart;
     @ApiModelProperty("有效期结束")
     private Date validEnd;
-    //todo 加个优先级
+    @ApiModelProperty("优先级")
+    private String priority;
+    @ApiModelProperty("描述")
     private String description;
-    private String creator;
-    private String modifier;
+    @ApiModelProperty("操作人")
+    private String operator;
+    @ApiModelProperty("操作时间")
+    private Date operationDate;//数据库设置为date类型
+
     private Date createTime;
     private Date updateTime;
 }

@@ -11,13 +11,14 @@ import java.util.Date;
 
 @Data
 @TableName("task_sql")
-//todo 参数组多条跑多次
 public class TaskSql {
     @TableId(type= IdType.AUTO)
     private Long id;
     @ApiModelProperty("SQL编号")
     private String code;
-    @ApiModelProperty("任务组名称编号")
+    @ApiModelProperty("任务组id")
+    private Long taskGroupId;
+    @ApiModelProperty("任务组编号")
     private String taskGroupCode;
     @ApiModelProperty("SQL类型")
     private SqlType type;
@@ -30,7 +31,7 @@ public class TaskSql {
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")
-    private Date operationTime;
+    private Date operationDate;//数据库设置为date类型
 
     private Date createTime;
     private Date updateTime;
