@@ -1,16 +1,11 @@
-package com.wenwan.dao.entity;
+package com.wenwan.model.result;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.wenwan.common.enums.SqlType;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@TableName("task_log")
-public class TaskLog {
-    @TableId(type= IdType.AUTO)
+public class SqlLogVo {
     private Long id;
     @ApiModelProperty("关联解析规则id")
     private Long parseRuleId;
