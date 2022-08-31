@@ -2,9 +2,8 @@ package com.wenwan.api.result;
 
 import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
-import com.wenwan.model.parse.ParseRuleVo;
 import com.wenwan.model.result.LogVo;
-import com.wenwan.model.result.TaskLogVo;
+import com.wenwan.model.result.TaskSqlLogVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +19,7 @@ public interface LogApi {
     @ApiOperation("运行日志")
     APIResponse<SearchResult<LogVo>> list(@RequestBody LogVo logVo);
 
-    @PostMapping("/task/list")
+    @PostMapping("/taskSql/list")
     @ApiOperation("sql任务组运行日志")
-    APIResponse<SearchResult<TaskLogVo>> taskList(@RequestBody TaskLogVo taskLogVo);
+    APIResponse<SearchResult<TaskSqlLogVo>> taskSqlList(@RequestBody TaskSqlLogVo taskSqlLogVo);
 }
