@@ -14,25 +14,25 @@ public class SortRule {
     @TableId(type= IdType.AUTO)
     private long id;
     @ApiModelProperty("标签")
-    private String labels;//五要素对标签 1对多
+    private String labels;//五要素对标签 1对多,逗号分隔
     @ApiModelProperty("分拣规则名称")
     private String name;
     @ApiModelProperty("收件箱正则")
-    private String receiver;
+    private String receiverRegular;
     @ApiModelProperty("发件人正则")
-    private String sender;
+    private String senderRegular;
     @ApiModelProperty("主题正则")
-    private String theme;
+    private String themeRegular;
     @ApiModelProperty("文件名正则")
-    private String fileName;
-    @ApiModelProperty("有效期开始")
-    private Date validStart;
-    @ApiModelProperty("有效期结束")
-    private Date validEnd;
+    private String fileNameRegular;
     @ApiModelProperty("优先级")
     private String priority;
     @ApiModelProperty("描述")
     private String description;
+    @ApiModelProperty("有效期开始")
+    private Date expireStart;
+    @ApiModelProperty("有效期结束")
+    private Date expireEnd;
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")

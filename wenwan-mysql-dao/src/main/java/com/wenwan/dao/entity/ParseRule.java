@@ -28,15 +28,15 @@ public class ParseRule {
     @ApiModelProperty("描述")
     private String description;
     @ApiModelProperty("五要素一 文件路径正则")
-    private String filePath;
+    private String filePathRegular;
     @ApiModelProperty("五要素二 文件名称正则")
-    private String fileName;
+    private String fileNameRegular;
     @ApiModelProperty("五要素三 发送方正则")
-    private String sender;
+    private String senderRegular;
     @ApiModelProperty("五要素四 接收方正则")
-    private String receiver;
+    private String receiverRegular;
     @ApiModelProperty("五要素五 文件主题正则")
-    private String theme;
+    private String themeRegular;
     @ApiModelProperty("状态")
     private String status;
     @ApiModelProperty("操作人")

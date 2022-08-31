@@ -25,9 +25,9 @@ public class SourceFile {
     @ApiModelProperty("邮件正文")
     private String content;
     @ApiModelProperty("附件名")
-    private String attachmentName;
+    private String fileName;
     @ApiModelProperty("附件路径")
-    private String attachmentPath;
+    private String filePath;
     @ApiModelProperty("标签")
     private String labels;
     @ApiModelProperty("操作人")

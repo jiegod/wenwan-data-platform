@@ -23,9 +23,9 @@ public class BusinessLog {
     @ApiModelProperty("邮件正文")
     private String content;
     @ApiModelProperty("附件名")
-    private String attachmentName;
+    private String fileName;
     @ApiModelProperty("附件路径")
-    private String attachmentPath;
+    private String filePath;
     @ApiModelProperty("文件类型")
     private String fileType;
     @ApiModelProperty("数据源")
