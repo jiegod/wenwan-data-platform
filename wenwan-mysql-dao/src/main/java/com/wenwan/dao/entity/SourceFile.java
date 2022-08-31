@@ -28,8 +28,10 @@ public class SourceFile {
     private String fileName;
     @ApiModelProperty("附件路径")
     private String filePath;
-    @ApiModelProperty("标签")
+    @ApiModelProperty("目标分类")
     private String labels;
+    @ApiModelProperty("描述")
+    private String description;
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")

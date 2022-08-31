@@ -3,13 +3,15 @@ package com.wenwan.model.parse;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.wenwan.common.enums.SqlType;
+import com.wenwan.model.request.BaseQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
-public class TaskSqlVo {
+public class TaskSqlVo extends BaseQuery {
     private Long id;
     @ApiModelProperty("SQL编号")
     private String code;
@@ -27,4 +29,8 @@ public class TaskSqlVo {
     private String operator;
     @ApiModelProperty("操作时间")
     private Date operationTime;
+
+    //param mapping
+    @ApiModelProperty("sql关联的参数组")
+    private List<List<TaskSqlParamVo>> taskSqlParamVos;
 }

@@ -24,9 +24,9 @@ public interface ITaskApi {
     @ApiOperation("删除任务组")
     APIResponse<Void> deleteGroup(@PathVariable Long groupId);
 
-    @PostMapping("/group/query")
+    @PostMapping("/group/list")
     @ApiOperation("任务组list")
-    APIResponse<SearchResult<TaskGroupVo>> queryGroup(@RequestBody TaskGroupVo taskGroupVo);
+    APIResponse<SearchResult<TaskGroupVo>> groupList(@RequestBody TaskGroupVo taskGroupVo);
 
     @PutMapping("/sql/insert")
     @ApiOperation("新增SQL")
@@ -40,8 +40,8 @@ public interface ITaskApi {
     @ApiOperation("删除SQL")
     APIResponse<Void> deleteSql(@PathVariable Long sqlId);
 
-    @PostMapping("/sql/query")
+    @PostMapping("/sql/list")
     @ApiOperation("Sql-list")
-    APIResponse<SearchResult<TaskSqlVo>> querySql(@RequestBody TaskSqlVo taskSqlVo);
+    APIResponse<SearchResult<TaskSqlVo>> sqlList(@RequestBody TaskSqlVo taskSqlVo);
 
 }

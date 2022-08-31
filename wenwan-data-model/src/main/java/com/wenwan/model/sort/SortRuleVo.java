@@ -1,17 +1,15 @@
-package com.wenwan.dao.entity;
+package com.wenwan.model.sort;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.wenwan.model.request.BaseQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-@TableName("sort_rule")
-public class SortRule {
-    @TableId(type= IdType.AUTO)
+public class SortRuleVo extends BaseQuery {
     private long id;
     @ApiModelProperty("目标分类")
     private String labels;//五要素对标签 1对多,逗号分隔
@@ -35,7 +33,4 @@ public class SortRule {
     private String operator;
     @ApiModelProperty("操作时间")
     private Date operationDate;//数据库设置为date类型
-
-    private Date createTime;
-    private Date updateTime;
 }

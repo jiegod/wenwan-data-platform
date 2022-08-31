@@ -13,6 +13,10 @@ import java.util.Date;
 public class TaskGroup {
     @TableId(type= IdType.AUTO)
     private Long id;
+    @ApiModelProperty("关联解析规则id")
+    private Long parseRuleId;
+    @ApiModelProperty("关联解析规则code")
+    private String parseRuleCode;
     @ApiModelProperty("任务组编号")
     private String code;
     @ApiModelProperty("任务组名称")

@@ -1,21 +1,16 @@
-package com.wenwan.dao.entity;
+package com.wenwan.model.sort;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.wenwan.model.request.BaseQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+
 @Data
-@TableName("business_log")
-public class BusinessLog {
-    @TableId(type= IdType.AUTO)
+public class SourceFileVo extends BaseQuery {
     private long id;
-    @ApiModelProperty("名字")
-    private long name;
-    @ApiModelProperty("FILE_ID")
-    private Long fileId;
     @ApiModelProperty("接收方")
     private String receiver;
     @ApiModelProperty("发送方")
@@ -30,17 +25,11 @@ public class BusinessLog {
     private String fileName;
     @ApiModelProperty("附件路径")
     private String filePath;
-    @ApiModelProperty("文件类型")
-    private String fileType;
-    @ApiModelProperty("数据源")
-    private String dataSource;
-    @ApiModelProperty("解析状态")
-    private String status;
+    @ApiModelProperty("目标分类")
+    private String labels;
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")
     private Date operationDate;//数据库设置为date类型
 
-    private Date createTime;
-    private Date updateTime;
 }
