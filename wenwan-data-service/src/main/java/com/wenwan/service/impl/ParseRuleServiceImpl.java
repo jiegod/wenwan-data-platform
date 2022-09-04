@@ -28,14 +28,14 @@ public class ParseRuleServiceImpl extends BaseService implements ParseRuleServic
         ParseRule parseRule = new ParseRule();
         BeanUtils.copyProperties(parseRuleVo, parseRule);
         parseRuleDao.insert(parseRule);
-        return null;
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
     public APIResponse<Void> delete(Long id) {
         LambdaQueryWrapper<ParseRule> wrapper = Wrappers.lambdaQuery(ParseRule.class).eq(ParseRule::getId, id);
         parseRuleDao.delete(wrapper);
-        return null;
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ParseRuleServiceImpl extends BaseService implements ParseRuleServic
         ParseRule parseRule = new ParseRule();
         BeanUtils.copyProperties(parseRuleVo, parseRule);
         parseRuleDao.updateById(parseRule);
-        return null;
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
