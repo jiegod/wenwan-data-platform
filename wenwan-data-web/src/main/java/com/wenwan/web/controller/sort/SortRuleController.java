@@ -5,10 +5,14 @@ import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.sort.LabelVo;
 import com.wenwan.model.sort.SortRuleVo;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-public class ISortRuleController implements ISortRuleApi {
+@RestController
+@Slf4j
+public class SortRuleController implements ISortRuleApi {
     @Override
     public APIResponse<Void> insert(SortRuleVo sortRuleVo) {
         return null;

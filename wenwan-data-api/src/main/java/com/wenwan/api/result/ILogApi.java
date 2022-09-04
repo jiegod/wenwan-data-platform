@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/log")
-@Api("日志列表")
-public interface LogApi {
+@Api(description = "运行日志相关api")
+public interface ILogApi {
     @PostMapping("/list")
     @ApiOperation("运行日志")
     APIResponse<SearchResult<LogVo>> list(@RequestBody LogVo logVo);

@@ -4,6 +4,7 @@ import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.FileTypeVo;
 import com.wenwan.model.parse.ParseRuleVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/parse/rule")
+@Api(description = "解析规则配置相关api")
 public interface IParseRuleApi {
 
     @PostMapping("/insert")

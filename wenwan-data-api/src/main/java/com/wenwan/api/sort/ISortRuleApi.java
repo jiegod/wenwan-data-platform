@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@Api("分拣规则")
+@Api(description = "分拣规则相关api")
 @RequestMapping("/api/v1/sort/rule")
 public interface ISortRuleApi {
 

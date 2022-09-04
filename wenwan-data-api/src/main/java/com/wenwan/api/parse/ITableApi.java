@@ -5,12 +5,14 @@ import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.ColumnInfoVo;
 import com.wenwan.model.parse.ParseTableMappingVo;
 import com.wenwan.model.parse.TableInfoVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequestMapping("/api/v1/parse/table")
+@Api(description = "落地表相关api")
 public interface ITableApi {
     @PostMapping("/mapping")
     @ApiOperation("修改解析规则的落地表关联")

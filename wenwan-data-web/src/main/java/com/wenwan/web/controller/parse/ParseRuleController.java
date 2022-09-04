@@ -5,12 +5,14 @@ import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.FileTypeVo;
 import com.wenwan.model.parse.ParseRuleVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-public class IParseRuleController implements IParseRuleApi {
+@Slf4j
+public class ParseRuleController implements IParseRuleApi {
 
     @Override
     public APIResponse<Void> insert(ParseRuleVo parseRule) {

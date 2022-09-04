@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/sort")
-@Api("分拣列表")
+@Api(description = "分拣列表相关api")
 public interface ISortApi {
 
     @PostMapping("/list")

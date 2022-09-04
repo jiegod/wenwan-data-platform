@@ -5,12 +5,14 @@ import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.TableInfoVo;
 import com.wenwan.model.parse.TaskGroupVo;
 import com.wenwan.model.parse.TaskSqlVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequestMapping("/api/v1/parse/task")
+@Api(description = "任务组相关api")
 public interface ITaskApi {
     @PutMapping("/group/insert")
     @ApiOperation("新增任务组")
