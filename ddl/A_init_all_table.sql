@@ -65,7 +65,7 @@ CREATE TABLE `parse_rule` (
   `name` varchar(32) DEFAULT NULL comment 'name',
   `data_source` varchar(32) DEFAULT NULL comment 'dataSource',
   `priority` varchar(32) DEFAULT NULL comment 'priority',
-  `fileType` varchar(32) DEFAULT NULL comment 'fileType',
+  `file_type` varchar(32) DEFAULT NULL comment 'fileType',
   `business_log` varchar(32) DEFAULT NULL comment 'businessLog',
   `description` varchar(32) DEFAULT NULL comment 'description',
   `file_path_regular` varchar(32) DEFAULT NULL comment 'filePathRegular',

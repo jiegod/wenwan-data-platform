@@ -1,5 +1,6 @@
 package com.wenwan.dao.config;
 
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -31,6 +32,7 @@ public class WwDbConfig {
     public SqlSessionFactory dbSqlSessionFactory(@Qualifier("db1DataSource") DataSource dataSource) throws Exception {
         MybatisSqlSessionFactoryBean bean = new MybatisSqlSessionFactoryBean ();
         bean.setDataSource(dataSource);
+        bean.setPlugins(new PaginationInterceptor());
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/*xml"));
         //这个的getResources指向的是你的mapper.xml文件，相当于在yml中配置的mapper-locations，此处配置了yml中就不用配置，或者说不会读取yml中的该配置。
         return bean.getObject();

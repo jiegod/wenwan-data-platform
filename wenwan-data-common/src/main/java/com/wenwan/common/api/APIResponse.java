@@ -74,4 +74,9 @@ public class APIResponse<T> extends ToString {
         APIResponse<T> result = new APIResponse<>(Status.OK, Type.GENERAL, GeneralCode.SUCCESS.getCode(), data);
         return result;
     }
+
+    public static <T> APIResponse<T> getErrorJsonResult(Object errorData) {
+        APIResponse<T> result = new APIResponse(Status.ERROR, Type.GENERAL, GeneralCode.SYS_ERROR.getCode(), errorData);
+        return result;
+    }
 }
