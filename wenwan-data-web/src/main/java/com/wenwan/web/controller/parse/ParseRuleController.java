@@ -5,7 +5,7 @@ import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.FileTypeVo;
 import com.wenwan.model.parse.ParseRuleVo;
-import com.wenwan.service.api.ParseRuleService;
+import com.wenwan.service.api.parse.ParseRuleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,22 +28,22 @@ public class ParseRuleController implements IParseRuleApi {
     @Override
     public APIResponse<Void> delete(Long id) {
         parseRuleService.delete(id);
-        return null;
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
     public APIResponse<Void> update(ParseRuleVo parseRule) {
         parseRuleService.update(parseRule);
-        return null;
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
     public APIResponse<SearchResult<ParseRuleVo>> list(ParseRuleVo parseRule) {
-        return parseRuleService.list(parseRule);
+        return APIResponse.getOkJsonResult(parseRuleService.list(parseRule));
     }
 
     @Override
     public APIResponse<List<FileTypeVo>> fileTypeList(FileTypeVo fileTypeVo) {
-        return parseRuleService.fileTypeList(fileTypeVo);
+        return APIResponse.getOkJsonResult(parseRuleService.fileTypeList(fileTypeVo));
     }
 }
