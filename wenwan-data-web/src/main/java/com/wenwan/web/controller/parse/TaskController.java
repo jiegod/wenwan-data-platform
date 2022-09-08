@@ -5,12 +5,13 @@ import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.TaskGroupVo;
 import com.wenwan.model.parse.TaskSqlVo;
+import com.wenwan.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Slf4j
-public class TaskController implements ITaskApi {
+public class TaskController extends BaseController implements ITaskApi {
     @Override
     public APIResponse<Void> insertGroup(TaskGroupVo taskGroupVo) {
         return null;

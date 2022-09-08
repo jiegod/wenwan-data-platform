@@ -6,6 +6,7 @@ import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.FileTypeVo;
 import com.wenwan.model.parse.ParseRuleVo;
 import com.wenwan.service.api.parse.ParseRuleService;
+import com.wenwan.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-public class ParseRuleController implements IParseRuleApi {
+public class ParseRuleController extends BaseController implements IParseRuleApi {
 
     @Autowired
     private ParseRuleService parseRuleService;

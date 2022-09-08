@@ -6,6 +6,7 @@ import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.ColumnInfoVo;
 import com.wenwan.model.parse.ParseTableMappingVo;
 import com.wenwan.model.parse.TableInfoVo;
+import com.wenwan.web.controller.BaseController;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-public class TableController implements ITableApi {
+public class TableController extends BaseController implements ITableApi {
 
     @Override
     public APIResponse<Void> parseTableMapping(List<ParseTableMappingVo> tableInfoVos) {
