@@ -3,5 +3,5 @@ package com.wenwan.dao.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wenwan.dao.entity.ParseRule;
 
-public interface ParseRuleDao extends BaseMapper<ParseRule> {
+public interface ParseRuleMapper extends BaseMapper<ParseRule> {
 }

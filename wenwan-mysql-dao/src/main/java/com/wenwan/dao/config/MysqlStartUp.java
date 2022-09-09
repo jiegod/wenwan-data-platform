@@ -2,7 +2,7 @@ package com.wenwan.dao.config;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.wenwan.dao.dao.UserDao;
+import com.wenwan.dao.dao.UserMapper;
 import com.wenwan.model.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,12 @@ import java.util.List;
 public class MysqlStartUp implements ApplicationListener<ApplicationReadyEvent> {
 
     @Autowired
-    private UserDao userDao;
+    private UserMapper userMapper;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         LambdaQueryWrapper wrapper = Wrappers.lambdaQuery(User.class).eq(User::getId, 1);
-       List<User> userList =  userDao.selectList(wrapper);
+       List<User> userList =  userMapper.selectList(wrapper);
        log.info("mysql startUp user:{}", userList);
     }
 }

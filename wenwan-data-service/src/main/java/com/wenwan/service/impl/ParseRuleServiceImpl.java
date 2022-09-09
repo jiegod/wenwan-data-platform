@@ -26,27 +26,27 @@ public class ParseRuleServiceImpl extends BaseService implements ParseRuleServic
     public Integer insert(@RequestBody ParseRuleVo parseRuleVo) {
         ParseRule parseRule = new ParseRule();
         BeanUtils.copyProperties(parseRuleVo, parseRule);
-        return parseRuleDao.insert(parseRule);
+        return parseRuleMapper.insert(parseRule);
     }
 
     @Override
     public Integer delete(Long id) {
         LambdaQueryWrapper<ParseRule> wrapper = Wrappers.lambdaQuery(ParseRule.class).eq(ParseRule::getId, id);
-        return parseRuleDao.delete(wrapper);
+        return parseRuleMapper.delete(wrapper);
     }
 
     @Override
     public Integer update(ParseRuleVo parseRuleVo) {
         ParseRule parseRule = new ParseRule();
         BeanUtils.copyProperties(parseRuleVo, parseRule);
-        return  parseRuleDao.updateById(parseRule);
+        return  parseRuleMapper.updateById(parseRule);
     }
 
     @Override
     public SearchResult<ParseRuleVo> list(ParseRuleVo parseRuleVo) {
         Page<ParseRule> page = new Page<>(parseRuleVo.getPageNo(), parseRuleVo.getPageSize());
         LambdaQueryWrapper<ParseRule> wrapper = Wrappers.lambdaQuery(ParseRule.class);
-        parseRuleDao.selectPage(page, wrapper);
+        parseRuleMapper.selectPage(page, wrapper);
         List<ParseRuleVo> rows = page.getRecords().stream().map(parseRule -> {
             ParseRuleVo resultVo = new ParseRuleVo();
             BeanUtils.copyProperties(parseRule, resultVo);

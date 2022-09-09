@@ -11,11 +11,26 @@ public class BaseService implements InitializingBean {
     @Autowired
     protected ColumnInfoMapper columnInfoMapper;
     @Autowired
-    protected ParseRuleDao parseRuleDao;
+    protected FileTypeMapper fileTypeMapper;
+    @Autowired
+    protected LabelMapper labelMapper;
+    @Autowired
+    protected ParseTableMappingMapper parseTableMappingMapper;
+    @Autowired
+    protected SortRuleMapper sortRuleMapper;
     @Autowired
     protected SourceFileMapper sourceFileMapper;
     @Autowired
-    protected SortRuleDao sortRuleDao;
+    protected SqlLogMapper sqlLogMapper;
+    @Autowired
+    protected TableInfoMapper tableInfoMapper;
+    @Autowired
+    protected TaskGroupMapper taskGroupMapper;
+    @Autowired
+    protected TaskSqlMapper taskSqlMapper;
+    @Autowired
+    protected ParseRuleMapper parseRuleMapper;
+
     @Override
     public void afterPropertiesSet() throws Exception {
 
