@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Configuration
 public class DDLGenerator implements DDLConstant {
 
-    @Value("${metadata.table.ddl.tpl:}")
+    //@Value("${metadata.table.ddl.tpl:}")
     //protected String ddlTpl;
 
     public String makeCreateTableDDL(List<ColumnInfo> columns, TableInfo tableInfo){

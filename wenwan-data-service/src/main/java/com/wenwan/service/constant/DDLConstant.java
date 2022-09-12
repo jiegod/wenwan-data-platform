@@ -4,6 +4,8 @@ public interface DDLConstant {
     String PLACEHOLDER_DB_NAME = "@@dbName@@";
     String PLACEHOLDER_TABLE_NAME = "@@tableName@@";
     String PLACEHOLDER_FIELD_LIST = "@@fieldList@@";
+    String FIELD_AUTO_ID = "`id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id'";
+    String PRIMARY_KEY = "PRIMARY KEY (`id`)";
     String PLACEHOLDER_TABLE_COMMENT = "@@tableComment@@";
 
     String DDL_FIELD_TPL = "`%s` %s(%s) DEFAULT NULL COMMENT '%s'";
