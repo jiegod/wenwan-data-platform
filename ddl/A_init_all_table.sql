@@ -14,7 +14,7 @@ CREATE TABLE `business_log` (
   `data_source` varchar(32) DEFAULT NULL comment 'dataSource',
   `status` varchar(32) DEFAULT NULL comment 'status',
   `operator` varchar(32) DEFAULT NULL comment 'operator',
-  `operation_date` varchar(32) DEFAULT NULL comment 'operationDate',
+  `operation_date` date DEFAULT NULL comment 'operationDate',
   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'createTime',
   `update_time` datetime DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT 'update_time',
   PRIMARY KEY (`id`)

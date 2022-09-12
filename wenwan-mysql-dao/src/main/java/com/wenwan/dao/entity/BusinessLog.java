@@ -14,7 +14,7 @@ public class BusinessLog {
     private long id;
     @ApiModelProperty("名字")
     private long name;
-    @ApiModelProperty("FILE_ID")
+    @ApiModelProperty("file_id")
     private Long fileId;
     @ApiModelProperty("接收方")
     private String receiver;

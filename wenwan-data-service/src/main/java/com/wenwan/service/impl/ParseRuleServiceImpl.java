@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenwan.common.api.SearchResult;
+import com.wenwan.dao.entity.FileType;
 import com.wenwan.dao.entity.ParseRule;
 import com.wenwan.model.parse.FileTypeVo;
 import com.wenwan.model.parse.ParseRuleVo;
@@ -14,12 +15,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class ParseRuleServiceImpl extends BaseService implements ParseRuleService{
+public class ParseRuleServiceImpl extends BaseService implements ParseRuleService {
 
 
     @Override
@@ -39,13 +41,13 @@ public class ParseRuleServiceImpl extends BaseService implements ParseRuleServic
     public Integer update(ParseRuleVo parseRuleVo) {
         ParseRule parseRule = new ParseRule();
         BeanUtils.copyProperties(parseRuleVo, parseRule);
-        return  parseRuleMapper.updateById(parseRule);
+        return parseRuleMapper.updateById(parseRule);
     }
 
     @Override
     public SearchResult<ParseRuleVo> list(ParseRuleVo parseRuleVo) {
         Page<ParseRule> page = new Page<>(parseRuleVo.getPageNo(), parseRuleVo.getPageSize());
-        LambdaQueryWrapper<ParseRule> wrapper = Wrappers.lambdaQuery(ParseRule.class);
+        LambdaQueryWrapper<ParseRule> wrapper = Wrappers.lambdaQuery(ParseRule.class);//todo 添加搜索
         parseRuleMapper.selectPage(page, wrapper);
         List<ParseRuleVo> rows = page.getRecords().stream().map(parseRule -> {
             ParseRuleVo resultVo = new ParseRuleVo();
@@ -57,6 +59,15 @@ public class ParseRuleServiceImpl extends BaseService implements ParseRuleServic
 
     @Override
     public List<FileTypeVo> fileTypeList(FileTypeVo fileTypeVo) {
-        return null;
+        List<FileTypeVo> result = new ArrayList<>();
+        LambdaQueryWrapper<FileType> wrapper = Wrappers.lambdaQuery(FileType.class)
+                .like(FileType::getName, fileTypeVo.getName());
+        List<FileType> fileTypes = fileTypeMapper.selectList(wrapper);
+        fileTypes.forEach(fileType -> {
+            FileTypeVo fileTypeVo1 = new FileTypeVo();
+            BeanUtils.copyProperties(fileType, fileTypeVo1);
+            result.add(fileTypeVo1);
+        });
+        return result;
     }
 }

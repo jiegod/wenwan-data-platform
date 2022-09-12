@@ -4,13 +4,16 @@ import com.wenwan.model.request.BaseQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Data
 public class TableInfoVo extends BaseQuery {
     private Long id;
     @ApiModelProperty("库名")
+    @NotBlank(message = "db name is null")
     private String dbName;
+    @NotBlank(message = "table name is null")
     @ApiModelProperty("表名")
     private String tableName;
     @ApiModelProperty("表中文名")

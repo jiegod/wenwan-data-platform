@@ -1,8 +1,5 @@
 package com.wenwan.model.parse;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.wenwan.model.request.BaseQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -4,6 +4,9 @@ import com.wenwan.dao.dao.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class BaseService implements InitializingBean {
 
     @Autowired
@@ -35,4 +38,6 @@ public class BaseService implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
 
     }
+
+    protected static final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(100);
 }

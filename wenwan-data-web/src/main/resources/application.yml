@@ -13,3 +13,7 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+metadata:
+  table:
+    ddl:
+      tpl: CREATE TABLE `@@dbname`.`@@@tableName@@` (\n@@fieldList@@ \n)  ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '@@tableComment@@'

@@ -16,19 +16,19 @@ import java.util.List;
 public interface ITableApi {
     @PostMapping("/mapping")
     @ApiOperation("修改解析规则的落地表关联")
-    APIResponse<Void> parseTableMapping(@RequestBody List<ParseTableMappingVo> tableInfoVos);
+    APIResponse<String> parseTableMapping(@RequestBody List<ParseTableMappingVo> tableInfoVos);
 
     @PutMapping("/table/insert")
     @ApiOperation("新增表信息")
-    APIResponse<Void> insertTable(@RequestBody TableInfoVo tableInfoVo);
+    APIResponse<String> insertTable(@RequestBody TableInfoVo tableInfoVo);
 
     @PostMapping("/table/update")
     @ApiOperation("修改表信息")
-    APIResponse<Void> updateTable(@RequestBody TableInfoVo tableInfoVo);
+    APIResponse<String> updateTable(@RequestBody TableInfoVo tableInfoVo);
 
     @DeleteMapping("/table/delete/{id}")
     @ApiOperation("删除表信息")
-    APIResponse<Void> deleteTable(@PathVariable Long id);
+    APIResponse<String> deleteTable(@PathVariable Long id);
 
     @PostMapping("/table/list")
     @ApiOperation("表list")
@@ -36,11 +36,11 @@ public interface ITableApi {
 
     @PutMapping("/column/insert")
     @ApiOperation("新增字段信息")
-    APIResponse<Void> insertColumn(@RequestBody List<ColumnInfoVo> columnInfoVos);
+    APIResponse<String> insertColumn(@RequestBody List<ColumnInfoVo> columnInfoVos);
 
     @PostMapping("/column/update")
     @ApiOperation("修改字段信息")
-    APIResponse<Void> updateColumn(@RequestBody List<ColumnInfoVo> columnInfoVos);
+    APIResponse<String> updateColumn(@RequestBody List<ColumnInfoVo> columnInfoVos);
 
     @PostMapping("/column/list")
     @ApiOperation("字段list")

@@ -6,9 +6,10 @@ import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.ColumnInfoVo;
 import com.wenwan.model.parse.ParseTableMappingVo;
 import com.wenwan.model.parse.TableInfoVo;
+import com.wenwan.service.api.parse.TableService;
 import com.wenwan.web.controller.BaseController;
-import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -17,48 +18,57 @@ import java.util.List;
 @Slf4j
 public class TableController extends BaseController implements ITableApi {
 
+    @Autowired
+    private TableService tableService;
+
     @Override
-    public APIResponse<Void> parseTableMapping(List<ParseTableMappingVo> tableInfoVos) {
-        return null;
+    public APIResponse<String> parseTableMapping(List<ParseTableMappingVo> tableInfoVos) {
+        tableService.parseTableMapping(tableInfoVos);
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
-    public APIResponse<Void> insertTable(TableInfoVo tableInfoVo) {
-        return null;
+    public APIResponse<String> insertTable(TableInfoVo tableInfoVo) {
+        tableService.insertTable(tableInfoVo);
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
-    public APIResponse<Void> updateTable(TableInfoVo tableInfoVo) {
-        return null;
+    public APIResponse<String> updateTable(TableInfoVo tableInfoVo) {
+        tableService.updateTable(tableInfoVo);
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
-    public APIResponse<Void> deleteTable(Long id) {
-        return null;
+    public APIResponse<String> deleteTable(Long id) {
+        tableService.deleteTable(id);
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
     public APIResponse<SearchResult<TableInfoVo>> tableList(TableInfoVo tableInfoVo) {
-        return null;
+        return APIResponse.getOkJsonResult(tableService.tableList(tableInfoVo));
     }
 
     @Override
-    public APIResponse<Void> insertColumn(List<ColumnInfoVo> columnInfoVos) {
-        return null;
+    public APIResponse<String> insertColumn(List<ColumnInfoVo> columnInfoVos) {
+        tableService.insertColumn(columnInfoVos);
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
-    public APIResponse<Void> updateColumn(List<ColumnInfoVo> columnInfoVos) {
-        return null;
+    public APIResponse<String> updateColumn(List<ColumnInfoVo> columnInfoVos) {
+        tableService.updateColumn(columnInfoVos);
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
     public APIResponse<SearchResult<ColumnInfoVo>> columnList(ColumnInfoVo columnInfoVo) {
-        return null;
+        return APIResponse.getOkJsonResult(tableService.columnList(columnInfoVo));
     }
 
     @Override
     public APIResponse<String> generateDDL(Long tableId) {
-        return null;
+        return APIResponse.getOkJsonResult(tableService.generateDDL(tableId));
     }
 }
