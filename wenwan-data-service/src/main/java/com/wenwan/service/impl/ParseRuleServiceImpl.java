@@ -26,6 +26,13 @@ public class ParseRuleServiceImpl extends BaseService implements ParseRuleServic
 
     @Override
     public Integer insert(@RequestBody ParseRuleVo parseRuleVo) {
+        LambdaQueryWrapper<FileType> wrapper = Wrappers.lambdaQuery(FileType.class).eq(FileType::getName, parseRuleVo.getFileType());
+        int count = fileTypeMapper.selectCount(wrapper);
+        if (count == 0) {
+            FileType fileType = new FileType();
+            fileType.setName(parseRuleVo.getFileType());
+            fileTypeMapper.insert(fileType);
+        }
         ParseRule parseRule = new ParseRule();
         BeanUtils.copyProperties(parseRuleVo, parseRule);
         return parseRuleMapper.insert(parseRule);

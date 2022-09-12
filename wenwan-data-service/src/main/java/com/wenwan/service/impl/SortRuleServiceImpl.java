@@ -10,6 +10,7 @@ import com.wenwan.model.sort.LabelVo;
 import com.wenwan.model.sort.SortRuleVo;
 import com.wenwan.service.api.BaseService;
 import com.wenwan.service.api.sort.SortRuleService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,8 @@ public class SortRuleServiceImpl extends BaseService implements SortRuleService 
     @Override
     public SearchResult<SortRuleVo> list(SortRuleVo sortRuleVo) {
         Page<SortRule> page = new Page<>(sortRuleVo.getPageNo(), sortRuleVo.getPageSize());
-        LambdaQueryWrapper<SortRule> wrapper = Wrappers.lambdaQuery(SortRule.class);//todo 添加搜索
+        LambdaQueryWrapper<SortRule> wrapper = Wrappers.lambdaQuery(SortRule.class);
+        addFilter(wrapper, sortRuleVo);
         sortRuleMapper.selectPage(page, wrapper);
         List<SortRuleVo> rows = page.getRecords().stream().map(parseRule -> {
             SortRuleVo resultVo = new SortRuleVo();
@@ -56,8 +58,10 @@ public class SortRuleServiceImpl extends BaseService implements SortRuleService 
     public List<LabelVo> labelList(LabelVo labelVo) {
         List<LabelVo> result = new ArrayList<>();
         LambdaQueryWrapper<Label> wrapper = Wrappers.lambdaQuery(Label.class)
-                .like(Label::getName, labelVo.getName())
-                .eq(Label::getReceiver, labelVo.getReceiver());
+                .like(Label::getName, labelVo.getName());
+        if (StringUtils.isNotEmpty(labelVo.getReceiver())) {
+            wrapper.eq(Label::getReceiver, labelVo.getReceiver());
+        }
         List<Label> labels = labelMapper.selectList(wrapper);
         labels.forEach(label -> {
             LabelVo labelVo1 = new LabelVo();
@@ -65,5 +69,28 @@ public class SortRuleServiceImpl extends BaseService implements SortRuleService 
             result.add(labelVo1);
         });
         return result;
+    }
+
+    private void addFilter(LambdaQueryWrapper<SortRule> wrapper, SortRuleVo sortRuleVo){
+        if (StringUtils.isNotEmpty(sortRuleVo.getName())){
+            wrapper.like(SortRule::getName, sortRuleVo.getName());
+        }
+        if (StringUtils.isNotEmpty(sortRuleVo.getLabels())){
+            for(String label: sortRuleVo.getLabels().split(",")){
+                wrapper.like(SortRule::getLabels, label);
+            }
+        }
+        if (StringUtils.isNotEmpty(sortRuleVo.getSenderRegular())){
+            wrapper.like(SortRule::getSenderRegular, sortRuleVo.getSenderRegular());
+        }
+        if (sortRuleVo.getExpireStart() != null){
+            wrapper.ge(SortRule::getExpireStart, sortRuleVo.getExpireStart());
+        }
+        if (sortRuleVo.getExpireEnd() != null){
+            wrapper.le(SortRule::getExpireEnd, sortRuleVo.getExpireEnd());
+        }
+        if (StringUtils.isNotEmpty(sortRuleVo.getFileNameRegular())){
+            wrapper.like(SortRule::getFileNameRegular, sortRuleVo.getFileNameRegular());
+        }
     }
 }

@@ -17,11 +17,11 @@ public interface ISortRuleApi {
 
     @PostMapping("/insert")
     @ApiOperation("创建分拣规则")
-    APIResponse<Void> insert(@RequestBody SortRuleVo sortRuleVo);
+    APIResponse<String> insert(@RequestBody SortRuleVo sortRuleVo);
 
     @PostMapping("/update")
     @ApiOperation("修改分拣规则")
-    APIResponse<Void> update(@RequestBody SortRuleVo sortRuleVo);
+    APIResponse<String> update(@RequestBody SortRuleVo sortRuleVo);
 
     @PostMapping("/list")
     @ApiOperation("分拣规则列表")
@@ -29,7 +29,8 @@ public interface ISortRuleApi {
 
     @DeleteMapping("/delete")
     @ApiOperation("删除解析规则")
-    APIResponse<Void> delete(@RequestParam Long id);
+    APIResponse<String> delete(@RequestParam Long id);
+
     @PostMapping("/label/list")
     @ApiOperation("分类列表")
     APIResponse<List<LabelVo>> labelList(@RequestParam LabelVo labelVo);

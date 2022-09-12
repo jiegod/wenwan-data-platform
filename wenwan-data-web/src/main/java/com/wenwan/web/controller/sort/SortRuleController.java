@@ -5,8 +5,10 @@ import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.sort.LabelVo;
 import com.wenwan.model.sort.SortRuleVo;
+import com.wenwan.service.api.sort.SortRuleService;
 import com.wenwan.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -14,28 +16,34 @@ import java.util.List;
 @RestController
 @Slf4j
 public class SortRuleController extends BaseController implements ISortRuleApi {
+    
+    @Autowired
+    private SortRuleService sortRuleService;
     @Override
-    public APIResponse<Void> insert(SortRuleVo sortRuleVo) {
-        return null;
+    public APIResponse<String> insert(SortRuleVo sortRuleVo) {
+        sortRuleService.insert(sortRuleVo);
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
-    public APIResponse<Void> update(SortRuleVo sortRuleVo) {
-        return null;
+    public APIResponse<String> update(SortRuleVo sortRuleVo) {
+        sortRuleService.update(sortRuleVo);
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
     public APIResponse<SearchResult<SortRuleVo>> list(SortRuleVo sortRuleVo) {
-        return null;
+        return APIResponse.getOkJsonResult(sortRuleService.list(sortRuleVo));
     }
 
     @Override
-    public APIResponse<Void> delete(Long id) {
-        return null;
+    public APIResponse<String> delete(Long id) {
+        sortRuleService.delete(id);
+        return APIResponse.getOkJsonResult();
     }
 
     @Override
     public APIResponse<List<LabelVo>> labelList(LabelVo labelVo) {
-        return null;
+        return APIResponse.getOkJsonResult(sortRuleService.labelList(labelVo));
     }
 }
