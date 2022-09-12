@@ -38,6 +38,7 @@ public class SortServiceImpl extends BaseService implements SortService {
         return new SearchResult<>(rows, page.getTotal());
     }
 
+    //1、插入label 2、更新file的labels 3、插入智能分拣
     @Override
     public void trigger(TriggerSortVo triggerSortVo) {
         String[] labels = triggerSortVo.getLabels().split(",");
