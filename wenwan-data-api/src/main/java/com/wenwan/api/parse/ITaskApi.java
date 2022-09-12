@@ -16,15 +16,15 @@ import java.util.List;
 public interface ITaskApi {
     @PutMapping("/group/insert")
     @ApiOperation("新增任务组")
-    APIResponse<Void> insertGroup(@RequestBody TaskGroupVo taskGroupVo);
+    APIResponse<String> insertGroup(@RequestBody TaskGroupVo taskGroupVo);
 
     @PostMapping("/group/update")
     @ApiOperation("修改任务组")
-    APIResponse<Void> updateGroup(@RequestBody TaskGroupVo taskGroupVo);
+    APIResponse<String> updateGroup(@RequestBody TaskGroupVo taskGroupVo);
 
     @DeleteMapping("/group/delete/{groupId}")
     @ApiOperation("删除任务组")
-    APIResponse<Void> deleteGroup(@PathVariable Long groupId);
+    APIResponse<String> deleteGroup(@PathVariable Long groupId);
 
     @PostMapping("/group/list")
     @ApiOperation("任务组list")
@@ -32,15 +32,15 @@ public interface ITaskApi {
 
     @PutMapping("/sql/insert")
     @ApiOperation("新增SQL")
-    APIResponse<Void> insertSql(@RequestBody TaskSqlVo taskSqlVo);
+    APIResponse<String> insertSql(@RequestBody TaskSqlVo taskSqlVo);
 
     @PostMapping("/sql/update")
     @ApiOperation("修改SQL")
-    APIResponse<Void> updateSql(@RequestBody TaskSqlVo taskSqlVo);
+    APIResponse<String> updateSql(@RequestBody TaskSqlVo taskSqlVo);
 
     @DeleteMapping("/sql/delete/{sqlId}")
     @ApiOperation("删除SQL")
-    APIResponse<Void> deleteSql(@PathVariable Long sqlId);
+    APIResponse<String> deleteSql(@PathVariable Long sqlId);
 
     @PostMapping("/sql/list")
     @ApiOperation("Sql-list")

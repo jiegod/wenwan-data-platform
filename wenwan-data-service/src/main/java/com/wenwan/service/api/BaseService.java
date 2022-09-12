@@ -33,6 +33,8 @@ public class BaseService implements InitializingBean {
     protected TaskSqlMapper taskSqlMapper;
     @Autowired
     protected ParseRuleMapper parseRuleMapper;
+    @Autowired
+    protected TaskSqlParamMapper taskSqlParamMapper;
 
     @Override
     public void afterPropertiesSet() throws Exception {

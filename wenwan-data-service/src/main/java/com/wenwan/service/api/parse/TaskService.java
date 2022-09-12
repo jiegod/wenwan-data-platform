@@ -15,7 +15,7 @@ public interface TaskService {
 
     SearchResult<TaskGroupVo> groupList(TaskGroupVo taskGroupVo);
 
-    int insertSql(TaskSqlVo taskSqlVo);
+    void insertSql(TaskSqlVo taskSqlVo);
 
     int updateSql(TaskSqlVo taskSqlVo);
 

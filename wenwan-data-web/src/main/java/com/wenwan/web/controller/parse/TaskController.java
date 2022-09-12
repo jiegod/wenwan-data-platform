@@ -19,50 +19,48 @@ public class TaskController extends BaseController implements ITaskApi {
     private TaskService taskService;
 
     @Override
-    public APIResponse<Void> insertGroup(TaskGroupVo taskGroupVo) {
+    public APIResponse<String> insertGroup(TaskGroupVo taskGroupVo) {
         taskService.insertGroup(taskGroupVo);
         return APIResponse.getOkJsonResult();
     }
 
     @Override
-    public APIResponse<Void> updateGroup(TaskGroupVo taskGroupVo) {
+    public APIResponse<String> updateGroup(TaskGroupVo taskGroupVo) {
         taskService.updateGroup(taskGroupVo);
         return APIResponse.getOkJsonResult();
     }
 
     @Override
-    public APIResponse<Void> deleteGroup(Long groupId) {
+    public APIResponse<String> deleteGroup(Long groupId) {
         taskService.deleteGroup(groupId);
         return APIResponse.getOkJsonResult();
     }
 
     @Override
     public APIResponse<SearchResult<TaskGroupVo>> groupList(TaskGroupVo taskGroupVo) {
-        taskService.groupList(taskGroupVo);
-        return APIResponse.getOkJsonResult();
+        return APIResponse.getOkJsonResult(taskService.groupList(taskGroupVo));
     }
 
     @Override
-    public APIResponse<Void> insertSql(TaskSqlVo taskSqlVo) {
+    public APIResponse<String> insertSql(TaskSqlVo taskSqlVo) {
         taskService.insertSql(taskSqlVo);
         return APIResponse.getOkJsonResult();
     }
 
     @Override
-    public APIResponse<Void> updateSql(TaskSqlVo taskSqlVo) {
+    public APIResponse<String> updateSql(TaskSqlVo taskSqlVo) {
         taskService.updateSql(taskSqlVo);
         return APIResponse.getOkJsonResult();
     }
 
     @Override
-    public APIResponse<Void> deleteSql(Long sqlId) {
+    public APIResponse<String> deleteSql(Long sqlId) {
         taskService.deleteSql(sqlId);
         return APIResponse.getOkJsonResult();
     }
 
     @Override
     public APIResponse<SearchResult<TaskSqlVo>> sqlList(TaskSqlVo taskSqlVo) {
-        taskService.sqlList(taskSqlVo);
-        return APIResponse.getOkJsonResult();
+        return APIResponse.getOkJsonResult(taskService.sqlList(taskSqlVo));
     }
 }

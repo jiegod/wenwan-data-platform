@@ -1,17 +1,21 @@
 package com.wenwan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenwan.common.api.SearchResult;
+import com.wenwan.common.exception.BusinessException;
 import com.wenwan.dao.entity.TaskGroup;
 import com.wenwan.dao.entity.TaskSql;
+import com.wenwan.dao.entity.TaskSqlParam;
 import com.wenwan.model.parse.TaskGroupVo;
 import com.wenwan.model.parse.TaskSqlVo;
 import com.wenwan.service.api.BaseService;
 import com.wenwan.service.api.parse.TaskService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,10 +56,25 @@ public class TaskServiceImpl extends BaseService implements TaskService {
     }
 
     @Override
-    public int insertSql(TaskSqlVo taskSqlVo) {
+    @Transactional
+    public void insertSql(TaskSqlVo taskSqlVo) {
+        LambdaQueryWrapper<TaskGroup> wrapper = Wrappers.lambdaQuery(TaskGroup.class).eq(TaskGroup::getCode, taskSqlVo.getTaskGroupCode());
+        TaskGroup taskGroup = taskGroupMapper.selectOne(wrapper);
+        if (taskGroup == null){
+            throw new BusinessException("task group not exit, please check");
+        }
         TaskSql taskSql = new TaskSql();
         BeanUtils.copyProperties(taskSqlVo, taskSql);
-        return taskSqlMapper.insert(taskSql);
+        taskSqlMapper.insert(taskSql);
+        if (CollectionUtils.isEmpty(taskSqlVo.getTaskSqlParamVos())){
+            return;
+        }
+        taskSqlVo.getTaskSqlParamVos().forEach(taskSqlParamVo -> {
+            TaskSqlParam taskSqlParam = new TaskSqlParam();
+            BeanUtils.copyProperties(taskSqlParamVo, taskSqlParam);
+            taskSqlParam.setTaskSqlId(taskSql.getId());
+            taskSqlParamMapper.insert(taskSqlParam);
+        });
     }
 
     @Override

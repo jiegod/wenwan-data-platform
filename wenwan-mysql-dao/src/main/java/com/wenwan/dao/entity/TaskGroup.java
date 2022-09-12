@@ -1,6 +1,7 @@
 package com.wenwan.dao.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,7 +12,7 @@ import java.util.Date;
 @Data
 @TableName("task_group")
 public class TaskGroup {
-    @TableId(type= IdType.AUTO)
+    @TableId(type = IdType.AUTO)
     private Long id;
     @ApiModelProperty("关联解析规则id")
     private Long parseRuleId;
@@ -22,6 +23,7 @@ public class TaskGroup {
     @ApiModelProperty("任务组名称")
     private String name;
     @ApiModelProperty("任务组描述")
+    @TableField("`desc`")
     private String desc;
     @ApiModelProperty("操作人")
     private String operator;
