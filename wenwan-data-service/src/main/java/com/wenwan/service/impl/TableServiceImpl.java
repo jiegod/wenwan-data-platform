@@ -121,8 +121,14 @@ public class TableServiceImpl extends BaseService implements TableService {
     @Override
     public String generateDDL(Long tableId) {
         TableInfo tableInfo = tableInfoMapper.selectById(tableId);
-        LambdaQueryWrapper<ColumnInfo> wrapper = Wrappers.lambdaQuery(ColumnInfo.class).eq(ColumnInfo::getTableId, tableInfo);
+        if (tableInfo == null){
+            throw new BusinessException("table is not exit, please check it");
+        }
+        LambdaQueryWrapper<ColumnInfo> wrapper = Wrappers.lambdaQuery(ColumnInfo.class).eq(ColumnInfo::getTableId, tableId);
         List<ColumnInfo> columns = columnInfoMapper.selectList(wrapper);
+        if (CollectionUtils.isEmpty(columns)){
+            throw new BusinessException("column is not exit, please check it");
+        }
         return ddlGenerator.makeCreateTableDDL(columns, tableInfo);
     }
 }

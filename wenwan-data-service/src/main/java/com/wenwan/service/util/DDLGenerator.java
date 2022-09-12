@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 public class DDLGenerator implements DDLConstant {
 
     @Value("${metadata.table.ddl.tpl:}")
-    protected String ddlTpl;
+    //protected String ddlTpl;
 
     public String makeCreateTableDDL(List<ColumnInfo> columns, TableInfo tableInfo){
         String fields = getFieldList(columns);
         String tableComment = getTableComment(tableInfo.getDbName(), tableInfo.getTableName(), tableInfo.getComment());
-        String ddl = ddlTpl.replace(PLACEHOLDER_DB_NAME, tableInfo.getDbName())
+        String ddl = DDL_CREATE_TABLE_TPL.replace(PLACEHOLDER_DB_NAME, tableInfo.getDbName())
                 .replace(PLACEHOLDER_TABLE_NAME, tableInfo.getTableName())
                 .replace(PLACEHOLDER_FIELD_LIST, fields)
                 .replace(PLACEHOLDER_TABLE_COMMENT, tableComment);
