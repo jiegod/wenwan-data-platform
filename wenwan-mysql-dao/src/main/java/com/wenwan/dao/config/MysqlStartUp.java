@@ -3,7 +3,7 @@ package com.wenwan.dao.config;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.wenwan.dao.dao.UserMapper;
-import com.wenwan.model.user.User;
+import com.wenwan.dao.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

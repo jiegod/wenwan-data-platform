@@ -1,7 +1,7 @@
 package com.wenwan.model.parse;
 
 import com.wenwan.common.enums.SqlType;
-import com.wenwan.model.request.BaseQuery;
+import com.wenwan.model.request.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class TaskSqlVo extends BaseQuery {
+public class TaskSqlVo extends PageQuery {
     private Long id;
     @ApiModelProperty("SQL编号")
     private String code;

@@ -1,13 +1,13 @@
 package com.wenwan.model.sort;
 
-import com.wenwan.model.request.BaseQuery;
+import com.wenwan.model.request.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class LabelVo extends BaseQuery {
+public class LabelVo extends PageQuery {
     private long id;
     @ApiModelProperty("标签名")
     private String name;

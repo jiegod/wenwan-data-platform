@@ -8,7 +8,7 @@ import com.wenwan.dao.entity.Label;
 import com.wenwan.dao.entity.SourceFile;
 import com.wenwan.model.sort.SourceFileVo;
 import com.wenwan.model.sort.TriggerSortVo;
-import com.wenwan.service.api.BaseService;
+import com.wenwan.service.api.ServiceConfig;
 import com.wenwan.service.api.sort.SortRuleService;
 import com.wenwan.service.api.sort.SortService;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class SortServiceImpl extends BaseService<SourceFile, SourceFileVo> implements SortService {
+public class SortServiceImpl extends ServiceConfig<SourceFile, SourceFileVo> implements SortService {
 
     @Autowired
     private SortRuleService sortRuleService;

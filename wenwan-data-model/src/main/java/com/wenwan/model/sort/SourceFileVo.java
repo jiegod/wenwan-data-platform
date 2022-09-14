@@ -1,13 +1,13 @@
 package com.wenwan.model.sort;
 
-import com.wenwan.model.request.BaseQuery;
+import com.wenwan.model.request.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class SourceFileVo extends BaseQuery {
+public class SourceFileVo extends PageQuery {
     private long id;
     @ApiModelProperty("接收方")
     private String receiver;

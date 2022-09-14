@@ -1,5 +1,7 @@
 package com.wenwan.common.api;
 
+import com.wenwan.common.constant.GeneralCode;
+
 public class APIResponse<T> extends ToString {
 
     private static final long serialVersionUID = 8708468057904019710L;

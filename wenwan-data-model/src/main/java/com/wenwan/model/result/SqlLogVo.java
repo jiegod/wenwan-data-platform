@@ -1,12 +1,12 @@
 package com.wenwan.model.result;
 
 import com.wenwan.common.enums.SqlType;
-import com.wenwan.model.request.BaseQuery;
+import com.wenwan.model.request.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class SqlLogVo extends BaseQuery {
+public class SqlLogVo extends PageQuery {
     private Long id;
     @ApiModelProperty("关联解析规则id")
     private Long parseRuleId;

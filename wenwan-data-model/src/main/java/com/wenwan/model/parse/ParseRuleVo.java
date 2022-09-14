@@ -1,6 +1,6 @@
 package com.wenwan.model.parse;
 
-import com.wenwan.model.request.BaseQuery;
+import com.wenwan.model.request.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-public class ParseRuleVo extends BaseQuery {
+public class ParseRuleVo extends PageQuery {
     private long id;
     @ApiModelProperty("解析规则编码")
     private String code;

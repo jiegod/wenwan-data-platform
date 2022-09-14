@@ -12,7 +12,7 @@ import com.wenwan.dao.entity.TableInfo;
 import com.wenwan.model.parse.ColumnInfoVo;
 import com.wenwan.model.parse.ParseTableMappingVo;
 import com.wenwan.model.parse.TableInfoVo;
-import com.wenwan.service.api.BaseService;
+import com.wenwan.service.api.ServiceConfig;
 import com.wenwan.service.api.parse.TableService;
 import com.wenwan.service.util.DDLGenerator;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class TableServiceImpl extends BaseService<TableInfo, TableInfoVo> implements TableService {
+public class TableServiceImpl extends ServiceConfig<TableInfo, TableInfoVo> implements TableService {
 
     @Autowired
     private DDLGenerator ddlGenerator;

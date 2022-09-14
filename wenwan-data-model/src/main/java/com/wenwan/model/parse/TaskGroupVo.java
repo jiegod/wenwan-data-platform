@@ -1,13 +1,13 @@
 package com.wenwan.model.parse;
 
-import com.wenwan.model.request.BaseQuery;
+import com.wenwan.model.request.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class TaskGroupVo extends BaseQuery {
+public class TaskGroupVo extends PageQuery {
     private Long id;
     @ApiModelProperty("关联解析规则id")
     private Long parseRuleId;

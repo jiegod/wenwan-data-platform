@@ -1,6 +1,6 @@
 package com.wenwan.model.parse;
 
-import com.wenwan.model.request.BaseQuery;
+import com.wenwan.model.request.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Data
-public class TableInfoVo extends BaseQuery {
+public class TableInfoVo extends PageQuery {
     private Long id;
     @ApiModelProperty("库名")
     @NotBlank(message = "db name is null")

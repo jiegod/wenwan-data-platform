@@ -11,7 +11,7 @@ import com.wenwan.dao.entity.TaskSql;
 import com.wenwan.dao.entity.TaskSqlParam;
 import com.wenwan.model.parse.TaskGroupVo;
 import com.wenwan.model.parse.TaskSqlVo;
-import com.wenwan.service.api.BaseService;
+import com.wenwan.service.api.ServiceConfig;
 import com.wenwan.service.api.parse.TaskService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TaskServiceImpl extends BaseService<TaskGroup, TaskGroupVo> implements TaskService {
+public class TaskServiceImpl extends ServiceConfig<TaskGroup, TaskGroupVo> implements TaskService {
 
     @Override
     public int insertGroup(TaskGroupVo taskGroupVo) {

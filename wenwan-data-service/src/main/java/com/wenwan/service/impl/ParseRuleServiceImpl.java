@@ -9,7 +9,7 @@ import com.wenwan.dao.entity.FileType;
 import com.wenwan.dao.entity.ParseRule;
 import com.wenwan.model.parse.FileTypeVo;
 import com.wenwan.model.parse.ParseRuleVo;
-import com.wenwan.service.api.BaseService;
+import com.wenwan.service.api.ServiceConfig;
 import com.wenwan.service.api.parse.ParseRuleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class ParseRuleServiceImpl extends BaseService<ParseRule, ParseRuleVo> implements ParseRuleService {
+public class ParseRuleServiceImpl extends ServiceConfig<ParseRule, ParseRuleVo> implements ParseRuleService {
 
 
     @Override

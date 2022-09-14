@@ -1,13 +1,13 @@
 package com.wenwan.model.parse;
 
-import com.wenwan.model.request.BaseQuery;
+import com.wenwan.model.request.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class FileTypeVo extends BaseQuery {
+public class FileTypeVo extends PageQuery {
     private long id;
     @ApiModelProperty("文件类型")
     private String name;

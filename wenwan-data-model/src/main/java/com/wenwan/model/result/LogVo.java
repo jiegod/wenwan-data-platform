@@ -1,13 +1,13 @@
 package com.wenwan.model.result;
 
-import com.wenwan.model.request.BaseQuery;
+import com.wenwan.model.request.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class LogVo extends BaseQuery {
+public class LogVo extends PageQuery {
     private long id;
     @ApiModelProperty("台账id")
     private Long parseRuleId;

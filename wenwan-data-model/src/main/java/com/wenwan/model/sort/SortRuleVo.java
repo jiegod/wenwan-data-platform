@@ -1,13 +1,13 @@
 package com.wenwan.model.sort;
 
-import com.wenwan.model.request.BaseQuery;
+import com.wenwan.model.request.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-public class SortRuleVo extends BaseQuery {
+public class SortRuleVo extends PageQuery {
     private long id;
     @ApiModelProperty("目标分类")
     private String labels;//五要素对标签 1对多,逗号分隔
