@@ -1,7 +1,5 @@
 package com.wenwan.dao.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,9 +8,7 @@ import java.util.Date;
 
 @Data
 @TableName("sort_rule")
-public class SortRule {
-    @TableId(type= IdType.AUTO)
-    private long id;
+public class SortRule extends BaseModel {
     @ApiModelProperty("目标分类")
     private String labels;//五要素对标签 1对多,逗号分隔
     @ApiModelProperty("分拣规则名称")

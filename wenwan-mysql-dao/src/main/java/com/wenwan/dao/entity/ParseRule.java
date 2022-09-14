@@ -1,7 +1,5 @@
 package com.wenwan.dao.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,9 +8,7 @@ import java.util.Date;
 
 @Data
 @TableName("parse_rule")
-public class ParseRule {
-    @TableId(type= IdType.AUTO)
-    private long id;
+public class ParseRule extends BaseModel {
     @ApiModelProperty("解析规则编码")
     private String code;
     @ApiModelProperty("规则名称")

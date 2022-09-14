@@ -1,7 +1,5 @@
 package com.wenwan.dao.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.wenwan.common.enums.SqlType;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,9 +9,7 @@ import java.util.Date;
 
 @Data
 @TableName("task_sql")
-public class TaskSql {
-    @TableId(type= IdType.AUTO)
-    private Long id;
+public class TaskSql extends BaseModel {
     @ApiModelProperty("SQL编号")
     private String code;
     @ApiModelProperty("任务组id")

@@ -1,7 +1,5 @@
 package com.wenwan.dao.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,9 +8,7 @@ import java.util.Date;
 
 @Data
 @TableName("column_info")
-public class ColumnInfo {
-    @TableId(type= IdType.AUTO)
-    private Long id;
+public class ColumnInfo extends BaseModel {
     @ApiModelProperty("关联表id")
     private Long tableId;
     @ApiModelProperty("列名")

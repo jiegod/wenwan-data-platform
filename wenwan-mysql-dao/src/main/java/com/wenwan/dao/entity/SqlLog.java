@@ -1,7 +1,5 @@
 package com.wenwan.dao.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.wenwan.common.enums.SqlType;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,9 +9,7 @@ import java.util.Date;
 
 @Data
 @TableName("sql_log")
-public class SqlLog {
-    @TableId(type= IdType.AUTO)
-    private Long id;
+public class SqlLog extends BaseModel {
     @ApiModelProperty("关联解析规则id")
     private Long parseRuleId;
     @ApiModelProperty("关联解析规则code")

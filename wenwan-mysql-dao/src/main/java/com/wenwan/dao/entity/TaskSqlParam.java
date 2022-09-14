@@ -1,7 +1,5 @@
 package com.wenwan.dao.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,9 +9,7 @@ import java.util.Date;
 @Data
 @TableName("task_sql_param")
 //N组参数，执行N次
-public class TaskSqlParam {
-    @TableId(type= IdType.AUTO)
-    private Long id;
+public class TaskSqlParam extends BaseModel {
     @ApiModelProperty("关联sql-id")
     private Long taskSqlId;
     @ApiModelProperty("关联sql-code")

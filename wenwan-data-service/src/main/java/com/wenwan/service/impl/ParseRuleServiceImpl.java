@@ -1,6 +1,7 @@
 package com.wenwan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenwan.common.api.SearchResult;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class ParseRuleServiceImpl extends BaseService implements ParseRuleService {
+public class ParseRuleServiceImpl extends BaseService<ParseRule, ParseRuleVo> implements ParseRuleService {
 
 
     @Override
@@ -54,7 +55,8 @@ public class ParseRuleServiceImpl extends BaseService implements ParseRuleServic
     @Override
     public SearchResult<ParseRuleVo> list(ParseRuleVo parseRuleVo) {
         Page<ParseRule> page = new Page<>(parseRuleVo.getPageNo(), parseRuleVo.getPageSize());
-        LambdaQueryWrapper<ParseRule> wrapper = Wrappers.lambdaQuery(ParseRule.class);//todo 添加搜索
+        LambdaQueryWrapper<ParseRule> wrapper = Wrappers.lambdaQuery(ParseRule.class);
+        addFilter(wrapper, parseRuleVo);
         parseRuleMapper.selectPage(page, wrapper);
         List<ParseRuleVo> rows = page.getRecords().stream().map(parseRule -> {
             ParseRuleVo resultVo = new ParseRuleVo();
@@ -76,5 +78,21 @@ public class ParseRuleServiceImpl extends BaseService implements ParseRuleServic
             result.add(fileTypeVo1);
         });
         return result;
+    }
+
+    @Override
+    protected void addFilter(LambdaQueryWrapper<ParseRule> wrapper, ParseRuleVo parseRuleVo) {
+        if (StringUtils.isNotBlank(parseRuleVo.getSearch())) {
+            wrapper.like(ParseRule::getName, parseRuleVo.getSearch());
+        }
+        if (StringUtils.isNotBlank(parseRuleVo.getDataSource())) {
+            wrapper.eq(ParseRule::getDataSource, parseRuleVo.getDataSource());
+        }
+        if (StringUtils.isNotBlank(parseRuleVo.getFileType())) {
+            wrapper.eq(ParseRule::getFileType, parseRuleVo.getFileType());
+        }
+        if (StringUtils.isNotBlank(parseRuleVo.getCode())) {
+            wrapper.eq(ParseRule::getCode, parseRuleVo.getCode());
+        }
     }
 }

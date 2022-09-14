@@ -13,6 +13,7 @@ import com.wenwan.model.parse.TaskGroupVo;
 import com.wenwan.model.parse.TaskSqlVo;
 import com.wenwan.service.api.BaseService;
 import com.wenwan.service.api.parse.TaskService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TaskServiceImpl extends BaseService implements TaskService {
+public class TaskServiceImpl extends BaseService<TaskGroup, TaskGroupVo> implements TaskService {
 
     @Override
     public int insertGroup(TaskGroupVo taskGroupVo) {
@@ -46,6 +47,7 @@ public class TaskServiceImpl extends BaseService implements TaskService {
     public SearchResult<TaskGroupVo> groupList(TaskGroupVo taskGroupVo) {
         Page<TaskGroup> page = new Page<>(taskGroupVo.getPageNo(), taskGroupVo.getPageSize());
         LambdaQueryWrapper<TaskGroup> wrapper = Wrappers.lambdaQuery(TaskGroup.class);
+        addFilter(wrapper, taskGroupVo);
         taskGroupMapper.selectPage(page, wrapper);
         List<TaskGroupVo> rows = page.getRecords().stream().map(taskGroup -> {
             TaskGroupVo resultVo = new TaskGroupVo();
@@ -90,6 +92,14 @@ public class TaskServiceImpl extends BaseService implements TaskService {
     }
 
     @Override
+    public TaskSqlVo getDetail(Long sqlId) {
+        TaskSql taskSql = taskSqlMapper.selectById(sqlId);
+        TaskSqlVo taskSqlVo = new TaskSqlVo();
+        BeanUtils.copyProperties(taskSql, taskSqlVo);
+        return taskSqlVo;
+    }
+
+    @Override
     public SearchResult<TaskSqlVo> sqlList(TaskSqlVo taskSqlVo) {
         Page<TaskSql> page = new Page<>(taskSqlVo.getPageNo(), taskSqlVo.getPageSize());
         LambdaQueryWrapper<TaskSql> wrapper = Wrappers.lambdaQuery(TaskSql.class);
@@ -100,5 +110,12 @@ public class TaskServiceImpl extends BaseService implements TaskService {
             return resultVo;
         }).collect(Collectors.toList());
         return new SearchResult<>(rows, page.getTotal());
+    }
+
+    @Override
+    protected void addFilter(LambdaQueryWrapper<TaskGroup> wrapper, TaskGroupVo taskGroupVo) {
+        if (StringUtils.isNotEmpty(taskGroupVo.getSearch())){
+            wrapper.like(TaskGroup::getName, taskGroupVo.getName());
+        }
     }
 }

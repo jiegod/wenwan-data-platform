@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class SortRuleServiceImpl extends BaseService implements SortRuleService {
+public class SortRuleServiceImpl extends BaseService<SortRule, SortRuleVo> implements SortRuleService {
 
     @Override
     public Integer insert(SortRuleVo sortRuleVo) {
@@ -71,7 +71,11 @@ public class SortRuleServiceImpl extends BaseService implements SortRuleService 
         return result;
     }
 
-    private void addFilter(LambdaQueryWrapper<SortRule> wrapper, SortRuleVo sortRuleVo){
+    @Override
+    protected void addFilter(LambdaQueryWrapper<SortRule> wrapper, SortRuleVo sortRuleVo){
+        if (StringUtils.isNotEmpty(sortRuleVo.getSearch())){
+            wrapper.like(SortRule::getName, sortRuleVo.getSearch());
+        }
         if (StringUtils.isNotEmpty(sortRuleVo.getName())){
             wrapper.like(SortRule::getName, sortRuleVo.getName());
         }

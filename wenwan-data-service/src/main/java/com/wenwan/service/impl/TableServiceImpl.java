@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class TableServiceImpl extends BaseService implements TableService {
+public class TableServiceImpl extends BaseService<TableInfo, TableInfoVo> implements TableService {
 
     @Autowired
     private DDLGenerator ddlGenerator;
@@ -63,6 +63,7 @@ public class TableServiceImpl extends BaseService implements TableService {
     public SearchResult<TableInfoVo> tableList(TableInfoVo tableInfoVo) {
         Page<TableInfo> page = new Page<>(tableInfoVo.getPageNo(), tableInfoVo.getPageSize());
         LambdaQueryWrapper<TableInfo> wrapper = Wrappers.lambdaQuery(TableInfo.class);
+        addFilter(wrapper, tableInfoVo);
         tableInfoMapper.selectPage(page, wrapper);
         List<TableInfoVo> rows = page.getRecords().stream().map(tableInfo -> {
             TableInfoVo resultVo = new TableInfoVo();
@@ -74,12 +75,12 @@ public class TableServiceImpl extends BaseService implements TableService {
 
     @Override
     public void insertColumn(List<ColumnInfoVo> columnInfoVos) {
-        if (CollectionUtils.isEmpty(columnInfoVos)){
+        if (CollectionUtils.isEmpty(columnInfoVos)) {
             log.info("[insertColumn] param empty");
             throw new BusinessException("param is empty");
         }
         TableInfo tableInfo = tableInfoMapper.selectById(columnInfoVos.get(0).getTableId());
-        if (tableInfo == null){
+        if (tableInfo == null) {
             throw new BusinessException("table is not exit, please check it");
         }
         columnInfoVos.forEach(columnInfoVo -> {
@@ -121,14 +122,21 @@ public class TableServiceImpl extends BaseService implements TableService {
     @Override
     public String generateDDL(Long tableId) {
         TableInfo tableInfo = tableInfoMapper.selectById(tableId);
-        if (tableInfo == null){
+        if (tableInfo == null) {
             throw new BusinessException("table is not exit, please check it");
         }
         LambdaQueryWrapper<ColumnInfo> wrapper = Wrappers.lambdaQuery(ColumnInfo.class).eq(ColumnInfo::getTableId, tableId);
         List<ColumnInfo> columns = columnInfoMapper.selectList(wrapper);
-        if (CollectionUtils.isEmpty(columns)){
+        if (CollectionUtils.isEmpty(columns)) {
             throw new BusinessException("column is not exit, please check it");
         }
         return ddlGenerator.makeCreateTableDDL(columns, tableInfo);
+    }
+
+    @Override
+    protected void addFilter(LambdaQueryWrapper<TableInfo> wrapper, TableInfoVo tableInfoVo) {
+        if (StringUtils.isNotEmpty(tableInfoVo.getSearch())){
+            wrapper.like(TableInfo::getTableName, tableInfoVo.getSearch());
+        }
     }
 }

@@ -10,9 +10,7 @@ import java.util.Date;
 
 @Data
 @TableName("label")
-public class Label {
-    @TableId(type= IdType.AUTO)
-    private long id;
+public class Label extends BaseModel{
     @ApiModelProperty("标签名")
     private String name;
     @ApiModelProperty("操作人")

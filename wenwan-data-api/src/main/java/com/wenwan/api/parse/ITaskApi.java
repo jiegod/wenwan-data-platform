@@ -42,6 +42,9 @@ public interface ITaskApi {
     @ApiOperation("删除SQL")
     APIResponse<String> deleteSql(@PathVariable Long sqlId);
 
+    @GetMapping("/sql/detail/{sqlId}")
+    APIResponse<TaskSqlVo> getDetail(@PathVariable Long sqlId);
+
     @PostMapping("/sql/list")
     @ApiOperation("Sql-list")
     APIResponse<SearchResult<TaskSqlVo>> sqlList(@RequestBody TaskSqlVo taskSqlVo);

@@ -1,7 +1,5 @@
 package com.wenwan.dao.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,9 +9,7 @@ import java.util.Date;
 
 @Data
 @TableName("source_file")
-public class SourceFile {
-    @TableId(type= IdType.AUTO)
-    private long id;
+public class SourceFile extends BaseModel {
     @ApiModelProperty("接收方")
     private String receiver;
     @ApiModelProperty("发送方")

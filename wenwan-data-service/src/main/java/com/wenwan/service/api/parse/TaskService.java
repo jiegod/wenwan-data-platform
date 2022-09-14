@@ -21,5 +21,7 @@ public interface TaskService {
 
     int deleteSql(Long sqlId);
 
+    TaskSqlVo getDetail(Long sqlId);
+
     SearchResult<TaskSqlVo> sqlList(@RequestBody TaskSqlVo taskSqlVo);
 }

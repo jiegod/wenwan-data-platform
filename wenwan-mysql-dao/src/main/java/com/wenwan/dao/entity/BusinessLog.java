@@ -1,17 +1,14 @@
 package com.wenwan.dao.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+
 @Data
 @TableName("business_log")
-public class BusinessLog {
-    @TableId(type= IdType.AUTO)
-    private long id;
+public class BusinessLog extends BaseModel {
     @ApiModelProperty("名字")
     private long name;
     @ApiModelProperty("file_id")

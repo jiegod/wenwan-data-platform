@@ -1,13 +1,16 @@
 package com.wenwan.service.api;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wenwan.dao.dao.*;
+import com.wenwan.dao.entity.BaseModel;
+import com.wenwan.model.request.BaseQuery;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class BaseService implements InitializingBean {
+public abstract class BaseService<T extends BaseModel, V extends BaseQuery> implements InitializingBean {
 
     @Autowired
     protected BusinessLogMapper businessLogMapper;
@@ -40,6 +43,8 @@ public class BaseService implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
 
     }
+
+    protected abstract void addFilter(LambdaQueryWrapper<T> wrapper, V v);
 
     protected static final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(100);
 }

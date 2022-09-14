@@ -60,6 +60,11 @@ public class TaskController extends BaseController implements ITaskApi {
     }
 
     @Override
+    public APIResponse<TaskSqlVo> getDetail(Long sqlId) {
+        return null;
+    }
+
+    @Override
     public APIResponse<SearchResult<TaskSqlVo>> sqlList(TaskSqlVo taskSqlVo) {
         return APIResponse.getOkJsonResult(taskService.sqlList(taskSqlVo));
     }
