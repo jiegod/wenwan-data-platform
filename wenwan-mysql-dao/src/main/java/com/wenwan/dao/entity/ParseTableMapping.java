@@ -1,6 +1,7 @@
 package com.wenwan.dao.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,12 +18,10 @@ public class ParseTableMapping extends BaseModel {
     @ApiModelProperty("状态")
     private String status;
     @ApiModelProperty("顺序")
+    @TableField("`order`")
     private String order;//依次为sheet1、sheet2....
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")
-    private Date operationDate;//数据库设置为date类型
-
-    private Date createTime;
-    private Date updateTime;
+    private Integer operationDate;
 }

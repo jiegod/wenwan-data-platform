@@ -18,8 +18,5 @@ public class TableInfo extends BaseModel {
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")
-    private Date operationDate;//数据库设置为date类型
-
-    private Date createTime;
-    private Date updateTime;
+    private Integer operationDate;
 }

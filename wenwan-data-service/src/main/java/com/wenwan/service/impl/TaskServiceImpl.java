@@ -6,19 +6,22 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.common.exception.BusinessException;
-import com.wenwan.dao.entity.TaskGroup;
-import com.wenwan.dao.entity.TaskSql;
-import com.wenwan.dao.entity.TaskSqlParam;
+import com.wenwan.dao.entity.*;
+import com.wenwan.model.parse.ParseRuleTableVo;
 import com.wenwan.model.parse.TaskGroupVo;
 import com.wenwan.model.parse.TaskSqlVo;
 import com.wenwan.service.api.ServiceConfig;
 import com.wenwan.service.api.parse.TaskService;
+import com.wenwan.service.util.StringDateUtil;
+import com.wenwan.service.util.UserStorage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +31,8 @@ public class TaskServiceImpl extends ServiceConfig<TaskGroup, TaskGroupVo> imple
     public int insertGroup(TaskGroupVo taskGroupVo) {
         TaskGroup taskGroup = new TaskGroup();
         BeanUtils.copyProperties(taskGroupVo, taskGroup);
+        taskGroup.setOperator(UserStorage.get());
+        taskGroup.setOperationDate(StringDateUtil.getToday());
         return taskGroupMapper.insert(taskGroup);
     }
 
@@ -35,6 +40,8 @@ public class TaskServiceImpl extends ServiceConfig<TaskGroup, TaskGroupVo> imple
     public int updateGroup(TaskGroupVo taskGroupVo) {
         TaskGroup taskGroup = new TaskGroup();
         BeanUtils.copyProperties(taskGroupVo, taskGroup);
+        taskGroup.setOperator(UserStorage.get());
+        taskGroup.setOperationDate(StringDateUtil.getToday());
         return taskGroupMapper.updateById(taskGroup);
     }
 
@@ -67,6 +74,8 @@ public class TaskServiceImpl extends ServiceConfig<TaskGroup, TaskGroupVo> imple
         }
         TaskSql taskSql = new TaskSql();
         BeanUtils.copyProperties(taskSqlVo, taskSql);
+        taskSql.setOperator(UserStorage.get());
+        taskSql.setOperationDate(StringDateUtil.getToday());
         taskSqlMapper.insert(taskSql);
         if (CollectionUtils.isEmpty(taskSqlVo.getTaskSqlParamVos())){
             return;
@@ -75,6 +84,8 @@ public class TaskServiceImpl extends ServiceConfig<TaskGroup, TaskGroupVo> imple
             TaskSqlParam taskSqlParam = new TaskSqlParam();
             BeanUtils.copyProperties(taskSqlParamVo, taskSqlParam);
             taskSqlParam.setTaskSqlId(taskSql.getId());
+            taskSqlParam.setOperator(UserStorage.get());
+            taskSqlParam.setOperationDate(StringDateUtil.getToday());
             taskSqlParamMapper.insert(taskSqlParam);
         });
     }
@@ -83,6 +94,8 @@ public class TaskServiceImpl extends ServiceConfig<TaskGroup, TaskGroupVo> imple
     public int updateSql(TaskSqlVo taskSqlVo) {
         TaskSql taskSql = new TaskSql();
         BeanUtils.copyProperties(taskSqlVo, taskSql);
+        taskSql.setOperator(UserStorage.get());
+        taskSql.setOperationDate(StringDateUtil.getToday());
         return taskSqlMapper.updateById(taskSql);
     }
 
@@ -110,6 +123,17 @@ public class TaskServiceImpl extends ServiceConfig<TaskGroup, TaskGroupVo> imple
             return resultVo;
         }).collect(Collectors.toList());
         return new SearchResult<>(rows, page.getTotal());
+    }
+
+    @Override
+    public Map<Long, List<ParseRuleTableVo>> getTableByParseRuleId(List<Long> parseRuleIds) {
+        Map<Long, List<ParseRuleTableVo>> result = new HashMap<>();
+        if (CollectionUtils.isEmpty(parseRuleIds)){
+            return result;
+        }
+        List<ParseRuleTableVo> parseRuleTableVos = parseTableMappingMapper.getTableByParseRuleIds(parseRuleIds);
+        result = parseRuleTableVos.stream().collect(Collectors.groupingBy(ParseRuleTableVo::getParseRuleId));
+        return result;
     }
 
     @Override

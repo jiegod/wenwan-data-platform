@@ -15,6 +15,8 @@ import com.wenwan.model.parse.TableInfoVo;
 import com.wenwan.service.api.ServiceConfig;
 import com.wenwan.service.api.parse.TableService;
 import com.wenwan.service.util.DDLGenerator;
+import com.wenwan.service.util.StringDateUtil;
+import com.wenwan.service.util.UserStorage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -36,6 +38,8 @@ public class TableServiceImpl extends ServiceConfig<TableInfo, TableInfoVo> impl
         tableInfoVos.forEach(parseTableMappingVo -> {
             ParseTableMapping parseTableMapping = new ParseTableMapping();
             BeanUtils.copyProperties(parseTableMappingVo, parseTableMapping);
+            parseTableMapping.setOperator(UserStorage.get());
+            parseTableMapping.setOperationDate(StringDateUtil.getToday());
             parseTableMappingMapper.insert(parseTableMapping);
         });
     }
@@ -44,6 +48,8 @@ public class TableServiceImpl extends ServiceConfig<TableInfo, TableInfoVo> impl
     public void insertTable(TableInfoVo tableInfoVo) {
         TableInfo tableInfo = new TableInfo();
         BeanUtils.copyProperties(tableInfoVo, tableInfo);
+        tableInfo.setOperator(UserStorage.get());
+        tableInfo.setOperationDate(StringDateUtil.getToday());
         tableInfoMapper.insert(tableInfo);
     }
 
@@ -51,6 +57,8 @@ public class TableServiceImpl extends ServiceConfig<TableInfo, TableInfoVo> impl
     public void updateTable(TableInfoVo tableInfoVo) {
         TableInfo tableInfo = new TableInfo();
         BeanUtils.copyProperties(tableInfoVo, tableInfo);
+        tableInfo.setOperator(UserStorage.get());
+        tableInfo.setOperationDate(StringDateUtil.getToday());
         tableInfoMapper.updateById(tableInfo);
     }
 
@@ -87,6 +95,8 @@ public class TableServiceImpl extends ServiceConfig<TableInfo, TableInfoVo> impl
             fixedThreadPool.submit(() -> {
                 ColumnInfo columnInfo = new ColumnInfo();
                 BeanUtils.copyProperties(columnInfoVo, columnInfo);
+                columnInfo.setOperator(UserStorage.get());
+                columnInfo.setOperationDate(StringDateUtil.getToday());
                 columnInfoMapper.insert(columnInfo);
             });
         });
@@ -106,6 +116,8 @@ public class TableServiceImpl extends ServiceConfig<TableInfo, TableInfoVo> impl
             fixedThreadPool.submit(() -> {
                 ColumnInfo columnInfo = new ColumnInfo();
                 BeanUtils.copyProperties(columnInfoVo, columnInfo);
+                columnInfo.setOperator(UserStorage.get());
+                columnInfo.setOperationDate(StringDateUtil.getToday());
                 columnInfoMapper.insert(columnInfo);
             });
         });

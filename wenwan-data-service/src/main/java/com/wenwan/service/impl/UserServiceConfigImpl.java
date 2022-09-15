@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.wenwan.common.constant.GeneralCode;
 import com.wenwan.common.exception.BusinessException;
 import com.wenwan.dao.entity.User;
+import com.wenwan.model.request.ListQuery;
 import com.wenwan.model.user.UserVo;
 import com.wenwan.service.api.ServiceConfig;
 import com.wenwan.service.api.user.TokenService;
@@ -17,7 +18,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
-public class UserServiceConfigImpl extends ServiceConfig<User, UserVo> implements UserService {
+public class UserServiceConfigImpl extends ServiceConfig<User, ListQuery> implements UserService {
 
     @Autowired
     private TokenService tokenService;
@@ -28,7 +29,7 @@ public class UserServiceConfigImpl extends ServiceConfig<User, UserVo> implement
                 .eq(User::getUsername, userVo.getUsername())
                 .eq(User::getPassword, userVo.getPassword());
         User user = userMapper.selectOne(wrapper);
-        if (user == null){
+        if (user == null) {
             throw new BusinessException(GeneralCode.USER_ERROR);
         }
         String token = tokenService.getToken(userVo);

@@ -10,6 +10,8 @@ import com.wenwan.model.sort.LabelVo;
 import com.wenwan.model.sort.SortRuleVo;
 import com.wenwan.service.api.ServiceConfig;
 import com.wenwan.service.api.sort.SortRuleService;
+import com.wenwan.service.util.StringDateUtil;
+import com.wenwan.service.util.UserStorage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,8 @@ public class SortRuleServiceImpl extends ServiceConfig<SortRule, SortRuleVo> imp
     public Integer insert(SortRuleVo sortRuleVo) {
         SortRule sortRule = new SortRule();
         BeanUtils.copyProperties(sortRuleVo, sortRule);
+        sortRule.setOperator(UserStorage.get());
+        sortRule.setOperationDate(StringDateUtil.getToday());
         return sortRuleMapper.insert(sortRule);
     }
 
@@ -32,6 +36,8 @@ public class SortRuleServiceImpl extends ServiceConfig<SortRule, SortRuleVo> imp
     public Integer update(SortRuleVo sortRuleVo) {
         SortRule sortRule = new SortRule();
         BeanUtils.copyProperties(sortRuleVo, sortRule);
+        sortRule.setOperator(UserStorage.get());
+        sortRule.setOperationDate(StringDateUtil.getToday());
         return sortRuleMapper.updateById(sortRule);
     }
 

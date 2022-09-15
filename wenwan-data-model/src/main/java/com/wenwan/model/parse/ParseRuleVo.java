@@ -39,9 +39,9 @@ public class ParseRuleVo extends PageQuery {
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")
-    private Date operationDate;//数据库设置为date类型
+    private Integer operationDate;//数据库设置为date类型
 
     //table mapping
     @ApiModelProperty("解析规则关联的表")
-    private List<ParseTableMappingVo> parseTableMappingVos;
+    private List<ParseRuleTableVo> tableInfoVos;
 }

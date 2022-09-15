@@ -8,22 +8,30 @@ import com.wenwan.common.api.SearchResult;
 import com.wenwan.dao.entity.FileType;
 import com.wenwan.dao.entity.ParseRule;
 import com.wenwan.model.parse.FileTypeVo;
+import com.wenwan.model.parse.ParseRuleTableVo;
 import com.wenwan.model.parse.ParseRuleVo;
 import com.wenwan.service.api.ServiceConfig;
 import com.wenwan.service.api.parse.ParseRuleService;
+import com.wenwan.service.api.parse.TaskService;
+import com.wenwan.service.util.StringDateUtil;
+import com.wenwan.service.util.UserStorage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class ParseRuleServiceImpl extends ServiceConfig<ParseRule, ParseRuleVo> implements ParseRuleService {
 
+    @Autowired
+    private TaskService taskService;
 
     @Override
     public Integer insert(@RequestBody ParseRuleVo parseRuleVo) {
@@ -32,10 +40,14 @@ public class ParseRuleServiceImpl extends ServiceConfig<ParseRule, ParseRuleVo> 
         if (count == 0) {
             FileType fileType = new FileType();
             fileType.setName(parseRuleVo.getFileType());
+            fileType.setOperator(UserStorage.get());
+            fileType.setOperationDate(StringDateUtil.getToday());
             fileTypeMapper.insert(fileType);
         }
         ParseRule parseRule = new ParseRule();
         BeanUtils.copyProperties(parseRuleVo, parseRule);
+        parseRule.setOperator(UserStorage.get());
+        parseRule.setOperationDate(StringDateUtil.getToday());
         return parseRuleMapper.insert(parseRule);
     }
 
@@ -49,6 +61,8 @@ public class ParseRuleServiceImpl extends ServiceConfig<ParseRule, ParseRuleVo> 
     public Integer update(ParseRuleVo parseRuleVo) {
         ParseRule parseRule = new ParseRule();
         BeanUtils.copyProperties(parseRuleVo, parseRule);
+        parseRule.setOperator(UserStorage.get());
+        parseRule.setOperationDate(StringDateUtil.getToday());
         return parseRuleMapper.updateById(parseRule);
     }
 
@@ -58,9 +72,12 @@ public class ParseRuleServiceImpl extends ServiceConfig<ParseRule, ParseRuleVo> 
         LambdaQueryWrapper<ParseRule> wrapper = Wrappers.lambdaQuery(ParseRule.class);
         addFilter(wrapper, parseRuleVo);
         parseRuleMapper.selectPage(page, wrapper);
+        List<Long> parseRuleIds = page.getRecords().stream().map(ParseRule::getId).collect(Collectors.toList());
+        Map<Long, List<ParseRuleTableVo>> tableInfoMap = taskService.getTableByParseRuleId(parseRuleIds);
         List<ParseRuleVo> rows = page.getRecords().stream().map(parseRule -> {
             ParseRuleVo resultVo = new ParseRuleVo();
             BeanUtils.copyProperties(parseRule, resultVo);
+            resultVo.setTableInfoVos(tableInfoMap.get(parseRule.getId()));
             return resultVo;
         }).collect(Collectors.toList());
         return new SearchResult<>(rows, page.getTotal());

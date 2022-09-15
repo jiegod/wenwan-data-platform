@@ -18,8 +18,5 @@ public class Label extends BaseModel{
     @ApiModelProperty("收件箱")
     private String receiver;
     @ApiModelProperty("操作时间")
-    private Date operationDate;//数据库设置为date类型
-
-    private Date createTime;
-    private Date updateTime;
+    private Integer operationDate;
 }

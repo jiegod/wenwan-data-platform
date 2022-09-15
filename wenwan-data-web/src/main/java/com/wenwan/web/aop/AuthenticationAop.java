@@ -72,7 +72,7 @@ public class AuthenticationAop extends BaseAop {
             }
             o = pjp.proceed(pjp.getArgs());
         } catch (Exception e) {
-            throw new BusinessException(GeneralCode.SYS_ERROR);
+            throw new BusinessException(e.getMessage());
         } finally {
             UserStorage.remove();
         }
