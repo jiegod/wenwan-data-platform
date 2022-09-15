@@ -93,6 +93,11 @@ public class TableServiceImpl extends ServiceConfig<TableInfo, TableInfoVo> impl
     }
 
     @Override
+    public void deleteColumn(Long id) {
+        columnInfoMapper.deleteById(id);
+    }
+
+    @Override
     public void updateColumn(List<ColumnInfoVo> columnInfoVos) {
         LambdaQueryWrapper<ColumnInfo> wrapper = Wrappers.lambdaQuery(ColumnInfo.class).
                 eq(ColumnInfo::getTableId, columnInfoVos.get(0).getTableId());

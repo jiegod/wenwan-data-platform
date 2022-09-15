@@ -20,6 +20,8 @@ public interface TableService {
 
     void insertColumn(List<ColumnInfoVo> columnInfoVos);
 
+    void deleteColumn(Long id);
+
     void updateColumn(List<ColumnInfoVo> columnInfoVos);
 
     SearchResult<ColumnInfoVo> columnList(ColumnInfoVo columnInfoVo);

@@ -38,6 +38,10 @@ public interface ITableApi {
     @ApiOperation("新增字段信息")
     APIResponse<String> insertColumn(@RequestBody List<ColumnInfoVo> columnInfoVos);
 
+    @DeleteMapping("/column/delete/{id}")
+    @ApiOperation("删除表信息")
+    APIResponse<String> deleteColumn(@PathVariable Long id);
+
     @PostMapping("/column/update")
     @ApiOperation("修改字段信息")
     APIResponse<String> updateColumn(@RequestBody List<ColumnInfoVo> columnInfoVos);

@@ -57,6 +57,12 @@ public class TableController extends BaseController implements ITableApi {
     }
 
     @Override
+    public APIResponse<String> deleteColumn(Long id) {
+        tableService.deleteColumn(id);
+        return APIResponse.getOkJsonResult();
+    }
+
+    @Override
     public APIResponse<String> updateColumn(List<ColumnInfoVo> columnInfoVos) {
         tableService.updateColumn(columnInfoVos);
         return APIResponse.getOkJsonResult();
