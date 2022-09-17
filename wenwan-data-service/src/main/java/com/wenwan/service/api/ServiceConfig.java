@@ -21,6 +21,8 @@ public class ServiceConfig <T extends BaseModel, V extends ListQuery> extends Se
     @Autowired
     protected LabelMapper labelMapper;
     @Autowired
+    protected SourceFileLabelMapper sourceFileLabelMapper;
+    @Autowired
     protected ParseTableMappingMapper parseTableMappingMapper;
     @Autowired
     protected SortRuleMapper sortRuleMapper;

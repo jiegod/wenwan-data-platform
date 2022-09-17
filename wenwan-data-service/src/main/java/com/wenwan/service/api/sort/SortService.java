@@ -9,4 +9,8 @@ public interface SortService {
     SearchResult<SourceFileVo> list(SourceFileVo sourceFileVo);
 
     void trigger(TriggerSortVo triggerSortVo);
+
+    void autoIncrTrigger();
+
+    void autoFullTrigger();
 }

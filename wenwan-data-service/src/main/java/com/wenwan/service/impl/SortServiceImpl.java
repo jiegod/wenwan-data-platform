@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.dao.entity.Label;
 import com.wenwan.dao.entity.SourceFile;
+import com.wenwan.dao.entity.SourceFileLabel;
 import com.wenwan.model.sort.SourceFileVo;
 import com.wenwan.model.sort.TriggerSortVo;
 import com.wenwan.service.api.ServiceConfig;
@@ -15,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,6 +43,7 @@ public class SortServiceImpl extends ServiceConfig<SourceFile, SourceFileVo> imp
 
     //1、插入label 2、更新file的labels 3、插入智能分拣
     @Override
+    @Transactional
     public void trigger(TriggerSortVo triggerSortVo) {
         String[] labels = triggerSortVo.getLabels().split(",");
         for (String label : labels) {
@@ -50,6 +53,10 @@ public class SortServiceImpl extends ServiceConfig<SourceFile, SourceFileVo> imp
                 Label label1 = new Label();
                 label1.setName(label);
                 labelMapper.insert(label1);
+                SourceFileLabel sourceFileLabel = new SourceFileLabel();
+                sourceFileLabel.setFileId(triggerSortVo.getFileId());
+                sourceFileLabel.setLabelId(label1.getId());
+                sourceFileLabelMapper.insert(sourceFileLabel);
             }
         }
         SourceFile sourceFile = new SourceFile();
@@ -59,6 +66,16 @@ public class SortServiceImpl extends ServiceConfig<SourceFile, SourceFileVo> imp
         if (triggerSortVo.getSortRuleVo() != null) {
             sortRuleService.insert(triggerSortVo.getSortRuleVo());
         }
+    }
+
+    @Override
+    public void autoIncrTrigger() {
+
+    }
+
+    @Override
+    public void autoFullTrigger() {
+
     }
 
     @Override
