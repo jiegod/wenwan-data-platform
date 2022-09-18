@@ -61,7 +61,7 @@ public class ParseServiceImpl extends MapperConfigService implements ParseServic
             filePattern.setLabels(labelList);
             List<SourceFile> files = sourceFileMapper.regexp4Parse(filePattern);
             files.forEach(file->{
-                insertToBusinessLog(rule.getFileType(),rule.getDataSource(),file,0);
+                insertToBusinessLog(rule,dataSource.getCode(),file,0);
             });
         }
         //未匹配的放入business_log，标记为加载失败
@@ -74,9 +74,14 @@ public class ParseServiceImpl extends MapperConfigService implements ParseServic
         });
     }
 
-    private void insertToBusinessLog(String fileType,String dataSource, SourceFile file,Integer loadingStatus) {
+    private void insertToBusinessLog(ParseRule rule,String dataSource, SourceFile file,Integer loadingStatus) {
         //todo 后续从rule里娶business_log表
         BusinessLog businessLog=new BusinessLog();
+        if(rule!=null){
+            businessLog.setParseRuleId(rule.getId());
+            businessLog.setParseRuleCode(rule.getCode());
+            businessLog.setFileType(rule.getFileType());
+        }
         businessLog.setFileId(file.getId());
         businessLog.setReceiver(file.getReceiver());
         businessLog.setSender(file.getSender());
@@ -85,10 +90,10 @@ public class ParseServiceImpl extends MapperConfigService implements ParseServic
         businessLog.setContent(file.getContent());
         businessLog.setFileName(file.getFileName());
         businessLog.setFilePath(file.getFilePath());
-        businessLog.setFileType(fileType);
         businessLog.setDataSource(dataSource);
         businessLog.setLoadingStatus(loadingStatus);
         businessLog.setStatus(0);
+        businessLog.setTableStatus(0);
         businessLog.setOperator(UserStorage.get());
         businessLog.setOperationDate(StringDateUtil.getToday());
         //todo 后续需要支持batch insert

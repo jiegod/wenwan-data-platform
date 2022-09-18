@@ -27,6 +27,8 @@ public class LogVo extends PageQuery {
     private String parseStatus;
     @ApiModelProperty("加载状态;0-加载成功 1-加载失败")
     private Integer loadingStatus;
+    @ApiModelProperty("落地状态;0-未开始 1-落地成功 2-落地失败")
+    private Integer tableStatus;
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")
