@@ -33,12 +33,12 @@ public class BusinessLog extends BaseModel {
     private String fileType;
     @ApiModelProperty("数据源")
     private String dataSource;
-    @ApiModelProperty("加载状态;0-加载成功 1-加载失败")
+    @ApiModelProperty("加载状态;1-加载成功 2-加载失败")
     private Integer loadingStatus;
     @ApiModelProperty("落地状态;0-未开始 1-落地成功 2-落地失败")
     private Integer tableStatus;
     @ApiModelProperty("解析状态;0-未开始")
-    private Integer status;
+    private Integer parseStatus;
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")

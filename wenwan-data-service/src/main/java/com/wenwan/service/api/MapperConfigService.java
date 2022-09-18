@@ -49,4 +49,6 @@ public class MapperConfigService<T extends BaseModel, V extends ListQuery> exten
 
     protected static final ExecutorService insertThreadPool = Executors.newFixedThreadPool(100);
     protected static final ExecutorService sortThreadPool = Executors.newFixedThreadPool(100);
+
+    protected static final ExecutorService parseTableThreadPool = Executors.newFixedThreadPool(100);
 }

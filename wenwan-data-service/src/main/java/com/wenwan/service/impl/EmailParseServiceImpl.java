@@ -1,47 +1,42 @@
 package com.wenwan.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.wenwan.dao.entity.BusinessLog;
 import com.wenwan.dao.entity.ParseRule;
 import com.wenwan.dao.entity.SourceFile;
-import com.wenwan.dao.entity.SqlLog;
 import com.wenwan.model.FilePattern;
 import com.wenwan.model.enums.Datasource;
 import com.wenwan.service.api.MapperConfigService;
-import com.wenwan.service.api.common.SourceFileService;
 import com.wenwan.service.api.parse.ParseRuleService;
-import com.wenwan.service.api.parse.ParseService;
+import com.wenwan.service.api.parse.EmailParseService;
 import com.wenwan.service.util.StringDateUtil;
 import com.wenwan.service.util.UserStorage;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.xml.transform.Source;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
-public class ParseServiceImpl extends MapperConfigService implements ParseService {
+public class EmailParseServiceImpl extends MapperConfigService implements EmailParseService {
 
     @Autowired
     private ParseRuleService parseRuleService;
 
     // todo 目前只实现全量加载，但是sourceFile数据量会很大，后续必须实现增量，需要记录游标
     @Override
+    @Transactional
     public void incrParse() {
 
     }
 
-    @Transactional
     @Override
-    public void fullParse(Datasource dataSource,String labels) {
+    @Transactional
+    public void fullParse(Datasource dataSource, String labels) {
         List<Long> labelList=null;
         if(StringUtils.isNotBlank(labels)){
             labelList = Arrays.stream(labels.split(",")).map(Long::parseLong).collect(Collectors.toList());
@@ -61,7 +56,7 @@ public class ParseServiceImpl extends MapperConfigService implements ParseServic
             filePattern.setLabels(labelList);
             List<SourceFile> files = sourceFileMapper.regexp4Parse(filePattern);
             files.forEach(file->{
-                insertToBusinessLog(rule,dataSource.getCode(),file,0);
+                insertToBusinessLog(rule,dataSource.getCode(),file,1);
             });
         }
         //未匹配的放入business_log，标记为加载失败
@@ -70,7 +65,7 @@ public class ParseServiceImpl extends MapperConfigService implements ParseServic
         filePattern.setLabels(labelList);
         List<SourceFile> files = sourceFileMapper.regexp4Parse(filePattern);
         files.forEach(file->{
-            insertToBusinessLog(null,dataSource.getCode(),file,1);
+            insertToBusinessLog(null,dataSource.getCode(),file,2);
         });
     }
 
@@ -92,7 +87,7 @@ public class ParseServiceImpl extends MapperConfigService implements ParseServic
         businessLog.setFilePath(file.getFilePath());
         businessLog.setDataSource(dataSource);
         businessLog.setLoadingStatus(loadingStatus);
-        businessLog.setStatus(0);
+        businessLog.setParseStatus(0);
         businessLog.setTableStatus(0);
         businessLog.setOperator(UserStorage.get());
         businessLog.setOperationDate(StringDateUtil.getToday());
