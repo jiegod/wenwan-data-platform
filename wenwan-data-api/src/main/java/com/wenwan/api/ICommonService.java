@@ -1,6 +1,7 @@
 package com.wenwan.api;
 
 import com.wenwan.common.api.APIResponse;
+import com.wenwan.model.StaticLabel;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import java.util.Map;
 @Api(description = "枚举等通用api")
 public interface ICommonService {
 
-    @GetMapping("/enum/")
+    @GetMapping("/static/type/list")
     @ApiOperation("枚举类api")
-    APIResponse<Map<String, List<String>>> list(@RequestParam(required = false) String key);
+    APIResponse<Map<String, List<StaticLabel>>> list(@RequestParam(required = false) String key);
 }
