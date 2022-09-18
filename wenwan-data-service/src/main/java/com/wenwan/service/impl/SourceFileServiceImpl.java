@@ -13,9 +13,4 @@ import java.util.List;
 public class SourceFileServiceImpl extends MapperConfigService<SourceFile, ListQuery> implements SourceFileService {
 
 
-    @Override
-    public List<SourceFile> regexp(FilePattern filePattern) {
-        List<SourceFile> files = sourceFileMapper.regexp(filePattern);//todo 添加label筛选
-        return files;
-    }
 }

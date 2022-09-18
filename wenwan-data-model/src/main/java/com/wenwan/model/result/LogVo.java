@@ -25,8 +25,8 @@ public class LogVo extends PageQuery {
     private String filePath;
     @ApiModelProperty("解析状态")
     private String parseStatus;
-    @ApiModelProperty("加载状态")
-    private String loadingStatus;//todo 加载状态是什么
+    @ApiModelProperty("加载状态;0-加载成功 1-加载失败")
+    private Integer loadingStatus;
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")

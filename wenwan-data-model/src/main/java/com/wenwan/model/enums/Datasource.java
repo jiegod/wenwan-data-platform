@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum Datasource {
-    DATA_IN("DATA_IN", "CNSJ场内数据"),
+    MAIL("MAIL", "MAIL项目邮箱"),
     SZT("SZT", "深圳通");
 
     private String code;
@@ -20,5 +20,13 @@ public enum Datasource {
 
     public static List<StaticLabel> getDatasourceLabel(){
         return Arrays.stream(Datasource.values()).map(aa ->new StaticLabel(aa.code, aa.label)).collect(Collectors.toList());
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getLabel() {
+        return label;
     }
 }

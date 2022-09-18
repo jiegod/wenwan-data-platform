@@ -3,6 +3,8 @@ package com.wenwan.model;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 
 @Data
 public class FilePattern {
@@ -17,7 +19,8 @@ public class FilePattern {
     private String receiverRegular;
     @ApiModelProperty("五要素五 文件主题正则")
     private String themeRegular;
-    private String labels;
+    @ApiModelProperty("label id")
+    private List<Long> labels;
     @ApiModelProperty("分拣状态 0:待分拣 1:已分拣")
     private int status;
     private Integer operationDate;

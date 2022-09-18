@@ -34,8 +34,8 @@ public class ParseRuleVo extends PageQuery {
     private String receiverRegular;
     @ApiModelProperty("五要素五 文件主题正则")
     private String themeRegular;
-    @ApiModelProperty("状态")
-    private String status;
+    @ApiModelProperty("状态,0-启动，1-禁用")
+    private Integer status;
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")

@@ -9,8 +9,6 @@ import java.util.Date;
 @Data
 @TableName("business_log")
 public class BusinessLog extends BaseModel {
-    @ApiModelProperty("名字")
-    private long name;
     @ApiModelProperty("file_id")
     private Long fileId;
     @ApiModelProperty("接收方")
@@ -31,8 +29,10 @@ public class BusinessLog extends BaseModel {
     private String fileType;
     @ApiModelProperty("数据源")
     private String dataSource;
-    @ApiModelProperty("解析状态")
-    private String status;
+    @ApiModelProperty("加载状态;0-加载成功 1-加载失败")
+    private Integer loadingStatus;
+    @ApiModelProperty("解析状态;0-未解析")
+    private Integer status;
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")

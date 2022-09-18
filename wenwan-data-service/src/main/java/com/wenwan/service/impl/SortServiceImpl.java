@@ -116,7 +116,7 @@ public class SortServiceImpl extends MapperConfigService<SourceFile, SourceFileV
         filePattern.setStatus(SortConst.FOR_SORT);
         filePattern.setSize(configCenter.getTriggerSize());
         filePattern.setId(id);
-        sourceFiles.addAll(sourceFileMapper.regexp(filePattern));
+        sourceFiles.addAll(sourceFileMapper.regexp4Sort(filePattern));
     }
 
     private void autoTrigger(List<SourceFile> sourceFiles, final SortRule sortRule) {

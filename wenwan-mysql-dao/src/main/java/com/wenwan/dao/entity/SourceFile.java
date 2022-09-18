@@ -9,6 +9,7 @@ import java.util.Date;
 
 @Data
 @TableName("source_file")
+//数据源：邮箱
 public class SourceFile extends BaseModel {
     @ApiModelProperty("接收方")
     private String receiver;

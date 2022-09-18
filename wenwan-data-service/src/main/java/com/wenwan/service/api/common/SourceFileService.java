@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface SourceFileService {
 
-    List<SourceFile> regexp(FilePattern filePattern);
 }

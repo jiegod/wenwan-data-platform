@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.dao.entity.FileType;
 import com.wenwan.dao.entity.ParseRule;
+import com.wenwan.model.enums.Datasource;
 import com.wenwan.model.parse.FileTypeVo;
 import com.wenwan.model.parse.ParseRuleTableVo;
 import com.wenwan.model.parse.ParseRuleVo;
@@ -97,6 +98,16 @@ public class ParseRuleServiceImpl extends MapperConfigService<ParseRule, ParseRu
             result.add(fileTypeVo1);
         });
         return result;
+    }
+
+    @Override
+    public List<ParseRule> all4Parse(Datasource datasource) {
+        LambdaQueryWrapper<ParseRule> wrapper = Wrappers.lambdaQuery(ParseRule.class)
+                .eq(ParseRule::getStatus, 0)
+                .eq(ParseRule::getDataSource,datasource.getCode())
+                .orderByAsc(ParseRule::getFileType)
+                .orderByAsc(ParseRule::getPriority);
+        return parseRuleMapper.selectList(wrapper);
     }
 
     @Override
