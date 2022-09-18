@@ -1,5 +1,6 @@
 package com.wenwan.api.parse;
 
+import com.wenwan.common.annotation.PassToken;
 import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.FileTypeVo;
@@ -33,6 +34,7 @@ public interface IParseRuleApi {
 
     @PostMapping("/fileType/list")
     @ApiOperation("文件类型列表")
+    @PassToken
     APIResponse<List<FileTypeVo>> fileTypeList(@RequestBody FileTypeVo fileTypeVo);
 
 

@@ -86,8 +86,10 @@ public class ParseRuleServiceImpl extends MapperConfigService<ParseRule, ParseRu
     @Override
     public List<FileTypeVo> fileTypeList(FileTypeVo fileTypeVo) {
         List<FileTypeVo> result = new ArrayList<>();
-        LambdaQueryWrapper<FileType> wrapper = Wrappers.lambdaQuery(FileType.class)
-                .like(FileType::getName, fileTypeVo.getName());
+        LambdaQueryWrapper<FileType> wrapper = Wrappers.lambdaQuery(FileType.class);
+        if (StringUtils.isNotBlank(fileTypeVo.getName())){
+            wrapper.like(FileType::getName, fileTypeVo.getName());
+        }
         List<FileType> fileTypes = fileTypeMapper.selectList(wrapper);
         fileTypes.forEach(fileType -> {
             FileTypeVo fileTypeVo1 = new FileTypeVo();

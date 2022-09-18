@@ -20,8 +20,10 @@ public class LabelServiceImpl extends MapperConfigService<Label, LabelVo> implem
     @Override
     public List<LabelVo> labelList(LabelVo labelVo) {
         List<LabelVo> result = new ArrayList<>();
-        LambdaQueryWrapper<Label> wrapper = Wrappers.lambdaQuery(Label.class)
-                .like(Label::getName, labelVo.getName());
+        LambdaQueryWrapper<Label> wrapper = Wrappers.lambdaQuery(Label.class);
+        if (StringUtils.isNotEmpty(labelVo.getName())){
+            wrapper.like(Label::getName, labelVo.getName());
+        }
         if (StringUtils.isNotEmpty(labelVo.getReceiver())) {
             wrapper.eq(Label::getReceiver, labelVo.getReceiver());
         }

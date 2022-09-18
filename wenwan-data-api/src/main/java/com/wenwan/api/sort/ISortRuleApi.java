@@ -1,5 +1,6 @@
 package com.wenwan.api.sort;
 
+import com.wenwan.common.annotation.PassToken;
 import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.sort.LabelVo;
@@ -33,5 +34,6 @@ public interface ISortRuleApi {
 
     @PostMapping("/label/list")
     @ApiOperation("分类列表")
-    APIResponse<List<LabelVo>> labelList(@RequestParam LabelVo labelVo);
+    @PassToken
+    APIResponse<List<LabelVo>> labelList(@RequestBody LabelVo labelVo);
 }

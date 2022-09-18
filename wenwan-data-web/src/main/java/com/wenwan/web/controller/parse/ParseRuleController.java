@@ -1,6 +1,7 @@
 package com.wenwan.web.controller.parse;
 
 import com.wenwan.api.parse.IParseRuleApi;
+import com.wenwan.common.annotation.PassToken;
 import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.FileTypeVo;
@@ -44,6 +45,7 @@ public class ParseRuleController extends BaseController implements IParseRuleApi
     }
 
     @Override
+    @PassToken
     public APIResponse<List<FileTypeVo>> fileTypeList(FileTypeVo fileTypeVo) {
         return APIResponse.getOkJsonResult(parseRuleService.fileTypeList(fileTypeVo));
     }

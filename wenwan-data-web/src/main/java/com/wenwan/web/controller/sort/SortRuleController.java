@@ -1,6 +1,7 @@
 package com.wenwan.web.controller.sort;
 
 import com.wenwan.api.sort.ISortRuleApi;
+import com.wenwan.common.annotation.PassToken;
 import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.sort.LabelVo;
@@ -43,6 +44,7 @@ public class SortRuleController extends BaseController implements ISortRuleApi {
     }
 
     @Override
+    @PassToken
     public APIResponse<List<LabelVo>> labelList(LabelVo labelVo) {
         return APIResponse.getOkJsonResult(sortRuleService.labelList(labelVo));
     }
