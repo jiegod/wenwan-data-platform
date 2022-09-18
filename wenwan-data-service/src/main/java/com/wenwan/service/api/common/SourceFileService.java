@@ -1,4 +1,4 @@
-package com.wenwan.service.api;
+package com.wenwan.service.api.common;
 
 import com.wenwan.dao.entity.SourceFile;
 import com.wenwan.model.FilePattern;

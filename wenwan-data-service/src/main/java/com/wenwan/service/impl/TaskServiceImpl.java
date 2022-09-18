@@ -10,7 +10,7 @@ import com.wenwan.dao.entity.*;
 import com.wenwan.model.parse.ParseRuleTableVo;
 import com.wenwan.model.parse.TaskGroupVo;
 import com.wenwan.model.parse.TaskSqlVo;
-import com.wenwan.service.api.ServiceConfig;
+import com.wenwan.service.api.MapperConfigService;
 import com.wenwan.service.api.parse.TaskService;
 import com.wenwan.service.util.StringDateUtil;
 import com.wenwan.service.util.UserStorage;
@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class TaskServiceImpl extends ServiceConfig<TaskGroup, TaskGroupVo> implements TaskService {
+public class TaskServiceImpl extends MapperConfigService<TaskGroup, TaskGroupVo> implements TaskService {
 
     @Override
     public int insertGroup(TaskGroupVo taskGroupVo) {

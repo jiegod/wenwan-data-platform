@@ -28,6 +28,8 @@ public class SourceFile extends BaseModel {
     private String labels;
     @ApiModelProperty("描述")
     private String description;
+    @ApiModelProperty("分拣状态：0待分拣 1：已分拣")
+    private Integer status;
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")

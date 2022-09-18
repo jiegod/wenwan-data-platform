@@ -8,7 +8,7 @@ import com.wenwan.common.exception.BusinessException;
 import com.wenwan.dao.entity.User;
 import com.wenwan.model.request.ListQuery;
 import com.wenwan.model.user.UserVo;
-import com.wenwan.service.api.ServiceConfig;
+import com.wenwan.service.api.MapperConfigService;
 import com.wenwan.service.api.user.TokenService;
 import com.wenwan.service.api.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
-public class UserServiceConfigImpl extends ServiceConfig<User, ListQuery> implements UserService {
+public class UserServiceConfigImpl extends MapperConfigService<User, ListQuery> implements UserService {
 
     @Autowired
     private TokenService tokenService;

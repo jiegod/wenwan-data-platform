@@ -8,7 +8,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.wenwan.common.annotation.PassToken;
 import com.wenwan.common.aop.BaseAop;
 import com.wenwan.common.constant.GeneralCode;
-import com.wenwan.common.constant.UserConstant;
+import com.wenwan.common.constant.UserConst;
 import com.wenwan.common.exception.BusinessException;
 import com.wenwan.dao.entity.User;
 import com.wenwan.service.api.user.UserService;
@@ -45,7 +45,7 @@ public class AuthenticationAop extends BaseAop {
         if (passToken != null && passToken.required()) {
             log.info("[authentication] this is white path");
         } else {
-            String token = RequestUtils.getRequest().getHeader(UserConstant.TOKEN);
+            String token = RequestUtils.getRequest().getHeader(UserConst.TOKEN);
             try {
                 userName = TokenUtil.getTokenUser();// 从 http 请求头中取出 token
             } catch (JWTDecodeException j) {

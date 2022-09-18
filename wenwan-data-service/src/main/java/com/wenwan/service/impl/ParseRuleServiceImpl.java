@@ -10,7 +10,7 @@ import com.wenwan.dao.entity.ParseRule;
 import com.wenwan.model.parse.FileTypeVo;
 import com.wenwan.model.parse.ParseRuleTableVo;
 import com.wenwan.model.parse.ParseRuleVo;
-import com.wenwan.service.api.ServiceConfig;
+import com.wenwan.service.api.MapperConfigService;
 import com.wenwan.service.api.parse.ParseRuleService;
 import com.wenwan.service.api.parse.TaskService;
 import com.wenwan.service.util.StringDateUtil;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class ParseRuleServiceImpl extends ServiceConfig<ParseRule, ParseRuleVo> implements ParseRuleService {
+public class ParseRuleServiceImpl extends MapperConfigService<ParseRule, ParseRuleVo> implements ParseRuleService {
 
     @Autowired
     private TaskService taskService;

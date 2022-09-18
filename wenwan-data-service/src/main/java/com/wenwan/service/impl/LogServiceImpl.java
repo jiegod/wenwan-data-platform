@@ -7,7 +7,7 @@ import com.wenwan.common.api.SearchResult;
 import com.wenwan.dao.entity.SqlLog;
 import com.wenwan.model.result.LogVo;
 import com.wenwan.model.result.SqlLogVo;
-import com.wenwan.service.api.ServiceConfig;
+import com.wenwan.service.api.MapperConfigService;
 import com.wenwan.service.api.result.LogService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class LogServiceImpl extends ServiceConfig<SqlLog, SqlLogVo> implements LogService {
+public class LogServiceImpl extends MapperConfigService<SqlLog, SqlLogVo> implements LogService {
 
     @Override
     public SearchResult<LogVo> list(LogVo logVo) {

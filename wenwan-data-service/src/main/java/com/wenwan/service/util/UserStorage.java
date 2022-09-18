@@ -1,6 +1,6 @@
 package com.wenwan.service.util;
 
-import com.wenwan.common.constant.UserConstant;
+import com.wenwan.common.constant.UserConst;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.UUID;
@@ -20,7 +20,7 @@ public class UserStorage {
         if (StringUtils.isNotEmpty(LOCAL.get())) {
             return LOCAL.get();
         }
-        return UserConstant.SYS_USER;
+        return UserConst.SYS_USER;
     }
 
     public static void remove() {
@@ -41,7 +41,7 @@ public class UserStorage {
             if (StringUtils.isNotEmpty(LOCAL.get())) {
                 return LOCAL.get();
             }
-            return UserConstant.SYS_USER_TRAC;
+            return UserConst.SYS_USER_TRAC;
         }
 
         public static void remove() {

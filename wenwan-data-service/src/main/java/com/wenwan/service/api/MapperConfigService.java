@@ -4,13 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wenwan.dao.dao.*;
 import com.wenwan.dao.entity.BaseModel;
 import com.wenwan.model.request.ListQuery;
-import com.wenwan.model.request.PageQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ServiceConfig <T extends BaseModel, V extends ListQuery> extends ServiceFilter<T, V> {
+public class MapperConfigService<T extends BaseModel, V extends ListQuery> extends ServiceFilter<T, V> {
 
     @Autowired
     protected BusinessLogMapper businessLogMapper;
@@ -43,10 +42,11 @@ public class ServiceConfig <T extends BaseModel, V extends ListQuery> extends Se
     @Autowired
     protected UserMapper userMapper;
 
-    protected static final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(100);
-
     @Override
     protected void addFilter(LambdaQueryWrapper<T> wrapper, V baseQuery) {
 
     }
+
+    protected static final ExecutorService insertThreadPool = Executors.newFixedThreadPool(100);
+    protected static final ExecutorService sortThreadPool = Executors.newFixedThreadPool(100);
 }

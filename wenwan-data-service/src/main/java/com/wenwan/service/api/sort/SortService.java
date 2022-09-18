@@ -10,7 +10,6 @@ public interface SortService {
 
     void trigger(TriggerSortVo triggerSortVo);
 
-    void autoIncrTrigger();
+    void autoTrigger(Integer operateDate);
 
-    void autoFullTrigger();
 }

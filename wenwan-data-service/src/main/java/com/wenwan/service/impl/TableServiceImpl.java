@@ -12,7 +12,7 @@ import com.wenwan.dao.entity.TableInfo;
 import com.wenwan.model.parse.ColumnInfoVo;
 import com.wenwan.model.parse.ParseTableMappingVo;
 import com.wenwan.model.parse.TableInfoVo;
-import com.wenwan.service.api.ServiceConfig;
+import com.wenwan.service.api.MapperConfigService;
 import com.wenwan.service.api.parse.TableService;
 import com.wenwan.service.util.DDLGenerator;
 import com.wenwan.service.util.StringDateUtil;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class TableServiceImpl extends ServiceConfig<TableInfo, TableInfoVo> implements TableService {
+public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo> implements TableService {
 
     @Autowired
     private DDLGenerator ddlGenerator;
@@ -92,7 +92,7 @@ public class TableServiceImpl extends ServiceConfig<TableInfo, TableInfoVo> impl
             throw new BusinessException("table is not exit, please check it");
         }
         columnInfoVos.forEach(columnInfoVo -> {
-            fixedThreadPool.submit(() -> {
+            insertThreadPool.submit(() -> {
                 ColumnInfo columnInfo = new ColumnInfo();
                 BeanUtils.copyProperties(columnInfoVo, columnInfo);
                 columnInfo.setOperator(UserStorage.get());
@@ -113,7 +113,7 @@ public class TableServiceImpl extends ServiceConfig<TableInfo, TableInfoVo> impl
                 eq(ColumnInfo::getTableId, columnInfoVos.get(0).getTableId());
         columnInfoMapper.delete(wrapper);
         columnInfoVos.forEach(columnInfoVo -> {
-            fixedThreadPool.submit(() -> {
+            insertThreadPool.submit(() -> {
                 ColumnInfo columnInfo = new ColumnInfo();
                 BeanUtils.copyProperties(columnInfoVo, columnInfo);
                 columnInfo.setOperator(UserStorage.get());

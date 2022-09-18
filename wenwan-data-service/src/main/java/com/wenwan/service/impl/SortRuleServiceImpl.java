@@ -4,24 +4,28 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenwan.common.api.SearchResult;
-import com.wenwan.dao.entity.Label;
 import com.wenwan.dao.entity.SortRule;
 import com.wenwan.model.sort.LabelVo;
 import com.wenwan.model.sort.SortRuleVo;
-import com.wenwan.service.api.ServiceConfig;
+import com.wenwan.service.api.MapperConfigService;
+import com.wenwan.service.api.common.LabelService;
 import com.wenwan.service.api.sort.SortRuleService;
 import com.wenwan.service.util.StringDateUtil;
 import com.wenwan.service.util.UserStorage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class SortRuleServiceImpl extends ServiceConfig<SortRule, SortRuleVo> implements SortRuleService {
+public class SortRuleServiceImpl extends MapperConfigService<SortRule, SortRuleVo> implements SortRuleService {
+
+    @Autowired
+    private LabelService labelService;
 
     @Override
     public Integer insert(SortRuleVo sortRuleVo) {
@@ -62,19 +66,23 @@ public class SortRuleServiceImpl extends ServiceConfig<SortRule, SortRuleVo> imp
 
     @Override
     public List<LabelVo> labelList(LabelVo labelVo) {
-        List<LabelVo> result = new ArrayList<>();
-        LambdaQueryWrapper<Label> wrapper = Wrappers.lambdaQuery(Label.class)
-                .like(Label::getName, labelVo.getName());
-        if (StringUtils.isNotEmpty(labelVo.getReceiver())) {
-            wrapper.eq(Label::getReceiver, labelVo.getReceiver());
+        return labelService.labelList(labelVo);
+    }
+
+    @Override
+    public List<SortRule> getALLSortRule() {
+        LambdaQueryWrapper<SortRule> wrapper = Wrappers.lambdaQuery(SortRule.class);
+        return sortRuleMapper.selectList(wrapper);
+    }
+
+    @Override
+    public List<SortRule> getSortRuleByDate(Integer operateDate) {
+        if (operateDate == null){
+            return Collections.EMPTY_LIST;
         }
-        List<Label> labels = labelMapper.selectList(wrapper);
-        labels.forEach(label -> {
-            LabelVo labelVo1 = new LabelVo();
-            BeanUtils.copyProperties(label, labelVo1);
-            result.add(labelVo1);
-        });
-        return result;
+        LambdaQueryWrapper<SortRule> wrapper = Wrappers.lambdaQuery(SortRule.class);
+        wrapper.eq(SortRule::getOperationDate, operateDate);
+        return sortRuleMapper.selectList(wrapper);
     }
 
     @Override
