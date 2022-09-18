@@ -66,14 +66,14 @@ public interface SourceFileMapper extends BaseMapper<SourceFile> {
             " <if test='filePattern.themeRegular != null and filePattern.themeRegular !=\"\" '>" +
             " and a.theme regexp #{filePattern.themeRegular} " +
             " </if>" +
-            " <if test='filePattern.labels != null '>" +
+            " <if test='filePattern.labels != null'>" +
             " and c.label_id in "+
-            " <foreach collection='filePattern.labels' item='labelId' open='(' separator=',' close=')'>"+
+            " <foreach collection='filePattern.labels' item='labelId' open='(' separator=',' close=')' >"+
             "#{labelId}"+
             " </foreach>"+
             " </if>" +
             " <if test='filePattern.id != null'>" +
-            " and a.id <= #{filePattern.id} " +
+            " and a.id &lt;= #{filePattern.id} " +
             " </if>" +
             "</script>"
     })
