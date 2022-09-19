@@ -15,8 +15,6 @@ public class ParseTableMapping extends BaseModel {
     private Long parseRuleId;
     @ApiModelProperty("表id")
     private Long tableId;
-    @ApiModelProperty("状态")
-    private String status;
     @ApiModelProperty("顺序")
     @TableField("`order`")
     private String order;//依次为sheet1、sheet2....

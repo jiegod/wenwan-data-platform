@@ -13,8 +13,6 @@ public class ParseTableMappingVo {
     private Long parseRuleId;
     @ApiModelProperty("表id")
     private Long tableId;
-    @ApiModelProperty("状态")
-    private String status;
     @ApiModelProperty("顺序")
     private String order;//依次为sheet1、sheet2....
     @ApiModelProperty("操作人")

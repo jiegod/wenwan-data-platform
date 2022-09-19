@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.wenwan.dao.entity.BusinessLog;
 import com.wenwan.service.api.MapperConfigService;
+import com.wenwan.service.api.common.FileTableService;
 import com.wenwan.service.api.parse.ParseTableService;
 import com.wenwan.service.util.AsyncExecutor;
+import com.wenwan.service.util.FileTableFactory;
 import com.wenwan.service.util.TransactionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class ParseTableServiceImpl extends MapperConfigService implements ParseT
 
     @Autowired
     private TransactionUtil transactionUtil;
+
+    @Autowired
+    private FileTableFactory fileTableFactory;
 
     // todo 目前只实现全量加载，后续必须实现增量，需要记录游标
     @Override
@@ -41,6 +46,7 @@ public class ParseTableServiceImpl extends MapperConfigService implements ParseT
     }
 
     private void parseTable(BusinessLog businessLog){
-
+        FileTableService fileTableService = fileTableFactory.get(businessLog.getFileName());
+        fileTableService.toTable(businessLog);
     }
 }
