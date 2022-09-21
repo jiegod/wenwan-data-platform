@@ -8,7 +8,6 @@ import com.wenwan.service.api.common.FileTableService;
 import com.wenwan.service.api.parse.ParseTableService;
 import com.wenwan.service.util.AsyncExecutor;
 import com.wenwan.service.util.FileTableFactory;
-import com.wenwan.service.util.TransactionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +19,6 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class ParseTableServiceImpl extends MapperConfigService implements ParseTableService {
-
-    @Autowired
-    private TransactionUtil transactionUtil;
 
     @Autowired
     private FileTableFactory fileTableFactory;
@@ -39,9 +35,7 @@ public class ParseTableServiceImpl extends MapperConfigService implements ParseT
                 .eq(BusinessLog::getLoadingStatus,1)
                 .eq(BusinessLog::getTableStatus,0);
         List<BusinessLog> businessLogs = businessLogMapper.selectList(wrapper);
-        List<Future<?>> futures = businessLogs.stream().map(businessLog -> parseTableThreadPool.submit(() -> {
-            transactionUtil.transactional(s-> parseTable(businessLog));
-        })).collect(Collectors.toList());
+        List<Future<?>> futures = businessLogs.stream().map(businessLog -> parseTableThreadPool.submit(() -> parseTable(businessLog))).collect(Collectors.toList());
         AsyncExecutor.wait(futures);
     }
 

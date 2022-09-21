@@ -25,7 +25,7 @@ public class TransactionUtil {
         } catch (Exception e) {
             transactionManager.rollback(status);
             log.error("TransactionUtil.transactional error",e);
-            throw new BusinessException(e.getMessage());
+            throw e;
         }
     }
 }

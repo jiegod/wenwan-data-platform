@@ -23,8 +23,8 @@ public class SourceFileVo extends PageQuery {
     private String filePath;
     @ApiModelProperty("目标分类")
     private String labels;
-    @ApiModelProperty("分拣状态")
-    private String status;
+    @ApiModelProperty("分拣状态：0待分拣 1：已分拣")
+    private Integer status;
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")

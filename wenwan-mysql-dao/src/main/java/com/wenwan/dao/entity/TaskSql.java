@@ -18,8 +18,8 @@ public class TaskSql extends BaseModel {
     private String taskGroupCode;
     @ApiModelProperty("SQL类型")
     private SqlType type;
-    @ApiModelProperty("启用状态")
-    private String status;
+    @ApiModelProperty("状态,0-启动，1-禁用")
+    private Integer status;
     @ApiModelProperty("执行顺序")
     private String priority;
     @ApiModelProperty("SQL语句")

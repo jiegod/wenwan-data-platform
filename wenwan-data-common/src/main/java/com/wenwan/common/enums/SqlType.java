@@ -4,6 +4,6 @@ public enum SqlType {
     PRE,
     PRE_ERROR,
     ETL,
-    POST
+    POST,
     ;
 }

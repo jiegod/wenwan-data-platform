@@ -10,6 +10,7 @@ import com.wenwan.dao.entity.ParseTableMapping;
 import com.wenwan.dao.entity.TableInfo;
 import com.wenwan.service.api.MapperConfigService;
 import com.wenwan.service.api.common.FileTableService;
+import com.wenwan.service.util.TransactionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -30,6 +31,9 @@ public class ExcelFileTableServiceImpl extends MapperConfigService implements Fi
 
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
+
+    @Autowired
+    private TransactionUtil transactional;
 
     @Override
     public boolean accept(String fileName) {
@@ -71,8 +75,10 @@ public class ExcelFileTableServiceImpl extends MapperConfigService implements Fi
                 insertSqlList.add(temp.substring(0,temp.length()-1)+";");
             }
             //todo 后续改成批量插入
-            insertSqlList.forEach(insertSql-> sqlSessionTemplate.insert(insertSql));
+            transactional.transactional(s->insertSqlList.forEach(insertSql-> sqlSessionTemplate.insert(insertSql)));
         }catch (Exception e) {
+            businessLog.setTableStatus(2);
+            businessLogMapper.updateById(businessLog);
             log.error("ExcelFileTableServiceImpl.toTable error",e);
             throw new RuntimeException(e);
         }

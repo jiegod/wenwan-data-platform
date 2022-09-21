@@ -26,8 +26,8 @@ public class SqlLogVo extends PageQuery {
     private SqlType type;
     @ApiModelProperty("执行顺序")
     private String priority;
-    @ApiModelProperty("执行状态")
-    private String status;
+    @ApiModelProperty("执行状态 0-成功 1-失败")
+    private Integer status;
     @ApiModelProperty("异常信息")
     private String error;
     @ApiModelProperty("执行时长")
