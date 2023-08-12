@@ -114,6 +114,7 @@ public class ParseTaskServiceImpl extends MapperConfigService implements ParseTa
             }
             Long startTime=System.currentTimeMillis();
             try {
+                //todo 配置Oracle 存储过程 （call存储过程）
                 sqlSessionTemplate.getConnection().createStatement().execute(subSql);
                 Long endTime=System.currentTimeMillis();
                 insertSqlLog(taskSql,businessLog,0,null,endTime-startTime);
