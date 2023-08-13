@@ -4,19 +4,25 @@ package com.wenwan.service.constant;
 import com.google.common.collect.Sets;
 import com.wenwan.model.parse.FilterKey;
 import lombok.Data;
+import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 @Data
+@Configuration
 public class TypeCache {
 
     public static final Set<String> dataSource = new HashSet<>();
     public static final Set<String> fileType = new HashSet<>();
     public static final Set<String> businessLog = new HashSet<>();
     public static final Map<String, Set<String>> allType = new HashMap<>();
+
+    @PostConstruct
+    public void init()
     {
         dataSource.addAll(Sets.newHashSet("CNSJ场内数据", "FWPT服务平台", "MAIL项目邮箱", "ZXMAIL归档邮箱", "SZT深圳通")) ;
         fileType.addAll(Sets.newHashSet("CNSJ场内数据", "CWJZ_XX场外净值", "CWQRD场外确认单", "CWYSP场外衍生品", "DWB_XX但外包资金调节表", "DZD_XX对账单"));

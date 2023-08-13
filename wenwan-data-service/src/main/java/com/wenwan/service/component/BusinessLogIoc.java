@@ -1,5 +1,6 @@
 package com.wenwan.service.component;
 
+import com.wenwan.service.constant.BusinessLogType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 public class BusinessLogIoc {
 
     @Bean
-    public Map<String, BusinessMapperStrategy> businessLog(List<BusinessMapperStrategy> businessMapperStrategyList) {
-        return businessMapperStrategyList.stream().collect(Collectors.toMap(BusinessMapperStrategy::getType, Function.identity()));
+    public Map<BusinessLogType, BusinessMapperStrategy> businessLog(List<BusinessMapperStrategy> businessMapperStrategyList) {
+        return businessMapperStrategyList.stream().collect(Collectors.toMap(BusinessMapperStrategy::getName, Function.identity()));
     }
 }

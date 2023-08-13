@@ -8,6 +8,7 @@ import com.wenwan.dao.dao.BusinessLogCnsjMapper;
 import com.wenwan.dao.entity.BusinessLogCnsj;
 import com.wenwan.model.parse.BusinessLogVo;
 import com.wenwan.model.parse.request.BusinessLogQuery;
+import com.wenwan.service.constant.BusinessLogType;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,7 @@ public class BusinessMapperCnsjStrategy implements BusinessMapperStrategy {
     }
 
     @Override
-    public String getType() {
-        return "business_log_cnsj";
+    public BusinessLogType getName() {
+        return BusinessLogType.business_log_cnsj;
     }
 }

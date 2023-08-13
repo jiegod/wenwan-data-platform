@@ -1,12 +1,10 @@
 package com.wenwan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenwan.common.api.SearchResult;
-import com.wenwan.dao.entity.BusinessLog;
 import com.wenwan.dao.entity.FileType;
 import com.wenwan.dao.entity.ParseRule;
 import com.wenwan.model.enums.Datasource;
@@ -16,6 +14,7 @@ import com.wenwan.service.api.MapperConfigService;
 import com.wenwan.service.api.parse.ParseRuleService;
 import com.wenwan.service.api.parse.TaskService;
 import com.wenwan.service.component.BusinessMapperStrategy;
+import com.wenwan.service.constant.BusinessLogType;
 import com.wenwan.service.constant.TypeCache;
 import com.wenwan.service.util.StringDateUtil;
 import com.wenwan.service.util.UserStorage;
@@ -35,7 +34,7 @@ public class ParseRuleServiceImpl extends MapperConfigService<ParseRule, ParseRu
     @Autowired
     private TaskService taskService;
     @Autowired
-    private Map<String, BusinessMapperStrategy> businessLog;
+    private Map<BusinessLogType, BusinessMapperStrategy> businessLog;
 
     @Override
     public Integer insert(@RequestBody ParseRuleVo parseRuleVo) {
@@ -126,7 +125,7 @@ public class ParseRuleServiceImpl extends MapperConfigService<ParseRule, ParseRu
     @Override
     public SearchResult<BusinessLogVo> businessLog(BusinessLogQuery businessLogQuery) {
         ParseRule parseRule = parseRuleMapper.selectById(businessLogQuery.getParseRuleId());
-        SearchResult<BusinessLogVo> searchResult = businessLog.get(parseRule.getBusinessLog()).fetchPatch(businessLogQuery);
+        SearchResult<BusinessLogVo> searchResult = businessLog.get(BusinessLogType.valueOf(parseRule.getBusinessLog())).fetchPatch(businessLogQuery);
         return searchResult;
     }
 

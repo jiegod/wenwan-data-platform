@@ -44,7 +44,7 @@ public interface IParseRuleApi {
     APIResponse<List<FileTypeVo>> fileTypeList(@RequestBody FileTypeVo fileTypeVo);
 
     @GetMapping("/filter/list")
-    APIResponse<Map<String, Set<String>>> dropList(@RequestParam FilterKey filterKey);
+    APIResponse<Map<String, Set<String>>> dropList(@RequestParam(required = false) FilterKey filterKey);
 
     @PostMapping("/business/log")
     APIResponse<SearchResult<BusinessLogVo>> businessLog(@Valid @RequestBody BusinessLogQuery businessLogQuery);

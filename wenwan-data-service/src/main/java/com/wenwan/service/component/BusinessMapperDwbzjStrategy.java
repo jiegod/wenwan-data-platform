@@ -11,6 +11,7 @@ import com.wenwan.dao.entity.BusinessLogCwjz;
 import com.wenwan.dao.entity.BusinessLogDwbzj;
 import com.wenwan.model.parse.BusinessLogVo;
 import com.wenwan.model.parse.request.BusinessLogQuery;
+import com.wenwan.service.constant.BusinessLogType;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,7 +40,7 @@ public class BusinessMapperDwbzjStrategy implements BusinessMapperStrategy {
     }
 
     @Override
-    public String getType() {
-        return "business_log_dwbzj";
+    public BusinessLogType getName() {
+        return BusinessLogType.business_log_dwbzj;
     }
 }
