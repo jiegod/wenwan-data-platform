@@ -3,13 +3,19 @@ package com.wenwan.api.parse;
 import com.wenwan.common.annotation.PassToken;
 import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
+import com.wenwan.model.parse.BusinessLogVo;
 import com.wenwan.model.parse.FileTypeVo;
+import com.wenwan.model.parse.FilterKey;
 import com.wenwan.model.parse.ParseRuleVo;
+import com.wenwan.model.parse.request.BusinessLogQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/parse/rule")
@@ -37,5 +43,9 @@ public interface IParseRuleApi {
     @PassToken
     APIResponse<List<FileTypeVo>> fileTypeList(@RequestBody FileTypeVo fileTypeVo);
 
+    @GetMapping("/filter/list")
+    APIResponse<Map<String, Set<String>>> dropList(@RequestParam FilterKey filterKey);
 
+    @PostMapping("/business/log")
+    APIResponse<SearchResult<BusinessLogVo>> businessLog(@Valid @RequestBody BusinessLogQuery businessLogQuery);
 }

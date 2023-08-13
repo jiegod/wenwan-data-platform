@@ -21,8 +21,6 @@ public class MysqlStartUp implements ApplicationListener<ApplicationReadyEvent> 
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        LambdaQueryWrapper wrapper = Wrappers.lambdaQuery(User.class).eq(User::getId, 1);
-       List<User> userList =  userMapper.selectList(wrapper);
-       log.info("mysql startUp user:{}", userList);
+
     }
 }

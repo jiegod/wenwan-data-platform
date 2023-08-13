@@ -1,19 +1,22 @@
 package com.wenwan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenwan.common.api.SearchResult;
+import com.wenwan.dao.entity.BusinessLog;
 import com.wenwan.dao.entity.FileType;
 import com.wenwan.dao.entity.ParseRule;
 import com.wenwan.model.enums.Datasource;
-import com.wenwan.model.parse.FileTypeVo;
-import com.wenwan.model.parse.ParseRuleTableVo;
-import com.wenwan.model.parse.ParseRuleVo;
+import com.wenwan.model.parse.*;
+import com.wenwan.model.parse.request.BusinessLogQuery;
 import com.wenwan.service.api.MapperConfigService;
 import com.wenwan.service.api.parse.ParseRuleService;
 import com.wenwan.service.api.parse.TaskService;
+import com.wenwan.service.component.BusinessMapperStrategy;
+import com.wenwan.service.constant.TypeCache;
 import com.wenwan.service.util.StringDateUtil;
 import com.wenwan.service.util.UserStorage;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +34,8 @@ public class ParseRuleServiceImpl extends MapperConfigService<ParseRule, ParseRu
 
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private Map<String, BusinessMapperStrategy> businessLog;
 
     @Override
     public Integer insert(@RequestBody ParseRuleVo parseRuleVo) {
@@ -108,6 +111,23 @@ public class ParseRuleServiceImpl extends MapperConfigService<ParseRule, ParseRu
                 .orderByAsc(ParseRule::getFileType)
                 .orderByAsc(ParseRule::getPriority);
         return parseRuleMapper.selectList(wrapper);
+    }
+
+    @Override
+    public Map<String, Set<String>> dropList(FilterKey filterKey) {
+        if (filterKey == null) {
+            return TypeCache.allType;
+        }
+        Map<String, Set<String>> result = new HashMap<>();
+        result.put(filterKey.name(), TypeCache.allType.get(filterKey.name()));
+        return result;
+    }
+
+    @Override
+    public SearchResult<BusinessLogVo> businessLog(BusinessLogQuery businessLogQuery) {
+        ParseRule parseRule = parseRuleMapper.selectById(businessLogQuery.getParseRuleId());
+        SearchResult<BusinessLogVo> searchResult = businessLog.get(parseRule.getBusinessLog()).fetchPatch(businessLogQuery);
+        return searchResult;
     }
 
     @Override
