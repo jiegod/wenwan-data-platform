@@ -35,7 +35,7 @@ public class BusinessLog extends BaseModel {
     private String dataSource;
     @ApiModelProperty("加载状态;1-加载成功 2-加载失败")
     private Integer loadingStatus;
-    @ApiModelProperty("落地状态;0-未开始 1-落地成功 2-落地失败")
+    @ApiModelProperty("落地状态;0-未开始 1-处理中 2-落地成功 3-落地失败")
     private Integer tableStatus;
     @ApiModelProperty("解析状态;0-未开始 1-解析成功 2-解析失败 3-稽核成功")
     private Integer parseStatus;

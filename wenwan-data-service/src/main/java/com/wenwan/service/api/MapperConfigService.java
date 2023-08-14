@@ -3,6 +3,7 @@ package com.wenwan.service.api;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wenwan.dao.dao.*;
 import com.wenwan.dao.entity.BaseModel;
+import com.wenwan.dao.entity.BusinessLogCnsj;
 import com.wenwan.model.request.ListQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,6 +42,18 @@ public class MapperConfigService<T extends BaseModel, V extends ListQuery> exten
     protected TaskSqlParamMapper taskSqlParamMapper;
     @Autowired
     protected UserMapper userMapper;
+    @Autowired
+    protected BusinessLogCnsjMapper cnsjMapper;
+    @Autowired
+    protected BusinessLogCwjzMapper cwjzMapper;
+    @Autowired
+    protected BusinessLogCwqrdMapper cwqrdMapper;
+    @Autowired
+    protected BusinessLogCwyspMapper cwyspMapper;
+    @Autowired
+    protected BusinessLogDwbzjMapper dwbzjMapper;
+    @Autowired
+    protected BusinessLogDzdMapper dzdMapper;
 
     @Override
     protected void addFilter(LambdaQueryWrapper<T> wrapper, V baseQuery) {

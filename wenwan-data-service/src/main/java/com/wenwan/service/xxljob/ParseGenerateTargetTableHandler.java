@@ -1,6 +1,6 @@
 package com.wenwan.service.xxljob;
 
-import com.wenwan.service.api.parse.ParseTableService;
+import com.wenwan.service.api.parse.GenerateTargetTableService;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.IJobHandler;
 import com.xxl.job.core.handler.annotation.XxlJob;
@@ -11,20 +11,20 @@ import org.springframework.context.annotation.Configuration;
 
 @Slf4j
 @Configuration
-public class ParseTableHandler extends IJobHandler {
+public class ParseGenerateTargetTableHandler extends IJobHandler {
     @Autowired
     private XxlJobConfig xxlJobConfig;
 
     @Autowired
-    private ParseTableService parseTableService;
+    private GenerateTargetTableService parseTableService;
 
     //todo 单线程处理，后续加上redis锁
-    @XxlJob(value = "parseTableHandler")
+    @XxlJob(value = "parseGenerateTargetTableHandler")
     @Override
     public ReturnT<String> execute(String param) throws Exception {
-        log.info("parse table job run, param: {},port:{}", param, xxlJobConfig.getPort());
+        log.info("parse generate target table job run, param: {}", param);
         XxlJobLogger.log("XXL-JOB-ANNOTATION, parseTableHandler.");
-        parseTableService.fullParse();
+        parseTableService.cnsjFullParse();
         return ReturnT.SUCCESS;
     }
 
