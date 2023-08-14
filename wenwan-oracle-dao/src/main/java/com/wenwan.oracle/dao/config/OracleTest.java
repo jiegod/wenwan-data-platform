@@ -14,15 +14,10 @@ import java.util.List;
 
 @Configuration
 @Slf4j
-public class oracle implements ApplicationListener<ApplicationReadyEvent> {
+public class OracleTest implements ApplicationListener<ApplicationReadyEvent> {
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
-        LambdaQueryWrapper wrapper = Wrappers.lambdaQuery(User.class).eq(User::getId, 1);
-        List<User> userList = userMapper.selectList(wrapper);
-        log.info("oracle startUp user:{}", userList);
-    }
 
-    @Resource
-    private UserMapper userMapper;
+    }
 }
