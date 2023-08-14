@@ -2,9 +2,9 @@ package com.wenwan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.wenwan.dao.entity.BusinessLog;
-import com.wenwan.dao.entity.ParseRule;
-import com.wenwan.dao.entity.SourceFile;
+import com.wenwan.mysql.dao.entity.BusinessLog;
+import com.wenwan.mysql.dao.entity.ParseRule;
+import com.wenwan.mysql.dao.entity.SourceFile;
 import com.wenwan.model.FilePattern;
 import com.wenwan.model.enums.Datasource;
 import com.wenwan.service.api.MapperConfigService;

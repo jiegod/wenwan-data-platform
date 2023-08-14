@@ -1,10 +1,9 @@
 package com.wenwan.service.util;
 
-import com.wenwan.dao.entity.ColumnInfo;
-import com.wenwan.dao.entity.TableInfo;
+import com.wenwan.mysql.dao.entity.ColumnInfo;
+import com.wenwan.mysql.dao.entity.TableInfo;
 import com.wenwan.service.constant.DDLConstant;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;

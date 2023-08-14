@@ -2,7 +2,7 @@ package com.wenwan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.wenwan.dao.entity.*;
+import com.wenwan.mysql.dao.entity.*;
 import com.wenwan.service.api.MapperConfigService;
 import com.wenwan.service.api.common.FileTableService;
 import com.wenwan.service.api.parse.GenerateTargetTableService;

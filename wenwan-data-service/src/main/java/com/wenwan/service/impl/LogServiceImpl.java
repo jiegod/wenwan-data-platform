@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.wenwan.common.api.SearchResult;
-import com.wenwan.dao.entity.SqlLog;
+import com.wenwan.mysql.dao.entity.SqlLog;
 import com.wenwan.model.result.LogVo;
 import com.wenwan.model.result.SqlLogVo;
 import com.wenwan.service.api.MapperConfigService;

@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScans;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@MapperScan(basePackages = "com.wenwan.dao")
 @ComponentScan(basePackages = "com.wenwan")
 @EnableSwagger2
 public class Application {

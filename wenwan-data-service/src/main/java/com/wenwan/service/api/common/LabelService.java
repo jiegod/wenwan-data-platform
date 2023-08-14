@@ -1,6 +1,6 @@
 package com.wenwan.service.api.common;
 
-import com.wenwan.dao.entity.Label;
+import com.wenwan.mysql.dao.entity.Label;
 import com.wenwan.model.sort.LabelVo;
 
 import java.util.List;

@@ -10,7 +10,7 @@ import com.wenwan.common.aop.BaseAop;
 import com.wenwan.common.constant.GeneralCode;
 import com.wenwan.common.constant.UserConst;
 import com.wenwan.common.exception.BusinessException;
-import com.wenwan.dao.entity.User;
+import com.wenwan.mysql.dao.entity.User;
 import com.wenwan.service.api.user.UserService;
 import com.wenwan.service.util.RequestUtils;
 import com.wenwan.service.util.TokenUtil;

@@ -2,7 +2,7 @@ package com.wenwan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.wenwan.dao.entity.Label;
+import com.wenwan.mysql.dao.entity.Label;
 import com.wenwan.model.sort.LabelVo;
 import com.wenwan.service.api.MapperConfigService;
 import com.wenwan.service.api.common.LabelService;

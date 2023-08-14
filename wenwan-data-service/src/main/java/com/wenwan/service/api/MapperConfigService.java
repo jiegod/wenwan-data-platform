@@ -1,9 +1,8 @@
 package com.wenwan.service.api;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.wenwan.dao.dao.*;
-import com.wenwan.dao.entity.BaseModel;
-import com.wenwan.dao.entity.BusinessLogCnsj;
+import com.wenwan.mysql.dao.dao.*;
+import com.wenwan.mysql.dao.entity.BaseModel;
 import com.wenwan.model.request.ListQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 
