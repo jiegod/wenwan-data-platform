@@ -1,8 +1,7 @@
 package com.wenwan.service.api.sort;
 
-import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
-import com.wenwan.dao.entity.SortRule;
+import com.wenwan.mysql.dao.entity.SortRule;
 import com.wenwan.model.sort.LabelVo;
 import com.wenwan.model.sort.SortRuleVo;
 

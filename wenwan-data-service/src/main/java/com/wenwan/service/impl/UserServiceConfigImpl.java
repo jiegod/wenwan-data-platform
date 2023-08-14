@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.wenwan.common.constant.GeneralCode;
 import com.wenwan.common.exception.BusinessException;
-import com.wenwan.dao.entity.User;
+import com.wenwan.mysql.dao.entity.User;
 import com.wenwan.model.request.ListQuery;
 import com.wenwan.model.user.UserVo;
 import com.wenwan.service.api.MapperConfigService;

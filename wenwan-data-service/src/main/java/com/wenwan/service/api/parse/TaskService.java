@@ -1,7 +1,6 @@
 package com.wenwan.service.api.parse;
 
 import com.wenwan.common.api.SearchResult;
-import com.wenwan.dao.entity.TableInfo;
 import com.wenwan.model.parse.ParseRuleTableVo;
 import com.wenwan.model.parse.TaskGroupVo;
 import com.wenwan.model.parse.TaskSqlVo;

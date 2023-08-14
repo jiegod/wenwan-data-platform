@@ -10,6 +10,12 @@ spring:
       username: admin1
       password: LIwenling521
       type: com.alibaba.druid.pool.DruidDataSource
+    db2:
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+      jdbcUrl: jdbc:mysql://rm-bp1z0r275698r8y64so.mysql.rds.aliyuncs.com:3306/wenwan?serverTimezone=UTC
+      username: admin1
+      password: LIwenling521
+      type: com.alibaba.druid.pool.DruidDataSource
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
