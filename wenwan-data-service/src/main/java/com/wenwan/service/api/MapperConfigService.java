@@ -41,6 +41,18 @@ public class MapperConfigService<T extends BaseModel, V extends ListQuery> exten
     protected TaskSqlParamMapper taskSqlParamMapper;
     @Autowired
     protected UserMapper userMapper;
+    @Autowired
+    protected BusinessLogCnsjMapper cnsjMapper;
+    @Autowired
+    protected BusinessLogCwjzMapper cwjzMapper;
+    @Autowired
+    protected BusinessLogCwqrdMapper cwqrdMapper;
+    @Autowired
+    protected BusinessLogCwyspMapper cwyspMapper;
+    @Autowired
+    protected BusinessLogDwbzjMapper dwbzjMapper;
+    @Autowired
+    protected BusinessLogDzdMapper dzdMapper;
 
     @Override
     protected void addFilter(LambdaQueryWrapper<T> wrapper, V baseQuery) {
