@@ -34,17 +34,19 @@ public class ParseTaskServiceImpl extends MapperConfigService implements ParseTa
     }
 
     @Override
-    public void fullParse() {
+    public void fullParse(String fileType) {
         LambdaQueryWrapper<BusinessLog> wrapper = Wrappers.lambdaQuery(BusinessLog.class)
                 .eq(BusinessLog::getLoadingStatus,1)
                 .eq(BusinessLog::getTableStatus,1)
-                .eq(BusinessLog::getParseStatus,0);
+                .eq(BusinessLog::getParseStatus,0)
+                .eq(BusinessLog::getFileType,fileType);
         List<BusinessLog> businessLogs = businessLogMapper.selectList(wrapper);
         List<Future<?>> futures = businessLogs.stream().map(businessLog -> parseTableThreadPool.submit(() -> parseTask(businessLog))).collect(Collectors.toList());
         AsyncExecutor.wait(futures);
     }
 
-    private void parseTask(BusinessLog businessLog) {
+    @Override
+    public void parseTask(BusinessLog businessLog) {
         LambdaQueryWrapper<TaskGroup> wrapper = Wrappers.lambdaQuery(TaskGroup.class)
                 .eq(TaskGroup::getParseRuleId,businessLog.getParseRuleId());
         List<TaskGroup> taskGroups = taskGroupMapper.selectList(wrapper);

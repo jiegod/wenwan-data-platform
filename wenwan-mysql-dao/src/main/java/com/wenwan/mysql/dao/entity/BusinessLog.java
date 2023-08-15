@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@TableName("business_log")
+//@TableName("business_log")
 public class BusinessLog extends BaseModel {
     @ApiModelProperty("台账id")
     private Long parseRuleId;

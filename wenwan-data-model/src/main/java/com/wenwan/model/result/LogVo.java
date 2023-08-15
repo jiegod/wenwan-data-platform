@@ -8,6 +8,7 @@ import java.util.Date;
 
 @Data
 public class LogVo extends PageQuery {
+    @ApiModelProperty("BusinessLogID")
     private long id;
     @ApiModelProperty("台账id")
     private Long parseRuleId;
@@ -15,8 +16,8 @@ public class LogVo extends PageQuery {
     private String parseRuleCode;
     @ApiModelProperty("FILE_ID")
     private Long fileId;
-    @ApiModelProperty("FILE_ID")
-    private Long businessLogId;
+    @ApiModelProperty("业务表")
+    private String businessLog;
     @ApiModelProperty("bus_log表名")
     private String businessLogName;
     @ApiModelProperty("附件名")
