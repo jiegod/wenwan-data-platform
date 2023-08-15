@@ -5,17 +5,19 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenwan.common.api.SearchResult;
+import com.wenwan.model.enums.Datasource;
+import com.wenwan.model.parse.BusinessLogVo;
+import com.wenwan.model.parse.FileTypeVo;
+import com.wenwan.model.parse.ParseRuleTableVo;
+import com.wenwan.model.parse.ParseRuleVo;
+import com.wenwan.model.parse.request.BusinessLogQuery;
 import com.wenwan.mysql.dao.entity.FileType;
 import com.wenwan.mysql.dao.entity.ParseRule;
-import com.wenwan.model.enums.Datasource;
-import com.wenwan.model.parse.*;
-import com.wenwan.model.parse.request.BusinessLogQuery;
 import com.wenwan.service.api.MapperConfigService;
 import com.wenwan.service.api.parse.ParseRuleService;
 import com.wenwan.service.api.parse.TaskService;
 import com.wenwan.service.component.BusinessMapperStrategy;
 import com.wenwan.service.constant.BusinessLogType;
-import com.wenwan.service.constant.TypeCache;
 import com.wenwan.service.util.StringDateUtil;
 import com.wenwan.service.util.UserStorage;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +26,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -110,16 +114,6 @@ public class ParseRuleServiceImpl extends MapperConfigService<ParseRule, ParseRu
                 .orderByAsc(ParseRule::getFileType)
                 .orderByAsc(ParseRule::getPriority);
         return parseRuleMapper.selectList(wrapper);
-    }
-
-    @Override
-    public Map<String, Set<String>> dropList(FilterKey filterKey) {
-        if (filterKey == null) {
-            return TypeCache.allType;
-        }
-        Map<String, Set<String>> result = new HashMap<>();
-        result.put(filterKey.name(), TypeCache.allType.get(filterKey.name()));
-        return result;
     }
 
     @Override

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/common")
@@ -19,5 +19,5 @@ public interface ICommonService {
 
     @GetMapping("/static/type/list")
     @ApiOperation("枚举类api")
-    APIResponse<Map<String, List<StaticLabel>>> list(@RequestParam(required = false) String key);
+    APIResponse<Map<String, Set<StaticLabel>>> list(@RequestParam(required = false) String key);
 }
