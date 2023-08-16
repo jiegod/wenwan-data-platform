@@ -1,4 +1,4 @@
-package com.wenwan.oracle.dao.entity;
+package com.wenwan.oracle.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
