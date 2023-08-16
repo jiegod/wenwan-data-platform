@@ -20,11 +20,17 @@ public class LogController extends BaseController implements ILogApi {
 
     @Override
     public APIResponse<SearchResult<LogVo>> list(LogVo logVo) {
-        return null;
+        return APIResponse.getOkJsonResult(logService.list(logVo));
     }
 
     @Override
     public APIResponse<SearchResult<SqlLogVo>> sqlLogList(SqlLogVo sqlLogVo) {
         return APIResponse.getOkJsonResult(logService.sqlLogList(sqlLogVo));
+    }
+
+    @Override
+    public APIResponse<Void> reParse(String businessLog,Long businessLogId) {
+        logService.reParse(businessLog,businessLogId);
+        return APIResponse.getOkJsonResult();
     }
 }

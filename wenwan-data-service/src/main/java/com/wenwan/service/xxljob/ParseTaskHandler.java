@@ -24,7 +24,7 @@ public class ParseTaskHandler extends IJobHandler {
     public ReturnT<String> execute(String param) throws Exception {
         log.info("parse task job run, param: {},port:{}", param, xxlJobConfig.getPort());
         XxlJobLogger.log("XXL-JOB-ANNOTATION, parseTaskHandler.");
-        parseTaskService.fullParse();
+        parseTaskService.fullParse(param);
         return ReturnT.SUCCESS;
     }
 

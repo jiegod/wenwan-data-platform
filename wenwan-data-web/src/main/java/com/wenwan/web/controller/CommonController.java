@@ -7,8 +7,8 @@ import com.wenwan.service.api.common.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class CommonController implements ICommonService {
@@ -17,7 +17,7 @@ public class CommonController implements ICommonService {
     private CommonService commonService;
 
     @Override
-    public APIResponse<Map<String, List<StaticLabel>>> list(String key) {
+    public APIResponse<Map<String, Set<StaticLabel>>> list(String key) {
         return APIResponse.getOkJsonResult(commonService.getStaticTypeList(key));
     }
 }

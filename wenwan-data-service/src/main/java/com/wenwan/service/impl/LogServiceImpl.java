@@ -4,24 +4,35 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.wenwan.common.api.SearchResult;
+import com.wenwan.mysql.dao.entity.BusinessLog;
 import com.wenwan.mysql.dao.entity.SqlLog;
 import com.wenwan.model.result.LogVo;
 import com.wenwan.model.result.SqlLogVo;
 import com.wenwan.service.api.MapperConfigService;
+import com.wenwan.service.api.parse.ParseTaskService;
 import com.wenwan.service.api.result.LogService;
+import com.wenwan.service.component.BusinessMapperStrategy;
+import com.wenwan.service.constant.BusinessLogType;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class LogServiceImpl extends MapperConfigService<SqlLog, SqlLogVo> implements LogService {
 
+    @Autowired
+    private Map<BusinessLogType, BusinessMapperStrategy> businessLogMap;
+
+    @Autowired
+    private ParseTaskService parseTaskService;
+
     @Override
     public SearchResult<LogVo> list(LogVo logVo) {
-        //todo 不知道取哪个表
-        return null;
+        return businessLogMap.get(BusinessLogType.valueOf(logVo.getBusinessLog())).list(logVo);
     }
 
     @Override
@@ -35,6 +46,12 @@ public class LogServiceImpl extends MapperConfigService<SqlLog, SqlLogVo> implem
             return sqlLogVo1;
         }).collect(Collectors.toList());
         return new SearchResult<>(result, result.size());
+    }
+
+    @Override
+    public void reParse(String businessLog, Long businessLogId) {
+        BusinessLog bl = businessLogMap.get(BusinessLogType.valueOf(businessLog)).getBusinessLog(businessLogId);
+        parseTaskService.parseTask(bl);
     }
 
 

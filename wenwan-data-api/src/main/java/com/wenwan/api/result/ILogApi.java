@@ -6,10 +6,7 @@ import com.wenwan.model.result.LogVo;
 import com.wenwan.model.result.SqlLogVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/log")
@@ -22,4 +19,8 @@ public interface ILogApi {
     @PostMapping("/sqlLog/list")
     @ApiOperation("sql任务组运行日志")
     APIResponse<SearchResult<SqlLogVo>> sqlLogList(@RequestBody SqlLogVo sqlLogVo);
+
+    @PostMapping("/re-parse/{businessLog}/{businessLogId}")
+    @ApiOperation("重跑任务组")
+    APIResponse<Void> reParse(@PathVariable("businessLog") String businessLog,@PathVariable("businessLogId") Long businessLogId);
 }
