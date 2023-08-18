@@ -22,6 +22,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -35,37 +36,44 @@ public class AuthenticationAop extends BaseAop {
 
     @Autowired
     UserService userService;
+    @Value("${auth.env:}")
+    private String authEnv;
 
     @Around(value = "controllerAllMethod()")
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
-        Method method = ((MethodSignature) pjp.getSignature()).getMethod();
-        Object o;
         String userName = null;
-        PassToken passToken = method.getAnnotation(PassToken.class);
-        if (passToken != null && passToken.required()) {
-            log.info("[authentication] this is white path");
+        Object o;
+        if (!"DEV".equals(authEnv)) {
+            Method method = ((MethodSignature) pjp.getSignature()).getMethod();
+            PassToken passToken = method.getAnnotation(PassToken.class);
+            if (passToken != null && passToken.required()) {
+                log.info("[authentication] this is white path");
+            } else {
+                String token = RequestUtils.getRequest().getHeader(UserConst.TOKEN);
+                try {
+                    userName = TokenUtil.getTokenUser();// 从 http 请求头中取出 token
+                } catch (JWTDecodeException j) {
+                    throw new BusinessException(GeneralCode.USER_NOT_LOGIN);
+                }
+                if (StringUtils.isEmpty(userName)) {
+                    throw new BusinessException(GeneralCode.USER_NOT_LOGIN);
+                }
+                User user = userService.getUserInfo(userName);
+                if (user == null) {
+                    throw new BusinessException(GeneralCode.USER_NOT_EXIT);
+                }
+                // 验证 token
+                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
+                try {
+                    jwtVerifier.verify(token);
+                } catch (JWTVerificationException e) {
+                    throw new BusinessException(GeneralCode.USER_NOT_LOGIN);
+                }
+            }
         } else {
-            String token = RequestUtils.getRequest().getHeader(UserConst.TOKEN);
-            try {
-                userName = TokenUtil.getTokenUser();// 从 http 请求头中取出 token
-            } catch (JWTDecodeException j) {
-                throw new BusinessException(GeneralCode.USER_NOT_LOGIN);
-            }
-            if (StringUtils.isEmpty(userName)) {
-                throw new BusinessException(GeneralCode.USER_NOT_LOGIN);
-            }
-            User user = userService.getUserInfo(userName);
-            if (user == null) {
-                throw new BusinessException(GeneralCode.USER_NOT_EXIT);
-            }
-            // 验证 token
-            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
-            try {
-                jwtVerifier.verify(token);
-            } catch (JWTVerificationException e) {
-                throw new BusinessException(GeneralCode.USER_NOT_LOGIN);
-            }
+            userName = "jack";
         }
+
         try {
             if (StringUtils.isNotEmpty(userName)) {
                 UserStorage.set(userName);

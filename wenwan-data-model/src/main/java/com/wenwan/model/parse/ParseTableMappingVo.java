@@ -1,10 +1,17 @@
 package com.wenwan.model.parse;
 
 
+import com.wenwan.common.exception.BusinessException;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.util.CollectionUtils;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 public class ParseTableMappingVo {
@@ -14,9 +21,20 @@ public class ParseTableMappingVo {
     @ApiModelProperty("表id")
     private Long tableId;
     @ApiModelProperty("顺序")
+    @NotBlank(message = "sheet number can not be empty")
     private String order;//依次为sheet1、sheet2....
     @ApiModelProperty("操作人")
     private String operator;
     @ApiModelProperty("操作时间")
     private Integer operationDate;//数据库设置为date类型
+
+    public static void paramCheck(List<ParseTableMappingVo> parseTables) {
+        if (CollectionUtils.isEmpty(parseTables)) {
+            throw new BusinessException("parse table list is empty");
+        }
+       Map<String, Long> orderCount = parseTables.stream().collect(Collectors.groupingBy(ParseTableMappingVo::getOrder, Collectors.counting()));
+       if(orderCount.values().stream().allMatch(count -> count>1)) {
+           throw new BusinessException("Sheet Number can not duplicate");
+       }
+    }
 }

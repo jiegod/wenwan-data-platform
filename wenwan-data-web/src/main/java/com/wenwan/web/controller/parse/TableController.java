@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @Slf4j
@@ -48,6 +49,16 @@ public class TableController extends BaseController implements ITableApi {
     @Override
     public APIResponse<SearchResult<TableInfoVo>> tableList(TableInfoVo tableInfoVo) {
         return APIResponse.getOkJsonResult(tableService.tableList(tableInfoVo));
+    }
+
+    @Override
+    public APIResponse<Set<String>> getTableNameList() {
+        return APIResponse.getOkJsonResult(tableService.tableList());
+    }
+
+    @Override
+    public APIResponse<Set<String>> getDbNameList() {
+        return APIResponse.getOkJsonResult(tableService.dbList());
     }
 
     @Override

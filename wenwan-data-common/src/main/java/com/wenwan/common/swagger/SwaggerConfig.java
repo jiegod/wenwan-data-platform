@@ -31,7 +31,7 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.wenwan")) // 指定路径
                 .build()
                 .securitySchemes(securitySchemes())
-                .securityContexts(securityContexts())
+               // .securityContexts(securityContexts()) 暂时关掉 需要用户信息的地方自己打卡
                 ;
     }
 

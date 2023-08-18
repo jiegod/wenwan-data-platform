@@ -30,7 +30,7 @@ public class ParseTaskServiceImpl extends MapperConfigService implements ParseTa
 
     @Autowired
     private SqlSessionTemplate sqlSessionTemplate;
-    @Resource
+    @Autowired(required = false)
     private StorageMapper storageMapper;
 
     @Value("${oracle.flag:false}")

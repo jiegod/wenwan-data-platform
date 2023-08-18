@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.common.exception.BusinessException;
 import com.wenwan.mysql.dao.entity.ColumnInfo;
+import com.wenwan.mysql.dao.entity.ParseRule;
 import com.wenwan.mysql.dao.entity.ParseTableMapping;
 import com.wenwan.mysql.dao.entity.TableInfo;
 import com.wenwan.model.parse.ColumnInfoVo;
@@ -22,8 +23,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +38,11 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
 
     @Override
     public void parseTableMapping(List<ParseTableMappingVo> tableInfoVos) {
+        ParseTableMappingVo.paramCheck(tableInfoVos);
+        Long parseRuleId = tableInfoVos.get(0).getParseRuleId();
+        LambdaQueryWrapper<ParseTableMapping> wrapper = Wrappers.lambdaQuery(ParseTableMapping.class)
+                .eq(ParseTableMapping::getParseRuleId, parseRuleId);
+        parseTableMappingMapper.delete(wrapper);
         tableInfoVos.forEach(parseTableMappingVo -> {
             ParseTableMapping parseTableMapping = new ParseTableMapping();
             BeanUtils.copyProperties(parseTableMappingVo, parseTableMapping);
@@ -45,12 +53,15 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
     }
 
     @Override
+    @Transactional
     public void insertTable(TableInfoVo tableInfoVo) {
         TableInfo tableInfo = new TableInfo();
         BeanUtils.copyProperties(tableInfoVo, tableInfo);
         tableInfo.setOperator(UserStorage.get());
         tableInfo.setOperationDate(StringDateUtil.getToday());
         tableInfoMapper.insert(tableInfo);
+
+        insertColumn(ColumnInfoVo.defaultColumn(tableInfo.getId(), tableInfoVo.getOperator()));
     }
 
     @Override
@@ -69,8 +80,18 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
 
     @Override
     public SearchResult<TableInfoVo> tableList(TableInfoVo tableInfoVo) {
+        List<Long> tableIds = null;
+        if (tableInfoVo.getParseRuleId() != null) {
+            LambdaQueryWrapper<ParseTableMapping> queryWrapper = Wrappers.lambdaQuery(ParseTableMapping.class)
+                    .eq(ParseTableMapping::getParseRuleId, tableInfoVo.getParseRuleId())
+                    .select(ParseTableMapping::getTableId);
+            tableIds = parseTableMappingMapper.selectList(queryWrapper).stream().map(ParseTableMapping::getTableId).collect(Collectors.toList());
+        }
         Page<TableInfo> page = new Page<>(tableInfoVo.getPageNo(), tableInfoVo.getPageSize());
         LambdaQueryWrapper<TableInfo> wrapper = Wrappers.lambdaQuery(TableInfo.class);
+        if (CollectionUtils.isNotEmpty(tableIds)) {
+            wrapper.in(TableInfo::getId, tableIds);
+        }
         addFilter(wrapper, tableInfoVo);
         tableInfoMapper.selectPage(page, wrapper);
         List<TableInfoVo> rows = page.getRecords().stream().map(tableInfo -> {
@@ -87,6 +108,7 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
             log.info("[insertColumn] param empty");
             throw new BusinessException("param is empty");
         }
+        ColumnInfoVo.paramCheck(columnInfoVos);
         TableInfo tableInfo = tableInfoMapper.selectById(columnInfoVos.get(0).getTableId());
         if (tableInfo == null) {
             throw new BusinessException("table is not exit, please check it");
@@ -126,7 +148,7 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
     @Override
     public SearchResult<ColumnInfoVo> columnList(ColumnInfoVo columnInfoVo) {
         Page<ColumnInfo> page = new Page<>(columnInfoVo.getPageNo(), columnInfoVo.getPageSize());
-        LambdaQueryWrapper<ColumnInfo> wrapper = Wrappers.lambdaQuery(ColumnInfo.class);
+        LambdaQueryWrapper<ColumnInfo> wrapper = Wrappers.lambdaQuery(ColumnInfo.class).eq(ColumnInfo::getTableId, columnInfoVo.getTableId());
         columnInfoMapper.selectPage(page, wrapper);
         List<ColumnInfoVo> rows = page.getRecords().stream().map(columnInfo -> {
             ColumnInfoVo resultVo = new ColumnInfoVo();
@@ -151,9 +173,27 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
     }
 
     @Override
+    public Set<String> dbList() {
+        Set<String> result = tableInfoMapper.selectList(Wrappers.lambdaQuery(TableInfo.class).select(TableInfo::getDbName)).stream().map(TableInfo::getDbName).collect(Collectors.toSet());
+        return result;
+    }
+
+    @Override
+    public Set<String> tableList() {
+        Set<String> result = tableInfoMapper.selectList(Wrappers.lambdaQuery(TableInfo.class).select(TableInfo::getTableName)).stream().map(TableInfo::getTableName).collect(Collectors.toSet());
+        return result;
+    }
+
+    @Override
     protected void addFilter(LambdaQueryWrapper<TableInfo> wrapper, TableInfoVo tableInfoVo) {
         if (StringUtils.isNotEmpty(tableInfoVo.getSearch())){
             wrapper.like(TableInfo::getTableName, tableInfoVo.getSearch());
+        }
+        if (StringUtils.isNotEmpty(tableInfoVo.getTableName())){
+            wrapper.like(TableInfo::getTableName, tableInfoVo.getSearch());
+        }
+        if (StringUtils.isNotEmpty(tableInfoVo.getDbName())){
+            wrapper.like(TableInfo::getDbName, tableInfoVo.getSearch());
         }
     }
 }

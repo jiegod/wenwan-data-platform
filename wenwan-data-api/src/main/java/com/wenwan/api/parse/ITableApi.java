@@ -9,14 +9,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @RequestMapping("/api/v1/parse/table")
 @Api(description = "落地表相关api")
 public interface ITableApi {
     @PostMapping("/mapping")
     @ApiOperation("修改解析规则的落地表关联")
-    APIResponse<String> parseTableMapping(@RequestBody List<ParseTableMappingVo> tableInfoVos);
+    APIResponse<String> parseTableMapping(@Valid @RequestBody List<ParseTableMappingVo> tableInfoVos);
 
     @PutMapping("/table/insert")
     @ApiOperation("新增表信息")
@@ -33,6 +35,12 @@ public interface ITableApi {
     @PostMapping("/table/list")
     @ApiOperation("表list")
     APIResponse<SearchResult<TableInfoVo>> tableList(@RequestBody TableInfoVo tableInfoVo);
+
+    @GetMapping("/table/name/list")
+    APIResponse<Set<String>> getTableNameList();
+
+    @GetMapping("/db/name/list")
+    APIResponse<Set<String>> getDbNameList();
 
     @PutMapping("/column/insert")
     @ApiOperation("新增字段信息")

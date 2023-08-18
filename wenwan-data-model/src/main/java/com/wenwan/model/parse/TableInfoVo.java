@@ -10,6 +10,7 @@ import java.util.Date;
 @Data
 public class TableInfoVo extends PageQuery {
     private Long id;
+    private Long parseRuleId;
     @ApiModelProperty("库名")
     @NotBlank(message = "db name is null")
     private String dbName;
