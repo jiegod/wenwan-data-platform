@@ -51,7 +51,7 @@ public class BusinessMapperCwyspStrategy implements BusinessMapperStrategy {
     public SearchResult<LogVo> list(LogVo logVo) {
         Page<BusinessLogCwysp> page = new Page<>(logVo.getPageNo(), logVo.getPageSize());
         LambdaQueryWrapper<BusinessLogCwysp> wrapper = Wrappers.lambdaQuery(BusinessLogCwysp.class)
-                .eq(StringUtils.isNotBlank(logVo.getParseRuleCode()),BusinessLogCwysp::getParseRuleCode, logVo.getParseRuleCode())
+                .eq(logVo.getParseRuleId() != null, BusinessLogCwysp::getParseRuleId, logVo.getParseRuleId())
                 .eq(logVo.getFileId()!=null,BusinessLogCwysp::getFileId, logVo.getFileId())
                 .eq(logVo.getLoadingStatus()!=null,BusinessLogCwysp::getLoadingStatus, logVo.getLoadingStatus())
                 .eq(logVo.getTableStatus()!=null,BusinessLogCwysp::getTableStatus, logVo.getTableStatus())

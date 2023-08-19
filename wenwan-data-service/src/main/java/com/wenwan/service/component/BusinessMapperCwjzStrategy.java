@@ -50,7 +50,7 @@ public class BusinessMapperCwjzStrategy implements BusinessMapperStrategy {
     public SearchResult<LogVo> list(LogVo logVo) {
         Page<BusinessLogCwjz> page = new Page<>(logVo.getPageNo(), logVo.getPageSize());
         LambdaQueryWrapper<BusinessLogCwjz> wrapper = Wrappers.lambdaQuery(BusinessLogCwjz.class)
-                .eq(StringUtils.isNotBlank(logVo.getParseRuleCode()),BusinessLogCwjz::getParseRuleCode, logVo.getParseRuleCode())
+                .eq(logVo.getParseRuleId() != null, BusinessLogCwjz::getParseRuleId, logVo.getParseRuleId())
                 .eq(logVo.getFileId()!=null,BusinessLogCwjz::getFileId, logVo.getFileId())
                 .eq(logVo.getLoadingStatus()!=null,BusinessLogCwjz::getLoadingStatus, logVo.getLoadingStatus())
                 .eq(logVo.getTableStatus()!=null,BusinessLogCwjz::getTableStatus, logVo.getTableStatus())

@@ -11,6 +11,7 @@ import java.util.Date;
 public class TableInfoVo extends PageQuery {
     private Long id;
     private Long parseRuleId;
+    private String order;
     @ApiModelProperty("库名")
     @NotBlank(message = "db name is null")
     private String dbName;

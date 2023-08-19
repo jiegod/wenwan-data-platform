@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wenwan.mysql.dao.dao.*;
 import com.wenwan.mysql.dao.entity.BaseModel;
 import com.wenwan.model.request.ListQuery;
+import com.wenwan.service.api.common.CommonService;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.ExecutorService;
@@ -53,6 +55,10 @@ public class MapperConfigService<T extends BaseModel, V extends ListQuery> exten
     protected BusinessLogDwbzjMapper dwbzjMapper;
     @Autowired
     protected BusinessLogDzdMapper dzdMapper;
+    @Autowired
+    protected SqlSessionTemplate db1SqlSessionTemplate;
+    @Autowired
+    protected CommonService commonService;
 
     @Override
     protected void addFilter(LambdaQueryWrapper<T> wrapper, V baseQuery) {

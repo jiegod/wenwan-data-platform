@@ -6,6 +6,8 @@ import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.ColumnInfoVo;
 import com.wenwan.model.parse.ParseTableMappingVo;
 import com.wenwan.model.parse.TableInfoVo;
+import com.wenwan.model.parse.request.TargetTableQuery;
+import com.wenwan.model.parse.result.TargetTableResult;
 import com.wenwan.service.api.parse.TableService;
 import com.wenwan.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
@@ -52,8 +54,8 @@ public class TableController extends BaseController implements ITableApi {
     }
 
     @Override
-    public APIResponse<Set<String>> getTableNameList() {
-        return APIResponse.getOkJsonResult(tableService.tableList());
+    public APIResponse<Set<String>> getTableNameList(String dbName) {
+        return APIResponse.getOkJsonResult(tableService.tableList(dbName));
     }
 
     @Override
@@ -87,5 +89,15 @@ public class TableController extends BaseController implements ITableApi {
     @Override
     public APIResponse<String> generateDDL(Long tableId) {
         return APIResponse.getOkJsonResult(tableService.generateDDL(tableId));
+    }
+
+    @Override
+    public APIResponse<List<String>> sheetNumbers(Long parseRuleId) {
+        return APIResponse.getOkJsonResult(tableService.sheetNumbers(parseRuleId));
+    }
+
+    @Override
+    public APIResponse<TargetTableResult> pageTargetTable(TargetTableQuery targetTableQuery) {
+        return APIResponse.getOkJsonResult(tableService.pageTargetTable(targetTableQuery));
     }
 }

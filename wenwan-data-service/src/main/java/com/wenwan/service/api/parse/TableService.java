@@ -4,6 +4,8 @@ import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.ColumnInfoVo;
 import com.wenwan.model.parse.ParseTableMappingVo;
 import com.wenwan.model.parse.TableInfoVo;
+import com.wenwan.model.parse.request.TargetTableQuery;
+import com.wenwan.model.parse.result.TargetTableResult;
 
 import java.util.List;
 import java.util.Set;
@@ -30,5 +32,9 @@ public interface TableService {
     String generateDDL(Long tableId);
 
     Set<String> dbList();
-    Set<String> tableList();
+    Set<String> tableList(String dbName);
+
+    List<String> sheetNumbers(Long parseRuleId);
+
+    TargetTableResult pageTargetTable(TargetTableQuery targetTableQuery);
 }

@@ -5,6 +5,8 @@ import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.parse.ColumnInfoVo;
 import com.wenwan.model.parse.ParseTableMappingVo;
 import com.wenwan.model.parse.TableInfoVo;
+import com.wenwan.model.parse.request.TargetTableQuery;
+import com.wenwan.model.parse.result.TargetTableResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +39,7 @@ public interface ITableApi {
     APIResponse<SearchResult<TableInfoVo>> tableList(@RequestBody TableInfoVo tableInfoVo);
 
     @GetMapping("/table/name/list")
-    APIResponse<Set<String>> getTableNameList();
+    APIResponse<Set<String>> getTableNameList(@RequestParam(required = false) String dbName);
 
     @GetMapping("/db/name/list")
     APIResponse<Set<String>> getDbNameList();
@@ -61,4 +63,10 @@ public interface ITableApi {
     @GetMapping("/ddl/generate/{tableId}")
     @ApiOperation("生成建表语句")
     APIResponse<String> generateDDL(@PathVariable Long tableId);
+
+    @GetMapping("/target/table/sheet/numbers")
+    APIResponse<List<String>> sheetNumbers(@RequestParam Long parseRuleId);
+
+    @PostMapping("/target/table/list")
+    APIResponse<TargetTableResult> pageTargetTable(@RequestBody TargetTableQuery targetTableQuery);
 }

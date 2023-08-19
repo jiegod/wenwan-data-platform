@@ -10,6 +10,7 @@ import com.wenwan.mysql.dao.entity.BusinessLog;
 import com.wenwan.mysql.dao.entity.BusinessLogCnsj;
 import com.wenwan.model.parse.BusinessLogVo;
 import com.wenwan.model.parse.request.BusinessLogQuery;
+import com.wenwan.mysql.dao.entity.BusinessLogCwjz;
 import com.wenwan.service.constant.BusinessLogType;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -48,7 +49,7 @@ public class BusinessMapperCnsjStrategy implements BusinessMapperStrategy {
     public SearchResult<LogVo> list(LogVo logVo) {
         Page<BusinessLogCnsj> page = new Page<>(logVo.getPageNo(), logVo.getPageSize());
         LambdaQueryWrapper<BusinessLogCnsj> wrapper = Wrappers.lambdaQuery(BusinessLogCnsj.class)
-                .eq(StringUtils.isNotBlank(logVo.getParseRuleCode()),BusinessLogCnsj::getParseRuleCode, logVo.getParseRuleCode())
+                .eq(logVo.getParseRuleId() != null, BusinessLogCnsj::getParseRuleId, logVo.getParseRuleId())
                 .eq(logVo.getFileId()!=null,BusinessLogCnsj::getFileId, logVo.getFileId())
                 .eq(logVo.getLoadingStatus()!=null,BusinessLogCnsj::getLoadingStatus, logVo.getLoadingStatus())
                 .eq(logVo.getTableStatus()!=null,BusinessLogCnsj::getTableStatus, logVo.getTableStatus())
