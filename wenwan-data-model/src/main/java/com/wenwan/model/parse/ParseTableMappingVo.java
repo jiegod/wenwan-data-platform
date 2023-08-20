@@ -7,10 +7,8 @@ import lombok.Data;
 import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -32,9 +30,20 @@ public class ParseTableMappingVo {
         if (CollectionUtils.isEmpty(parseTables)) {
             throw new BusinessException("parse table list is empty");
         }
-       Map<String, Long> orderCount = parseTables.stream().collect(Collectors.groupingBy(ParseTableMappingVo::getOrder, Collectors.counting()));
-       if(orderCount.values().stream().allMatch(count -> count>1)) {
-           throw new BusinessException("Sheet Number can not duplicate");
-       }
+        parseTables.forEach(parseTableMappingVo -> {
+            if (parseTableMappingVo.getTableId() == null) {
+                throw new BusinessException("Table can not be null");
+            }
+            if (parseTableMappingVo.getParseRuleId() == null) {
+                throw new BusinessException("Rule id can not be null");
+            }
+            if (parseTableMappingVo.getOrder() == null) {
+                throw new BusinessException("Sheet number can not be null");
+            }
+        });
+        Map<String, Long> orderCount = parseTables.stream().collect(Collectors.groupingBy(ParseTableMappingVo::getOrder, Collectors.counting()));
+        if (orderCount.values().stream().allMatch(count -> count > 1)) {
+            throw new BusinessException("Sheet Number can not duplicate");
+        }
     }
 }

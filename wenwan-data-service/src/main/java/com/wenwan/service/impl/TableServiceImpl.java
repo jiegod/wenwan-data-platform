@@ -88,6 +88,9 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
                     .eq(ParseTableMapping::getParseRuleId, tableInfoVo.getParseRuleId())
                     .select(ParseTableMapping::getTableId, ParseTableMapping::getOrder);
             parseTableMappings = parseTableMappingMapper.selectList(queryWrapper);
+            if (CollectionUtils.isEmpty(parseTableMappings)) {
+                return new SearchResult<>(new ArrayList<>(), 0);
+            }
         }
         Page<TableInfo> page = new Page<>(tableInfoVo.getPageNo(), tableInfoVo.getPageSize());
         LambdaQueryWrapper<TableInfo> wrapper = Wrappers.lambdaQuery(TableInfo.class);
