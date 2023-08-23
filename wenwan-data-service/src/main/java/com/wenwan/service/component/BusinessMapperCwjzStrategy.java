@@ -7,9 +7,8 @@ import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.result.LogVo;
 import com.wenwan.mysql.dao.dao.BusinessLogCnsjMapper;
 import com.wenwan.mysql.dao.dao.BusinessLogCwjzMapper;
-import com.wenwan.mysql.dao.entity.BusinessLog;
-import com.wenwan.mysql.dao.entity.BusinessLogCnsj;
-import com.wenwan.mysql.dao.entity.BusinessLogCwjz;
+import com.wenwan.mysql.dao.dao.ResultTableCwjzMapper;
+import com.wenwan.mysql.dao.entity.*;
 import com.wenwan.model.parse.BusinessLogVo;
 import com.wenwan.model.parse.request.BusinessLogQuery;
 import com.wenwan.service.constant.BusinessLogType;
@@ -26,6 +25,9 @@ public class BusinessMapperCwjzStrategy implements BusinessMapperStrategy {
 
     @Autowired
     private BusinessLogCwjzMapper cwjzMapper;
+
+    @Autowired
+    private ResultTableCwjzMapper resultTableCwjzMapper;
 
     @Override
     public SearchResult<BusinessLogVo> fetchPatch(BusinessLogQuery businessLogQuery) {
@@ -55,7 +57,7 @@ public class BusinessMapperCwjzStrategy implements BusinessMapperStrategy {
                 .eq(logVo.getLoadingStatus()!=null,BusinessLogCwjz::getLoadingStatus, logVo.getLoadingStatus())
                 .eq(logVo.getTableStatus()!=null,BusinessLogCwjz::getTableStatus, logVo.getTableStatus())
                 .eq(logVo.getParseStatus()!=null,BusinessLogCwjz::getParseStatus, logVo.getParseStatus())
-                .ge(logVo.getQueryDateStart()!=null,BusinessLogCwjz::getOperationDate, logVo.getParseStatus())
+                .ge(logVo.getQueryDateStart()!=null,BusinessLogCwjz::getOperationDate, logVo.getQueryDateStart())
                 .le(logVo.getQueryDateEnd()!=null,BusinessLogCwjz::getOperationDate, logVo.getQueryDateEnd())
                 ;
         Page<BusinessLogCwjz> result = cwjzMapper.selectPage(page, wrapper);
@@ -70,5 +72,10 @@ public class BusinessMapperCwjzStrategy implements BusinessMapperStrategy {
     @Override
     public BusinessLog getBusinessLog(Long businessLogId) {
         return cwjzMapper.selectById(businessLogId);
+    }
+
+    @Override
+    public ResultTable getResultTable(Long fileId) {
+        return resultTableCwjzMapper.selectOne(Wrappers.lambdaQuery(ResultTableCwjz.class).eq(ResultTableCwjz::getFileId, fileId).orderByDesc(ResultTableCwjz::getId).last("limit 1"));
     }
 }

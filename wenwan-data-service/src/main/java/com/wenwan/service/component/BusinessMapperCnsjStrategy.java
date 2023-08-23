@@ -4,15 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenwan.common.api.SearchResult;
-import com.wenwan.model.result.LogVo;
-import com.wenwan.mysql.dao.dao.BusinessLogCnsjMapper;
-import com.wenwan.mysql.dao.entity.BusinessLog;
-import com.wenwan.mysql.dao.entity.BusinessLogCnsj;
 import com.wenwan.model.parse.BusinessLogVo;
 import com.wenwan.model.parse.request.BusinessLogQuery;
-import com.wenwan.mysql.dao.entity.BusinessLogCwjz;
+import com.wenwan.model.result.LogVo;
+import com.wenwan.mysql.dao.dao.BusinessLogCnsjMapper;
+import com.wenwan.mysql.dao.dao.ResultTableCnsjMapper;
+import com.wenwan.mysql.dao.entity.BusinessLog;
+import com.wenwan.mysql.dao.entity.BusinessLogCnsj;
+import com.wenwan.mysql.dao.entity.ResultTable;
+import com.wenwan.mysql.dao.entity.ResultTableCnsj;
 import com.wenwan.service.constant.BusinessLogType;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,9 @@ public class BusinessMapperCnsjStrategy implements BusinessMapperStrategy {
 
     @Autowired
     private BusinessLogCnsjMapper cnsjMapper;
+
+    @Autowired
+    private ResultTableCnsjMapper resultTableCnsjMapper;
 
     @Override
     public SearchResult<BusinessLogVo> fetchPatch(BusinessLogQuery businessLogQuery) {
@@ -54,7 +58,7 @@ public class BusinessMapperCnsjStrategy implements BusinessMapperStrategy {
                 .eq(logVo.getLoadingStatus()!=null,BusinessLogCnsj::getLoadingStatus, logVo.getLoadingStatus())
                 .eq(logVo.getTableStatus()!=null,BusinessLogCnsj::getTableStatus, logVo.getTableStatus())
                 .eq(logVo.getParseStatus()!=null,BusinessLogCnsj::getParseStatus, logVo.getParseStatus())
-                .ge(logVo.getQueryDateStart()!=null,BusinessLogCnsj::getOperationDate, logVo.getParseStatus())
+                .ge(logVo.getQueryDateStart()!=null,BusinessLogCnsj::getOperationDate, logVo.getQueryDateStart())
                 .le(logVo.getQueryDateEnd()!=null,BusinessLogCnsj::getOperationDate, logVo.getQueryDateEnd())
                 ;
         Page<BusinessLogCnsj> result = cnsjMapper.selectPage(page, wrapper);
@@ -69,5 +73,10 @@ public class BusinessMapperCnsjStrategy implements BusinessMapperStrategy {
     @Override
     public BusinessLog getBusinessLog(Long businessLogId) {
         return cnsjMapper.selectById(businessLogId);
+    }
+
+    @Override
+    public ResultTable getResultTable(Long fileId) {
+        return resultTableCnsjMapper.selectOne(Wrappers.lambdaQuery(ResultTableCnsj.class).eq(ResultTableCnsj::getFileId, fileId).orderByDesc(ResultTableCnsj::getId).last("limit 1"));
     }
 }

@@ -23,4 +23,8 @@ public interface ILogApi {
     @PostMapping("/re-parse/{businessLog}/{businessLogId}")
     @ApiOperation("重跑任务组")
     APIResponse<Void> reParse(@PathVariable("businessLog") String businessLog,@PathVariable("businessLogId") Long businessLogId);
+
+    @GetMapping("/resultTable/{businessLog}/{fileId}")
+    @ApiOperation("重跑任务组")
+    APIResponse<String> resultTable(@PathVariable("businessLog") String businessLog,@PathVariable("fileId") Long fileId);
 }

@@ -33,4 +33,9 @@ public class LogController extends BaseController implements ILogApi {
         logService.reParse(businessLog,businessLogId);
         return APIResponse.getOkJsonResult();
     }
+
+    @Override
+    public APIResponse<String> resultTable(String businessLog, Long fileId) {
+        return APIResponse.getOkJsonResult(logService.resultTable(businessLog,fileId));
+    }
 }

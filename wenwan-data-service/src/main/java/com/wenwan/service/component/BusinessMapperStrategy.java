@@ -5,6 +5,7 @@ import com.wenwan.model.parse.BusinessLogVo;
 import com.wenwan.model.parse.request.BusinessLogQuery;
 import com.wenwan.model.result.LogVo;
 import com.wenwan.mysql.dao.entity.BusinessLog;
+import com.wenwan.mysql.dao.entity.ResultTable;
 import com.wenwan.service.constant.BusinessLogType;
 
 public interface BusinessMapperStrategy {
@@ -16,4 +17,6 @@ public interface BusinessMapperStrategy {
     SearchResult<LogVo> list(LogVo logVo);
 
     BusinessLog getBusinessLog(Long businessLogId);
+
+    ResultTable getResultTable(Long fileId);
 }

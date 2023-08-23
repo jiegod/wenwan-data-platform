@@ -6,10 +6,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.model.result.LogVo;
 import com.wenwan.mysql.dao.dao.BusinessLogDzdMapper;
-import com.wenwan.mysql.dao.entity.BusinessLog;
-import com.wenwan.mysql.dao.entity.BusinessLogCnsj;
-import com.wenwan.mysql.dao.entity.BusinessLogCwjz;
-import com.wenwan.mysql.dao.entity.BusinessLogDzd;
+import com.wenwan.mysql.dao.dao.ResultTableDwbzjMapper;
+import com.wenwan.mysql.dao.dao.ResultTableDzdMapper;
+import com.wenwan.mysql.dao.entity.*;
 import com.wenwan.model.parse.BusinessLogVo;
 import com.wenwan.model.parse.request.BusinessLogQuery;
 import com.wenwan.service.constant.BusinessLogType;
@@ -27,6 +26,9 @@ public class BusinessMapperDzdStrategy implements BusinessMapperStrategy {
 
     @Autowired
     private BusinessLogDzdMapper dzdMapper;
+
+    @Autowired
+    private ResultTableDzdMapper resultTableDzdMapper;
 
     @Override
     public SearchResult<BusinessLogVo> fetchPatch(BusinessLogQuery businessLogQuery) {
@@ -56,7 +58,7 @@ public class BusinessMapperDzdStrategy implements BusinessMapperStrategy {
                 .eq(logVo.getLoadingStatus()!=null,BusinessLogDzd::getLoadingStatus, logVo.getLoadingStatus())
                 .eq(logVo.getTableStatus()!=null,BusinessLogDzd::getTableStatus, logVo.getTableStatus())
                 .eq(logVo.getParseStatus()!=null,BusinessLogDzd::getParseStatus, logVo.getParseStatus())
-                .ge(logVo.getQueryDateStart()!=null,BusinessLogDzd::getOperationDate, logVo.getParseStatus())
+                .ge(logVo.getQueryDateStart()!=null,BusinessLogDzd::getOperationDate, logVo.getQueryDateStart())
                 .le(logVo.getQueryDateEnd()!=null,BusinessLogDzd::getOperationDate, logVo.getQueryDateEnd())
                 ;
         Page<BusinessLogDzd> result = dzdMapper.selectPage(page, wrapper);
@@ -71,5 +73,10 @@ public class BusinessMapperDzdStrategy implements BusinessMapperStrategy {
     @Override
     public BusinessLog getBusinessLog(Long businessLogId) {
         return dzdMapper.selectById(businessLogId);
+    }
+
+    @Override
+    public ResultTable getResultTable(Long fileId) {
+        return resultTableDzdMapper.selectOne(Wrappers.lambdaQuery(ResultTableDzd.class).eq(ResultTableDzd::getFileId, fileId).orderByDesc(ResultTableDzd::getId).last("limit 1"));
     }
 }

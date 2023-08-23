@@ -11,4 +11,6 @@ public interface LogService {
    SearchResult<SqlLogVo> sqlLogList(SqlLogVo sqlLogVo);
 
     void reParse(String businessLog, Long businessLogId);
+
+    String resultTable(String businessLog, Long fileId);
 }

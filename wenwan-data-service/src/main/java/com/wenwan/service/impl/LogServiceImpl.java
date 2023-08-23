@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.wenwan.common.api.SearchResult;
 import com.wenwan.mysql.dao.entity.BusinessLog;
+import com.wenwan.mysql.dao.entity.ResultTable;
 import com.wenwan.mysql.dao.entity.SqlLog;
 import com.wenwan.model.result.LogVo;
 import com.wenwan.model.result.SqlLogVo;
@@ -54,11 +55,18 @@ public class LogServiceImpl extends MapperConfigService<SqlLog, SqlLogVo> implem
         parseTaskService.parseTask(bl);
     }
 
+    @Override
+    public String resultTable(String businessLog, Long fileId) {
+        ResultTable resultTable = businessLogMap.get(BusinessLogType.valueOf(businessLog)).getResultTable(fileId);
+        if(resultTable!=null){
+            return resultTable.getContent();
+        }
+        return null;
+    }
+
 
     @Override
     protected void addFilter(LambdaQueryWrapper<SqlLog> wrapper, SqlLogVo sqlLogVo) {
-        if (StringUtils.isNotBlank(sqlLogVo.getTaskSqlCode())) {
-            wrapper.like(SqlLog::getTaskSqlCode, sqlLogVo.getTaskSqlCode());
-        }
+        wrapper.eq(sqlLogVo.getFileId()!=null,SqlLog::getFileId, sqlLogVo.getFileId());
     }
 }

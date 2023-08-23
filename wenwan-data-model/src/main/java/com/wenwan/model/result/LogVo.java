@@ -18,8 +18,6 @@ public class LogVo extends PageQuery {
     private Long fileId;
     @ApiModelProperty("业务表")
     private String businessLog;
-    @ApiModelProperty("bus_log表名")
-    private String businessLogName;
     @ApiModelProperty("附件名")
     private String fileName;
     @ApiModelProperty("附件路径")
