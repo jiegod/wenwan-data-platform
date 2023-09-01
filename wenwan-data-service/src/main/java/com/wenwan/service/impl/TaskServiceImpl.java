@@ -33,6 +33,9 @@ public class TaskServiceImpl extends MapperConfigService<TaskGroup, TaskGroupVo>
     public int insertGroup(TaskGroupVo taskGroupVo) {
         TaskGroup taskGroup = new TaskGroup();
         BeanUtils.copyProperties(taskGroupVo, taskGroup);
+        if (taskGroup.getParseRuleId() == null) {
+            throw new BusinessException("Task Group Rule Id Is Null");
+        }
         taskGroup.setOperator(UserStorage.get());
         taskGroup.setOperationDate(StringDateUtil.getToday());
         return taskGroupMapper.insert(taskGroup);
@@ -75,6 +78,9 @@ public class TaskServiceImpl extends MapperConfigService<TaskGroup, TaskGroupVo>
             throw new BusinessException("task group not exit, please check");
         }
         TaskSql taskSql = new TaskSql();
+        if (taskSqlVo.getTaskGroupCode() == null) {
+            throw new BusinessException("sql group id is null");
+        }
         BeanUtils.copyProperties(taskSqlVo, taskSql);
         taskSql.setOperator(UserStorage.get());
         taskSql.setOperationDate(StringDateUtil.getToday());
@@ -85,6 +91,12 @@ public class TaskServiceImpl extends MapperConfigService<TaskGroup, TaskGroupVo>
         taskSqlVo.getTaskSqlParamVos().forEach(taskSqlParamVo -> {
             TaskSqlParam taskSqlParam = new TaskSqlParam();
             BeanUtils.copyProperties(taskSqlParamVo, taskSqlParam);
+            if (StringUtils.isEmpty(taskSqlParam.getKey())) {
+                throw new BusinessException("sql param key is null");
+            }
+            if (taskSqlParam.getTaskSqlId() == null) {
+                throw new BusinessException("sql param sql id is null");
+            }
             taskSqlParam.setTaskSqlId(taskSql.getId());
             taskSqlParam.setOperator(UserStorage.get());
             taskSqlParam.setOperationDate(StringDateUtil.getToday());
@@ -142,6 +154,9 @@ public class TaskServiceImpl extends MapperConfigService<TaskGroup, TaskGroupVo>
     protected void addFilter(LambdaQueryWrapper<TaskGroup> wrapper, TaskGroupVo taskGroupVo) {
         if (StringUtils.isNotEmpty(taskGroupVo.getSearch())){
             wrapper.like(TaskGroup::getName, taskGroupVo.getName());
+        }
+        if (taskGroupVo != null && taskGroupVo.getParseRuleId() != null) {
+            wrapper.eq(TaskGroup::getParseRuleId, taskGroupVo.getParseRuleId());
         }
     }
 }

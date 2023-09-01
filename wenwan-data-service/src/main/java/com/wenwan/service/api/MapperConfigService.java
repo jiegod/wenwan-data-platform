@@ -5,6 +5,7 @@ import com.wenwan.mysql.dao.dao.*;
 import com.wenwan.mysql.dao.entity.BaseModel;
 import com.wenwan.model.request.ListQuery;
 import com.wenwan.service.api.common.CommonService;
+import com.wenwan.service.impl.ExcelUtils;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -59,6 +60,8 @@ public class MapperConfigService<T extends BaseModel, V extends ListQuery> exten
     protected SqlSessionTemplate db1SqlSessionTemplate;
     @Autowired
     protected CommonService commonService;
+    @Autowired
+    protected ExcelUtils excelUtils;
 
     @Override
     protected void addFilter(LambdaQueryWrapper<T> wrapper, V baseQuery) {

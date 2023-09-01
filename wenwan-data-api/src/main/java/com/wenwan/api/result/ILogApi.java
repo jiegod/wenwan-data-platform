@@ -6,6 +6,8 @@ import com.wenwan.model.result.LogVo;
 import com.wenwan.model.result.SqlLogVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,4 +29,7 @@ public interface ILogApi {
     @GetMapping("/resultTable/{businessLog}/{fileId}")
     @ApiOperation("重跑任务组")
     APIResponse<String> resultTable(@PathVariable("businessLog") String businessLog,@PathVariable("fileId") Long fileId);
+
+    @GetMapping("/download/source/file")
+    ResponseEntity<Resource> downloadFile(@RequestParam String businessLog, @RequestParam Long businessLogId);
 }

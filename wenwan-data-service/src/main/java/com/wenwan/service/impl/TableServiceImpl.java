@@ -1,6 +1,7 @@
 package com.wenwan.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -143,17 +144,10 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
 
     @Override
     public void updateColumn(List<ColumnInfoVo> columnInfoVos) {
-        LambdaQueryWrapper<ColumnInfo> wrapper = Wrappers.lambdaQuery(ColumnInfo.class).
-                eq(ColumnInfo::getTableId, columnInfoVos.get(0).getTableId());
-        columnInfoMapper.delete(wrapper);
         columnInfoVos.forEach(columnInfoVo -> {
-            insertThreadPool.submit(() -> {
-                ColumnInfo columnInfo = new ColumnInfo();
-                BeanUtils.copyProperties(columnInfoVo, columnInfo);
-                columnInfo.setOperator(UserStorage.get());
-                columnInfo.setOperationDate(StringDateUtil.getToday());
-                columnInfoMapper.insert(columnInfo);
-            });
+            LambdaUpdateWrapper<ColumnInfo> wrapper = Wrappers.lambdaUpdate(ColumnInfo.class).
+                    eq(ColumnInfo::getId, columnInfoVo.getId());
+            columnInfoMapper.update(null, wrapper);
         });
     }
 
@@ -241,18 +235,18 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
 
     private String getSql(String db, String table, Integer pageNo, Integer pageSize) {
         Integer from = (pageNo - 1) * pageSize;
-        return "select * from " + db+ "." + table + " limit "+ pageNo + "," + pageSize;
+        return "select * from " + db + "." + table + " limit " + pageNo + "," + pageSize;
     }
 
     @Override
     protected void addFilter(LambdaQueryWrapper<TableInfo> wrapper, TableInfoVo tableInfoVo) {
-        if (StringUtils.isNotEmpty(tableInfoVo.getSearch())){
+        if (StringUtils.isNotEmpty(tableInfoVo.getSearch())) {
             wrapper.like(TableInfo::getTableName, tableInfoVo.getSearch()).or().like(TableInfo::getDbName, tableInfoVo.getSearch());
         }
-        if (StringUtils.isNotEmpty(tableInfoVo.getTableName())){
+        if (StringUtils.isNotEmpty(tableInfoVo.getTableName())) {
             wrapper.eq(TableInfo::getTableName, tableInfoVo.getSearch());
         }
-        if (StringUtils.isNotEmpty(tableInfoVo.getDbName())){
+        if (StringUtils.isNotEmpty(tableInfoVo.getDbName())) {
             wrapper.eq(TableInfo::getDbName, tableInfoVo.getDbName());
         }
     }

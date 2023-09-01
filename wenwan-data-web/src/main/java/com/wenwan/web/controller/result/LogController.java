@@ -9,6 +9,8 @@ import com.wenwan.service.api.result.LogService;
 import com.wenwan.web.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -37,5 +39,10 @@ public class LogController extends BaseController implements ILogApi {
     @Override
     public APIResponse<String> resultTable(String businessLog, Long fileId) {
         return APIResponse.getOkJsonResult(logService.resultTable(businessLog,fileId));
+    }
+
+    @Override
+    public ResponseEntity<Resource> downloadFile(String businessLog, Long businessLogId) {
+        return logService.downloadFile(businessLog, businessLogId);
     }
 }

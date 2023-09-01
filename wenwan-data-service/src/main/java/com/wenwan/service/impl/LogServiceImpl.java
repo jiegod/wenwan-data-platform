@@ -16,8 +16,14 @@ import com.wenwan.service.component.BusinessMapperStrategy;
 import com.wenwan.service.constant.BusinessLogType;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,7 +58,7 @@ public class LogServiceImpl extends MapperConfigService<SqlLog, SqlLogVo> implem
     @Override
     public void reParse(String businessLog, Long businessLogId) {
         BusinessLog bl = businessLogMap.get(BusinessLogType.valueOf(businessLog)).getBusinessLog(businessLogId);
-        parseTaskService.parseTask(bl);
+        parseTaskService.parseTask(bl.getParseRuleCode(), bl.getFileId(), bl.getParseRuleId());
     }
 
     @Override
@@ -62,6 +68,23 @@ public class LogServiceImpl extends MapperConfigService<SqlLog, SqlLogVo> implem
             return resultTable.getContent();
         }
         return null;
+    }
+
+    @Override
+    public ResponseEntity<Resource> downloadFile(String businessLog, Long businessLogId) {
+        BusinessLog log = businessLogMap.get(BusinessLogType.valueOf(businessLog)).getBusinessLog(businessLogId);
+        String filePath = log.getFilePath();
+        Path file = Paths.get(filePath);
+
+        try {
+            Resource resource = new UrlResource(file.toUri());
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        }
     }
 
 
