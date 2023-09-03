@@ -143,8 +143,13 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
     @Override
     public void updateColumn(List<ColumnInfoVo> columnInfoVos) {
         columnInfoVos.forEach(columnInfoVo -> {
-            LambdaUpdateWrapper<ColumnInfo> wrapper = Wrappers.lambdaUpdate(ColumnInfo.class).
-                    eq(ColumnInfo::getId, columnInfoVo.getId());
+            LambdaUpdateWrapper<ColumnInfo> wrapper = Wrappers.lambdaUpdate(ColumnInfo.class)
+                    .eq(ColumnInfo::getId, columnInfoVo.getId())
+                    .set(ColumnInfo::getName, columnInfoVo.getName())
+                    .set(ColumnInfo::getLength, columnInfoVo.getLength())
+                    .set(ColumnInfo::getComment, columnInfoVo.getComment())
+                    .set(ColumnInfo::getOperator, UserStorage.get())
+                    .set(ColumnInfo::getType, columnInfoVo.getType());
             columnInfoMapper.update(null, wrapper);
         });
     }
@@ -203,10 +208,10 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
     }
 
     @Override
-    public TargetTableResult pageTargetTable(TargetTableQuery targetTableQuery) {
+    public TargetTableResult pageTargetTable(TargetTableQuery query) {
         LambdaQueryWrapper<ParseTableMapping> queryWrapper = Wrappers.lambdaQuery(ParseTableMapping.class)
-                .eq(ParseTableMapping::getParseRuleId, targetTableQuery.getParseRuleId())
-                .eq(ParseTableMapping::getOrder, targetTableQuery.getOrder())
+                .eq(ParseTableMapping::getParseRuleId, query.getParseRuleId())
+                .eq(ParseTableMapping::getOrder, query.getOrder())
                 .select(ParseTableMapping::getTableId);
         ParseTableMapping parseTableMapping = parseTableMappingMapper.selectOne(queryWrapper);
         if (parseTableMapping == null) {
@@ -216,18 +221,24 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
         if (tableInfo == null) {
             throw new BusinessException("Can not get table info, System error");
         }
-        List<ColumnInfo> columnInfo = columnInfoMapper.selectList(Wrappers.lambdaQuery(ColumnInfo.class).eq(ColumnInfo::getTableId, parseTableMapping.getTableId()));
-        if (CollectionUtils.isEmpty(columnInfo)) {
-            throw new BusinessException("Please fill the column info, column is empty");
-        }
         TargetTableResult result = new TargetTableResult();
-        result.setHeader(columnInfo.stream().map(ColumnInfo::getName).collect(Collectors.toSet()));
+        List<Map<String, String>> dataResult = commonService.executeDynamicQuery(getSql(tableInfo.getDbName(), tableInfo.getTableName(), query.getPageNo(), query.getPageSize()));
+        result.setRows(dataResult);
+        if (CollectionUtils.isNotEmpty(dataResult)) {
+            result.setHeader(dataResult.get(0).keySet());
+        } else {
+            List<ColumnInfo> columnInfo = columnInfoMapper.selectList(Wrappers.lambdaQuery(ColumnInfo.class).eq(ColumnInfo::getTableId, parseTableMapping.getTableId()));
+            if (CollectionUtils.isEmpty(columnInfo)) {
+                throw new BusinessException("Please fill the column info, column is empty");
+            }
+            result.setHeader(columnInfo.stream().map(ColumnInfo::getName).collect(Collectors.toSet()));
+
+        }
         int size = commonService.count(tableInfo.getDbName(), tableInfo.getTableName());
 
-        result.setRows(commonService.executeDynamicQuery(getSql(tableInfo.getDbName(), tableInfo.getTableName(), targetTableQuery.getPageNo(), targetTableQuery.getPageSize())));
         result.setSize(size);
-        result.setPageNo(targetTableQuery.getPageNo());
-        result.setPageSize(targetTableQuery.getPageSize());
+        result.setPageNo(query.getPageNo());
+        result.setPageSize(query.getPageSize());
         return result;
     }
 
