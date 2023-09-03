@@ -11,5 +11,5 @@ public interface BusinessLogCwyspMapper extends BaseMapper<BusinessLogCwysp> {
     BusinessLogCwysp getUnStartOneRow();
 
     @Select("select * from business_log_cwysp where table_status = 2 and parse_status = 0 limit 1 for update")
-    BusinessLogCnsj getUnStartParseTaskOneRow();
+    BusinessLogCwysp getUnStartParseTaskOneRow();
 }

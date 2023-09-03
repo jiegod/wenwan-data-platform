@@ -9,7 +9,6 @@ import com.wenwan.mysql.dao.entity.*;
 import com.wenwan.oracle.dao.StorageMapper;
 import com.wenwan.service.api.MapperConfigService;
 import com.wenwan.service.api.parse.ParseTaskService;
-import com.wenwan.service.util.AsyncExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +19,8 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -120,27 +116,137 @@ public class ParseTaskServiceImpl extends MapperConfigService implements ParseTa
 
     @Override
     public void cwjzFullParse() {
-
+        while (true) {
+            BusinessLogCwjz businessLog = cwjzMapper.getUnStartParseTaskOneRow();
+            if (businessLog == null) {
+                return;
+            }
+            try {
+                LambdaUpdateWrapper<BusinessLogCwjz> wrapper = Wrappers.lambdaUpdate(BusinessLogCwjz.class)
+                        .set(BusinessLog::getParseStatus, 1)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                cwjzMapper.update(null, wrapper);
+                parseTask(businessLog.getParseRuleCode(), businessLog.getFileId(), businessLog.getParseRuleId());
+                LambdaUpdateWrapper<BusinessLogCwjz> success = Wrappers.lambdaUpdate(BusinessLogCwjz.class)
+                        .set(BusinessLog::getParseStatus, 2)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                cwjzMapper.update(null, success);
+            } catch (Exception e) {
+                log.error("cnsjFullParse error.", e);
+                LambdaUpdateWrapper<BusinessLogCwjz> wrapper = Wrappers.lambdaUpdate(BusinessLogCwjz.class)
+                        .set(BusinessLog::getParseStatus, 3)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                cwjzMapper.update(null, wrapper);
+            }
+        }
     }
 
     @Override
     public void cwqrdFullParse() {
-
+        while (true) {
+            BusinessLogCwqrd businessLog = cwqrdMapper.getUnStartParseTaskOneRow();
+            if (businessLog == null) {
+                return;
+            }
+            try {
+                LambdaUpdateWrapper<BusinessLogCwqrd> wrapper = Wrappers.lambdaUpdate(BusinessLogCwqrd.class)
+                        .set(BusinessLog::getParseStatus, 1)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                cwqrdMapper.update(null, wrapper);
+                parseTask(businessLog.getParseRuleCode(), businessLog.getFileId(), businessLog.getParseRuleId());
+                LambdaUpdateWrapper<BusinessLogCwqrd> success = Wrappers.lambdaUpdate(BusinessLogCwqrd.class)
+                        .set(BusinessLog::getParseStatus, 2)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                cwqrdMapper.update(null, success);
+            } catch (Exception e) {
+                log.error("cnsjFullParse error.", e);
+                LambdaUpdateWrapper<BusinessLogCwqrd> wrapper = Wrappers.lambdaUpdate(BusinessLogCwqrd.class)
+                        .set(BusinessLog::getParseStatus, 3)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                cwqrdMapper.update(null, wrapper);
+            }
+        }
     }
 
     @Override
     public void cwyspFullParse() {
-
+        while (true) {
+            BusinessLogCwysp businessLog = cwyspMapper.getUnStartParseTaskOneRow();
+            if (businessLog == null) {
+                return;
+            }
+            try {
+                LambdaUpdateWrapper<BusinessLogCwysp> wrapper = Wrappers.lambdaUpdate(BusinessLogCwysp.class)
+                        .set(BusinessLog::getParseStatus, 1)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                cwyspMapper.update(null, wrapper);
+                parseTask(businessLog.getParseRuleCode(), businessLog.getFileId(), businessLog.getParseRuleId());
+                LambdaUpdateWrapper<BusinessLogCwysp> success = Wrappers.lambdaUpdate(BusinessLogCwysp.class)
+                        .set(BusinessLog::getParseStatus, 2)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                cwyspMapper.update(null, success);
+            } catch (Exception e) {
+                log.error("cnsjFullParse error.", e);
+                LambdaUpdateWrapper<BusinessLogCwysp> wrapper = Wrappers.lambdaUpdate(BusinessLogCwysp.class)
+                        .set(BusinessLog::getParseStatus, 3)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                cwyspMapper.update(null, wrapper);
+            }
+        }
     }
 
     @Override
     public void dwbzjFullParse() {
-
+        while (true) {
+            BusinessLogDwbzj businessLog = dwbzjMapper.getUnStartParseTaskOneRow();
+            if (businessLog == null) {
+                return;
+            }
+            try {
+                LambdaUpdateWrapper<BusinessLogDwbzj> wrapper = Wrappers.lambdaUpdate(BusinessLogDwbzj.class)
+                        .set(BusinessLog::getParseStatus, 1)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                dwbzjMapper.update(null, wrapper);
+                parseTask(businessLog.getParseRuleCode(), businessLog.getFileId(), businessLog.getParseRuleId());
+                LambdaUpdateWrapper<BusinessLogDwbzj> success = Wrappers.lambdaUpdate(BusinessLogDwbzj.class)
+                        .set(BusinessLog::getParseStatus, 2)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                dwbzjMapper.update(null, success);
+            } catch (Exception e) {
+                log.error("cnsjFullParse error.", e);
+                LambdaUpdateWrapper<BusinessLogDwbzj> wrapper = Wrappers.lambdaUpdate(BusinessLogDwbzj.class)
+                        .set(BusinessLog::getParseStatus, 3)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                dwbzjMapper.update(null, wrapper);
+            }
+        }
     }
 
     @Override
     public void dzdFullParse() {
-
+        while (true) {
+            BusinessLogDzd businessLog = dzdMapper.getUnStartParseTaskOneRow();
+            if (businessLog == null) {
+                return;
+            }
+            try {
+                LambdaUpdateWrapper<BusinessLogDzd> wrapper = Wrappers.lambdaUpdate(BusinessLogDzd.class)
+                        .set(BusinessLog::getParseStatus, 1)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                dzdMapper.update(null, wrapper);
+                parseTask(businessLog.getParseRuleCode(), businessLog.getFileId(), businessLog.getParseRuleId());
+                LambdaUpdateWrapper<BusinessLogDzd> success = Wrappers.lambdaUpdate(BusinessLogDzd.class)
+                        .set(BusinessLog::getParseStatus, 2)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                dzdMapper.update(null, success);
+            } catch (Exception e) {
+                log.error("cnsjFullParse error.", e);
+                LambdaUpdateWrapper<BusinessLogDzd> wrapper = Wrappers.lambdaUpdate(BusinessLogDzd.class)
+                        .set(BusinessLog::getParseStatus, 3)
+                        .eq(BusinessLog::getId, businessLog.getId());
+                dzdMapper.update(null, wrapper);
+            }
+        }
     }
 
     private void pre(List<TaskSql> taskSqls, String parseRuleCode, Long fileId, Long parseRuleId) {
@@ -182,14 +288,11 @@ public class ParseTaskServiceImpl extends MapperConfigService implements ParseTa
             sql = sql.replace("&{FILE_ID}", String.valueOf(fileId));
             executeSql(taskSql, sql, parseRuleCode, fileId, parseRuleId);
         } else {
-            Map<Integer, List<TaskSqlParam>> map = taskSqlParams.stream().collect(Collectors.groupingBy(TaskSqlParam::getGroup));
             sql = sql.replace("&{FILE_ID}", String.valueOf(fileId));
-            for (Map.Entry<Integer, List<TaskSqlParam>> entry : map.entrySet()) {
+            for (TaskSqlParam taskSqlParam : taskSqlParams) {
                 String subSql = sql;
-                for (TaskSqlParam taskSqlParam : entry.getValue()) {
-                    subSql = subSql.replace("${" + taskSqlParam.getKey() + "}", taskSqlParam.getValue());
-                    executeSql(taskSql, sql, parseRuleCode, fileId, parseRuleId);
-                }
+                subSql = subSql.replace("${" + taskSqlParam.getKey() + "}", taskSqlParam.getValue());
+                executeSql(taskSql, subSql, parseRuleCode, fileId, parseRuleId);
             }
         }
         return true;

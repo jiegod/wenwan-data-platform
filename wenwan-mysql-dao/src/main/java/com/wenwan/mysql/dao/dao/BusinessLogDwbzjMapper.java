@@ -10,5 +10,5 @@ public interface BusinessLogDwbzjMapper extends BaseMapper<BusinessLogDwbzj> {
     BusinessLogDwbzj getUnStartOneRow();
 
     @Select("select * from business_log_dwbzj where table_status = 2 and parse_status = 0 limit 1 for update")
-    BusinessLogCnsj getUnStartParseTaskOneRow();
+    BusinessLogDwbzj getUnStartParseTaskOneRow();
 }
