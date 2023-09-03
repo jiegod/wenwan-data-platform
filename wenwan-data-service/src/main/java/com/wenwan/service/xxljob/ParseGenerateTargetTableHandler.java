@@ -18,7 +18,6 @@ import java.util.concurrent.Executors;
 public class ParseGenerateTargetTableHandler extends IJobHandler {
     @Autowired
     private XxlJobConfig xxlJobConfig;
-    private static final ExecutorService targetTableThreadPool = Executors.newFixedThreadPool(10);
 
     @Autowired
     private GenerateTargetTableService parseTableService;
@@ -29,57 +28,7 @@ public class ParseGenerateTargetTableHandler extends IJobHandler {
         log.info("parse generate target table job run, param: {}", param);
         XxlJobLogger.log("XXL-JOB-ANNOTATION, parseTableHandler.");
         //不指定参数全量跑
-        if (StringUtils.isEmpty(param)) {
-            targetTableThreadPool.submit(() -> {
-                parseTableService.cnsjFullParse();
-            });
-            targetTableThreadPool.submit(() -> {
-                parseTableService.cwjzFullParse();
-            });
-            targetTableThreadPool.submit(() -> {
-                parseTableService.cwqrdFullParse();
-            });
-            targetTableThreadPool.submit(() -> {
-                parseTableService.cwyspFullParse();
-            });
-            targetTableThreadPool.submit(() -> {
-                parseTableService.dwbzjFullParse();
-            });
-            targetTableThreadPool.submit(() -> {
-                parseTableService.dzdFullParse();
-            });
-        } else {
-            if ("cnsj".equals(param)) {
-                targetTableThreadPool.submit(() -> {
-                    parseTableService.cnsjFullParse();
-                });
-            }
-            if ("cwjz".equals(param)) {
-                targetTableThreadPool.submit(() -> {
-                    parseTableService.cwjzFullParse();
-                });
-            }
-            if ("cwqrd".equals(param)) {
-                targetTableThreadPool.submit(() -> {
-                    parseTableService.cwqrdFullParse();
-                });
-            }
-            if ("cwysp".equals(param)) {
-                targetTableThreadPool.submit(() -> {
-                    parseTableService.cwyspFullParse();
-                });
-            }
-            if ("dwbzj".equals(param)) {
-                targetTableThreadPool.submit(() -> {
-                    parseTableService.dwbzjFullParse();
-                });
-            }
-            if ("dzd".equals(param)) {
-                targetTableThreadPool.submit(() -> {
-                    parseTableService.dzdFullParse();
-                });
-            }
-        }
+        parseTableService.fullPath(param);
         return ReturnT.SUCCESS;
     }
 

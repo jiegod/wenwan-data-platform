@@ -15,6 +15,8 @@ public class TaskSqlVo extends PageQuery {
     private String code;
     @ApiModelProperty("任务组名称编号")
     private String taskGroupCode;
+    @ApiModelProperty
+    private Long taskGroupId;
     @ApiModelProperty("SQL类型")
     private SqlType type;
     @ApiModelProperty("状态,0-启动，1-禁用")
@@ -30,5 +32,5 @@ public class TaskSqlVo extends PageQuery {
 
     //param mapping
     @ApiModelProperty("sql关联的参数组")
-    private List<List<TaskSqlParamVo>> taskSqlParamVos;
+    private List<TaskSqlParamVo> taskSqlParamVos;
 }

@@ -11,6 +11,7 @@ import com.wenwan.service.api.MapperConfigService;
 import com.wenwan.service.api.parse.ParseTaskService;
 import com.wenwan.service.util.AsyncExecutor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,6 +21,8 @@ import org.springframework.util.CollectionUtils;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
@@ -35,11 +38,7 @@ public class ParseTaskServiceImpl extends MapperConfigService implements ParseTa
     @Value("${oracle.flag:false}")
     private boolean oracleFlag;
 
-    // todo 目前只实现全量加载，后续必须实现增量，需要记录游标
-    @Override
-    public void incrParse() {
-
-    }
+    private static final ExecutorService targetTableThreadPool = Executors.newFixedThreadPool(10);
 
     @Override
     public void parseTask(String parseRuleCode, Long fileId, Long parseRuleId) {
@@ -59,6 +58,37 @@ public class ParseTaskServiceImpl extends MapperConfigService implements ParseTa
             post(taskSqls, parseRuleCode, fileId, parseRuleId);
         }
 
+    }
+
+    @Override
+    public void fullParse(String param) {
+        if (StringUtils.isEmpty(param)) {
+            targetTableThreadPool.submit(this::cnsjFullParse);
+            targetTableThreadPool.submit(this::cwjzFullParse);
+            targetTableThreadPool.submit(this::cwqrdFullParse);
+            targetTableThreadPool.submit(this::cwyspFullParse);
+            targetTableThreadPool.submit(this::dwbzjFullParse);
+            targetTableThreadPool.submit(this::dzdFullParse);
+        } else {
+            if ("cnsj".equals(param)) {
+                targetTableThreadPool.submit(this::cnsjFullParse);
+            }
+            if ("cwjz".equals(param)) {
+                targetTableThreadPool.submit(this::cwjzFullParse);
+            }
+            if ("cwqrd".equals(param)) {
+                targetTableThreadPool.submit(this::cwqrdFullParse);
+            }
+            if ("cwysp".equals(param)) {
+                targetTableThreadPool.submit(this::cwyspFullParse);
+            }
+            if ("dwbzj".equals(param)) {
+                targetTableThreadPool.submit(this::dwbzjFullParse);
+            }
+            if ("dzd".equals(param)) {
+                targetTableThreadPool.submit(this::dzdFullParse);
+            }
+        }
     }
 
     @Override

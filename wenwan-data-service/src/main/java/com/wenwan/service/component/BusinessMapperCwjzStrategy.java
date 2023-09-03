@@ -64,6 +64,7 @@ public class BusinessMapperCwjzStrategy implements BusinessMapperStrategy {
         List<LogVo> businessLogVos = result.getRecords().stream().map(businessLog -> {
             LogVo resultVo = new LogVo();
             BeanUtils.copyProperties(businessLog, resultVo);
+            resultVo.setBusinessLog(BusinessLogType.business_log_cwjz.name());
             return resultVo;
         }).collect(Collectors.toList());
         return new SearchResult<>(businessLogVos, result.getTotal());

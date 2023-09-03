@@ -1,8 +1,11 @@
 package com.wenwan.web.controller.result;
 
 import com.wenwan.api.result.ILogApi;
+import com.wenwan.common.annotation.PassToken;
 import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
+import com.wenwan.model.parse.request.ResultTableQuery;
+import com.wenwan.model.parse.result.TargetTableResult;
 import com.wenwan.model.result.LogVo;
 import com.wenwan.model.result.SqlLogVo;
 import com.wenwan.service.api.result.LogService;
@@ -37,11 +40,12 @@ public class LogController extends BaseController implements ILogApi {
     }
 
     @Override
-    public APIResponse<String> resultTable(String businessLog, Long fileId) {
-        return APIResponse.getOkJsonResult(logService.resultTable(businessLog,fileId));
+    public APIResponse<TargetTableResult> resultTable(ResultTableQuery resultTableQuery) {
+        return APIResponse.getOkJsonResult(logService.resultTable(resultTableQuery));
     }
 
     @Override
+    @PassToken
     public ResponseEntity<Resource> downloadFile(String businessLog, Long businessLogId) {
         return logService.downloadFile(businessLog, businessLogId);
     }

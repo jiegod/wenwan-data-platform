@@ -1,9 +1,10 @@
 package com.wenwan.service.api.parse;
 
 public interface ParseTaskService {
-    void incrParse();
 
     void parseTask(String parseRuleCode, Long fileId, Long parseRuleId);
+
+    void fullParse(String param);
 
     void cnsjFullParse();
     void cwjzFullParse();

@@ -8,6 +8,7 @@ import com.wenwan.common.api.SearchResult;
 import com.wenwan.common.exception.BusinessException;
 import com.wenwan.model.parse.ParseRuleTableVo;
 import com.wenwan.model.parse.TaskGroupVo;
+import com.wenwan.model.parse.TaskSqlParamVo;
 import com.wenwan.model.parse.TaskSqlVo;
 import com.wenwan.mysql.dao.entity.TaskGroup;
 import com.wenwan.mysql.dao.entity.TaskSql;
@@ -21,9 +22,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -74,7 +73,7 @@ public class TaskServiceImpl extends MapperConfigService<TaskGroup, TaskGroupVo>
     public void insertSql(TaskSqlVo taskSqlVo) {
         LambdaQueryWrapper<TaskGroup> wrapper = Wrappers.lambdaQuery(TaskGroup.class).eq(TaskGroup::getCode, taskSqlVo.getTaskGroupCode());
         TaskGroup taskGroup = taskGroupMapper.selectOne(wrapper);
-        if (taskGroup == null){
+        if (taskGroup == null) {
             throw new BusinessException("task group not exit, please check");
         }
         TaskSql taskSql = new TaskSql();
@@ -85,7 +84,7 @@ public class TaskServiceImpl extends MapperConfigService<TaskGroup, TaskGroupVo>
         taskSql.setOperator(UserStorage.get());
         taskSql.setOperationDate(StringDateUtil.getToday());
         taskSqlMapper.insert(taskSql);
-        if (CollectionUtils.isEmpty(taskSqlVo.getTaskSqlParamVos())){
+        if (CollectionUtils.isEmpty(taskSqlVo.getTaskSqlParamVos())) {
             return;
         }
         taskSqlVo.getTaskSqlParamVos().forEach(taskSqlParamVo -> {
@@ -105,12 +104,35 @@ public class TaskServiceImpl extends MapperConfigService<TaskGroup, TaskGroupVo>
     }
 
     @Override
-    public int updateSql(TaskSqlVo taskSqlVo) {
+    public Long updateSql(TaskSqlVo taskSqlVo) {
         TaskSql taskSql = new TaskSql();
         BeanUtils.copyProperties(taskSqlVo, taskSql);
+        if (taskSqlVo.getId() == null) {
+            throw new BusinessException("Task sql id is null");
+        }
         taskSql.setOperator(UserStorage.get());
         taskSql.setOperationDate(StringDateUtil.getToday());
-        return taskSqlMapper.updateById(taskSql);
+        taskSqlMapper.updateById(taskSql);
+        if (CollectionUtils.isNotEmpty(taskSqlVo.getTaskSqlParamVos())) {
+            LambdaQueryWrapper<TaskSqlParam> wrapper = Wrappers.lambdaQuery(TaskSqlParam.class)
+                    .eq(TaskSqlParam::getTaskSqlId, taskSqlVo.getId());
+            taskSqlParamMapper.delete(wrapper);
+            taskSqlVo.getTaskSqlParamVos().forEach(taskSqlParamVo -> {
+                TaskSqlParam taskSqlParam = new TaskSqlParam();
+                BeanUtils.copyProperties(taskSqlParamVo, taskSqlParam);
+                if (StringUtils.isEmpty(taskSqlParam.getKey())) {
+                    throw new BusinessException("sql param key is null");
+                }
+                if (taskSqlParam.getTaskSqlId() == null) {
+                    throw new BusinessException("sql param sql id is null");
+                }
+                taskSqlParam.setTaskSqlId(taskSql.getId());
+                taskSqlParam.setOperator(UserStorage.get());
+                taskSqlParam.setOperationDate(StringDateUtil.getToday());
+                taskSqlParamMapper.insert(taskSqlParam);
+            });
+        }
+        return taskSql.getId();
     }
 
     @Override
@@ -130,19 +152,47 @@ public class TaskServiceImpl extends MapperConfigService<TaskGroup, TaskGroupVo>
     public SearchResult<TaskSqlVo> sqlList(TaskSqlVo taskSqlVo) {
         Page<TaskSql> page = new Page<>(taskSqlVo.getPageNo(), taskSqlVo.getPageSize());
         LambdaQueryWrapper<TaskSql> wrapper = Wrappers.lambdaQuery(TaskSql.class);
+        if (taskSqlVo.getTaskGroupId() != null) {
+            wrapper.eq(TaskSql::getTaskGroupId, taskSqlVo.getTaskGroupId());
+        }
         taskSqlMapper.selectPage(page, wrapper);
+
+        List<Long> taskSqlIds = page.getRecords().stream().map(TaskSql::getId).collect(Collectors.toList());
+
+        LambdaQueryWrapper<TaskSqlParam> sqlParamWrapper = Wrappers.lambdaQuery(TaskSqlParam.class)
+                .in(TaskSqlParam::getTaskSqlId, taskSqlIds);
+        List<TaskSqlParam> taskSqlParams = taskSqlParamMapper.selectList(sqlParamWrapper);
+        Map<Long, List<TaskSqlParamVo>> sqlParam = new LinkedHashMap<>();
+        if (CollectionUtils.isNotEmpty(taskSqlParams)) {
+            taskSqlParams.forEach(taskSqlParam -> {
+                TaskSqlParamVo taskSqlParamVo = new TaskSqlParamVo();
+                BeanUtils.copyProperties(taskSqlParam, taskSqlParamVo);
+                if (sqlParam.containsKey(taskSqlParamVo.getTaskSqlId())) {
+                    sqlParam.get(taskSqlParamVo.getTaskSqlId()).add(taskSqlParamVo);
+                }else {
+                    List<TaskSqlParamVo> sqlParamVoList = new ArrayList<>();
+                    sqlParamVoList.add(taskSqlParamVo);
+                    sqlParam.put(taskSqlParamVo.getTaskSqlId(), sqlParamVoList);
+                }
+            });
+        }
+
         List<TaskSqlVo> rows = page.getRecords().stream().map(taskSql -> {
             TaskSqlVo resultVo = new TaskSqlVo();
             BeanUtils.copyProperties(taskSql, resultVo);
+            resultVo.setTaskSqlParamVos(sqlParam.get(taskSql.getId()));
             return resultVo;
         }).collect(Collectors.toList());
+
+
+
         return new SearchResult<>(rows, page.getTotal());
     }
 
     @Override
     public Map<Long, List<ParseRuleTableVo>> getTableByParseRuleId(List<Long> parseRuleIds) {
         Map<Long, List<ParseRuleTableVo>> result = new HashMap<>();
-        if (CollectionUtils.isEmpty(parseRuleIds)){
+        if (CollectionUtils.isEmpty(parseRuleIds)) {
             return result;
         }
         List<ParseRuleTableVo> parseRuleTableVos = parseTableMappingMapper.getTableByParseRuleIds(parseRuleIds);
@@ -152,7 +202,7 @@ public class TaskServiceImpl extends MapperConfigService<TaskGroup, TaskGroupVo>
 
     @Override
     protected void addFilter(LambdaQueryWrapper<TaskGroup> wrapper, TaskGroupVo taskGroupVo) {
-        if (StringUtils.isNotEmpty(taskGroupVo.getSearch())){
+        if (StringUtils.isNotEmpty(taskGroupVo.getSearch())) {
             wrapper.like(TaskGroup::getName, taskGroupVo.getName());
         }
         if (taskGroupVo != null && taskGroupVo.getParseRuleId() != null) {

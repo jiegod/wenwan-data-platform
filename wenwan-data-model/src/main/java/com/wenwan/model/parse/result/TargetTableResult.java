@@ -4,10 +4,11 @@ import lombok.Data;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Data
 public class TargetTableResult {
-    private List<String> header;
+    private Set<String> header;
     private List<Map<String, String>> rows;
     private Integer size;
     private Integer pageNo;

@@ -127,13 +127,11 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
             throw new BusinessException("table is not exit, please check it");
         }
         columnInfoVos.forEach(columnInfoVo -> {
-            insertThreadPool.submit(() -> {
-                ColumnInfo columnInfo = new ColumnInfo();
-                BeanUtils.copyProperties(columnInfoVo, columnInfo);
-                columnInfo.setOperator(UserStorage.get());
-                columnInfo.setOperationDate(StringDateUtil.getToday());
-                columnInfoMapper.insert(columnInfo);
-            });
+            ColumnInfo columnInfo = new ColumnInfo();
+            BeanUtils.copyProperties(columnInfoVo, columnInfo);
+            columnInfo.setOperator(UserStorage.get());
+            columnInfo.setOperationDate(StringDateUtil.getToday());
+            columnInfoMapper.insert(columnInfo);
         });
     }
 
@@ -223,7 +221,7 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
             throw new BusinessException("Please fill the column info, column is empty");
         }
         TargetTableResult result = new TargetTableResult();
-        result.setHeader(columnInfo.stream().map(ColumnInfo::getName).collect(Collectors.toList()));
+        result.setHeader(columnInfo.stream().map(ColumnInfo::getName).collect(Collectors.toSet()));
         int size = commonService.count(tableInfo.getDbName(), tableInfo.getTableName());
 
         result.setRows(commonService.executeDynamicQuery(getSql(tableInfo.getDbName(), tableInfo.getTableName(), targetTableQuery.getPageNo(), targetTableQuery.getPageSize())));
@@ -235,7 +233,7 @@ public class TableServiceImpl extends MapperConfigService<TableInfo, TableInfoVo
 
     private String getSql(String db, String table, Integer pageNo, Integer pageSize) {
         Integer from = (pageNo - 1) * pageSize;
-        return "select * from " + db + "." + table + " limit " + pageNo + "," + pageSize;
+        return "select * from " + db + "." + table + " limit " + from + "," + pageSize;
     }
 
     @Override

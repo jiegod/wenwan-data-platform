@@ -18,15 +18,13 @@ public class ParseTaskHandler extends IJobHandler {
     @Autowired
     private ParseTaskService parseTaskService;
 
-    //todo 单线程处理，后续加上redis锁
     @XxlJob(value = "parseTaskHandler")
     @Override
     public ReturnT<String> execute(String param) throws Exception {
         log.info("parse task job run, param: {},port:{}", param, xxlJobConfig.getPort());
         XxlJobLogger.log("XXL-JOB-ANNOTATION, parseTaskHandler.");
-        parseTaskService.cnsjFullParse();
+        parseTaskService.fullParse(param);
         return ReturnT.SUCCESS;
     }
 
-    //todo 失败的需要补偿
 }

@@ -21,7 +21,7 @@ public interface TaskService {
 
     void insertSql(TaskSqlVo taskSqlVo);
 
-    int updateSql(TaskSqlVo taskSqlVo);
+    Long updateSql(TaskSqlVo taskSqlVo);
 
     int deleteSql(Long sqlId);
 

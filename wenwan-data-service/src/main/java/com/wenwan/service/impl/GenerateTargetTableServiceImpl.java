@@ -8,8 +8,12 @@ import com.wenwan.service.api.common.FileTableService;
 import com.wenwan.service.api.parse.GenerateTargetTableService;
 import com.wenwan.service.util.FileTableFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 @Slf4j
@@ -17,11 +21,37 @@ public class GenerateTargetTableServiceImpl extends MapperConfigService implemen
 
     @Autowired
     private FileTableFactory fileTableFactory;
+    private static final ExecutorService targetTableThreadPool = Executors.newFixedThreadPool(10);
 
-    // todo 目前只实现全量加载，后续必须实现增量，需要记录游标
     @Override
-    public void incrParse() {
-
+    public void fullPath(String param) {
+        if (StringUtils.isEmpty(param)) {
+            targetTableThreadPool.submit(this::cnsjFullParse);
+            targetTableThreadPool.submit(this::cwjzFullParse);
+            targetTableThreadPool.submit(this::cwqrdFullParse);
+            targetTableThreadPool.submit(this::cwyspFullParse);
+            targetTableThreadPool.submit(this::dwbzjFullParse);
+            targetTableThreadPool.submit(this::dzdFullParse);
+        } else {
+            if ("cnsj".equals(param)) {
+                targetTableThreadPool.submit(this::cnsjFullParse);
+            }
+            if ("cwjz".equals(param)) {
+                targetTableThreadPool.submit(this::cwjzFullParse);
+            }
+            if ("cwqrd".equals(param)) {
+                targetTableThreadPool.submit(this::cwqrdFullParse);
+            }
+            if ("cwysp".equals(param)) {
+                targetTableThreadPool.submit(this::cwyspFullParse);
+            }
+            if ("dwbzj".equals(param)) {
+                targetTableThreadPool.submit(this::dwbzjFullParse);
+            }
+            if ("dzd".equals(param)) {
+                targetTableThreadPool.submit(this::dzdFullParse);
+            }
+        }
     }
 
     @Override

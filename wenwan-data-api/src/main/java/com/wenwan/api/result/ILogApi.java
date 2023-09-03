@@ -1,7 +1,10 @@
 package com.wenwan.api.result;
 
+import com.wenwan.common.annotation.PassToken;
 import com.wenwan.common.api.APIResponse;
 import com.wenwan.common.api.SearchResult;
+import com.wenwan.model.parse.request.ResultTableQuery;
+import com.wenwan.model.parse.result.TargetTableResult;
 import com.wenwan.model.result.LogVo;
 import com.wenwan.model.result.SqlLogVo;
 import io.swagger.annotations.Api;
@@ -26,10 +29,11 @@ public interface ILogApi {
     @ApiOperation("重跑任务组")
     APIResponse<Void> reParse(@PathVariable("businessLog") String businessLog,@PathVariable("businessLogId") Long businessLogId);
 
-    @GetMapping("/resultTable/{businessLog}/{fileId}")
-    @ApiOperation("重跑任务组")
-    APIResponse<String> resultTable(@PathVariable("businessLog") String businessLog,@PathVariable("fileId") Long fileId);
+    @PostMapping("/resultTable/page")
+    @ApiOperation("结果表")
+    APIResponse<TargetTableResult> resultTable(@RequestBody ResultTableQuery resultTableQuery);
 
     @GetMapping("/download/source/file")
+    @PassToken
     ResponseEntity<Resource> downloadFile(@RequestParam String businessLog, @RequestParam Long businessLogId);
 }

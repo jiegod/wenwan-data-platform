@@ -41,5 +41,7 @@ public class BusinessLog extends BaseModel {
     private String operator;
     @ApiModelProperty("操作时间")
     private Integer operationDate;//数据库设置为date类型
+    @ApiModelProperty("result_table")
+    private String resultTable;
 
 }
